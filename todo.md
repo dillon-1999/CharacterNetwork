@@ -1,0 +1,5 @@
+- [x] design database
+- [x] implement models
+    - [ ] implement situation function for character update
+- [ ] implement controllers
+- [ ] create github repo
