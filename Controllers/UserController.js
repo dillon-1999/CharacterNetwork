@@ -52,17 +52,18 @@ module.exports = (app) =>{
                 console.log(userID);
                 console.log(username);
                 console.log(role);
-                req.session.regenerate((e) => {
-                    if(e){
+                req.session.regenerate((err) => {
+                    if(err){
                         res.sendStatus(401);
-                        return console.error(e);
+                        return console.error(err);
                     }
-                req.session.userID = userID;
-                req.session.email = email;
-                req.session.username = username;
-                req.session.role = role;
-                req.session.isLoggedIn = true;
-                res.redirect('/homepage');
+                    req.session.userID = userID;
+                    req.session.email = email;
+                    req.session.username = username;
+                    req.session.role = role;
+                    req.session.isLoggedIn = true;
+                    console.log(req.session)
+                    res.redirect('/homepage');
                 });
             } else {
                 return res.sendStatus(400);

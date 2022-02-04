@@ -10,15 +10,6 @@ const session = require('express-session');
 let RedisStore = require('connect-redis')(session);
 let client = redis.createClient();
 
-client.on('connect', function (err){
-    console.log('in connect')
-    if(err){
-        console.error('couldnt establish redis connection')
-    } else {
-        console.log('connected to redis!')
-    }
-})
-client.connect();
 const sessionConfig = {
     store: new RedisStore({ client: client }),
     secret: process.env.COOKIE_SECRET,
@@ -57,6 +48,19 @@ app.get('/login', (req, res) => {
 app.get('/createUser', (req, res) => {
     res.render('createUser');
 })
+
+app.get("/visit", (req, res) => {
+    if (!req.session.visits) {
+        req.session.visits = 1;
+        console.log("This is the user's first visit for the session.");
+    } else {
+        req.session.visits++;
+        console.log(`This user has visited ${req.session.visits} times.`);
+    }
+    
+    res.sendStatus(200);
+});
+
 app.listen(process.env.PORT, () => {
     console.log(`server lisening on http://localhost:${process.env.PORT} `);
 });

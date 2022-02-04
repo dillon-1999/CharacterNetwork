@@ -36,6 +36,7 @@ async function login(email, password){
         document.querySelector('.error').textContent = "Server error...";
     }
 }
+
 if(document.getElementById('registerForm')){
     document.getElementById('registerForm').addEventListener('submit', (event) => {
         event.preventDefault();
