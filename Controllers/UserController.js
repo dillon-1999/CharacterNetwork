@@ -6,10 +6,15 @@ const {schemas, VALIDATION_OPTIONS} = require("../validators/validatorContainer"
 module.exports = (app) =>{
     app.get('/newUser', (req, res) => {
         res.render('newUser');
-    })
-    app.get('/homepage', (req, res) => {
-        res.render('homepage');
-    })
+    });
+    app.get('/users/homepage', (req, res) => {
+        res.render('homepage', {session: req.session});
+    });
+
+    // app.get('/users/friends', (req,res) => {
+
+    // });
+
     app.post('/newUser/attemptRegister', async (req, res) => {
         console.log("POST /newUser/attemptRegister");
         const {value, error} = schemas.userSchema.validate(req.body, VALIDATION_OPTIONS); 
@@ -29,7 +34,7 @@ module.exports = (app) =>{
             console.error(e);
             return res.sendStatus(500);
         }
-    })
+    });
 
     app.post("/login", async (req, res) => {
         const {value, error} = schemas.loginSchema.validate(req.body, VALIDATION_OPTIONS);
@@ -63,7 +68,7 @@ module.exports = (app) =>{
                     req.session.role = role;
                     req.session.isLoggedIn = true;
                     console.log(req.session)
-                    res.redirect('/homepage');
+                    res.redirect('/users/homepage');
                 });
             } else {
                 return res.sendStatus(400);
@@ -72,5 +77,15 @@ module.exports = (app) =>{
             console.error(e);
             return res.sendStatus(500);
         }
-    })
+    });
+
+    app.post('/logout', (req, res) => {
+        req.session.destroy((err) => {
+            if(err){
+                res.sendStatus(500);
+                return console.error(err);
+            }
+            res.redirect('/login');
+        })
+    });
 }

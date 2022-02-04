@@ -10,9 +10,20 @@
 <body>
     <div>
         <%- include('partials/header.ejs') %>
-        <div>
-            <h1>This is your homepage</h1>
-        </div>
+        <% if(session.isLoggedIn === true) { %>
+            <form action = "/logout" method="POST" id="logoutForm">
+                <button>Logout</button>
+            </form>
+            <div>
+                <h1>Hello <%= session.username %>!</h1>
+                <h1>This is your homepage</h1>
+            </div>
+            <!-- <div>
+                <input type="button" id="">
+            </div> -->
+        <% }  else { %>
+            <%- include('partials/accessDenied.ejs') %>
+           <% } %>
     </div>
 </body>
 </html>
