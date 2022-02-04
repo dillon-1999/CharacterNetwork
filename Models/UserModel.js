@@ -160,7 +160,7 @@ class UserModel {
 
     getUserData (userID) {
         try{
-            const sql = `SELECT userID, username, role, email, didVerifyEmail, bio
+            const sql = `SELECT userID, username, role
                          FROM Users 
                          WHERE userID = @userID
             `;
@@ -215,5 +215,6 @@ class UserModel {
         }
     }
 }
-
+let u = new UserModel(db);
+console.log(u.getUsers());
 exports.userModel = new UserModel(db);

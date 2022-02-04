@@ -1,23 +1,26 @@
 "use strict";
 
-// allows the use of .env file
 require("dotenv").config();
-// will use later, variable depending on mode
 const isProduction = process.env.MODE === "production";
-// create and instantiate express (our backend framework)
 const express = require("express");
 const app = express();
-// set the view engine, we will be using ejs
-// allows the parsing of json
-// allows parsing of url encoded bodies
-// redis is our session store
+const path = require("path");
 const redis = require('redis');
 const session = require('express-session');
 let RedisStore = require('connect-redis')(session);
-let redisClient = redis.createClient();
+let client = redis.createClient();
 
+client.on('connect', function (err){
+    console.log('in connect')
+    if(err){
+        console.error('couldnt establish redis connection')
+    } else {
+        console.log('connected to redis!')
+    }
+})
+client.connect();
 const sessionConfig = {
-    store: new RedisStore({ client: redisClient }),
+    store: new RedisStore({ client: client }),
     secret: process.env.COOKIE_SECRET,
     resave: false,
     saveUninitialized: false,
@@ -29,27 +32,31 @@ const sessionConfig = {
 };
 
 app.set('view engine', 'ejs');
-app.use(express.urlencoded({ extended: false }));
-app.use(express.json());
-const usersRouter = require("./Controllers/UserController.js");
-const friendsRouter = require("./Controllers/FriendController.js");
-const projectsRouter = require("./Controllers/ProjectController.js");
-const charactersRouter = require("./Controllers/CharacterController.js");
-const favoritesRouter = require("./Controllers/FavoriteController.js");
-const starsInRouter = require("./Controllers/StarsInController.js");
-
 app.use(session(sessionConfig));
-app.use('/users', usersRouter);
-app.use('/friends', friendsRouter);
-app.use('/projects', projectsRouter);
-app.use('/characters', charactersRouter);
-app.use('/favorites', favoritesRouter);
-app.use('/starsIn', starsInRouter);
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(express.static(path.join(__dirname, "public"), {
+    extensions: ['html'],
+}));
+require("./Controllers/UserController.js")(app);
+// require("./Controllers/FriendController.js")(app);
+// require("./Controllers/ProjectController.js")(app);
+// require("./Controllers/CharacterController.js")(app);
+// require("./Controllers/FavoriteController.js")(app);
+// require("./Controllers/StarsInController.js")(app);
+
 
 app.get('/', (req, res) => {
-    res.send("hello, world");
+    res.render('index');
 });
 
+app.get('/login', (req, res) => {
+    res.render('login');
+})
+
+app.get('/createUser', (req, res) => {
+    res.render('createUser');
+})
 app.listen(process.env.PORT, () => {
     console.log(`server lisening on http://localhost:${process.env.PORT} `);
 });
