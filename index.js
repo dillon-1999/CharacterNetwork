@@ -29,8 +29,18 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public"), {
     extensions: ['html'],
 }));
+app.use(
+    "/css",
+    express.static(path.join(__dirname, "node_modules/bootstrap/dist/css"))
+  )
+app.use(
+"/js",
+express.static(path.join(__dirname, "node_modules/bootstrap/dist/js"))
+)
+app.use("/js", express.static(path.join(__dirname, "node_modules/jquery/dist")))
+
 require("./Controllers/UserController.js")(app);
-// require("./Controllers/FriendController.js")(app);
+require("./Controllers/FriendController.js")(app);
 // require("./Controllers/ProjectController.js")(app);
 // require("./Controllers/CharacterController.js")(app);
 // require("./Controllers/FavoriteController.js")(app);
@@ -38,7 +48,7 @@ require("./Controllers/UserController.js")(app);
 
 
 app.get('/', (req, res) => {
-    res.render('index');
+    res.redirect('/login');
 });
 
 app.get('/login', (req, res) => {
@@ -48,18 +58,6 @@ app.get('/login', (req, res) => {
 app.get('/createUser', (req, res) => {
     res.render('createUser');
 })
-
-app.get("/visit", (req, res) => {
-    if (!req.session.visits) {
-        req.session.visits = 1;
-        console.log("This is the user's first visit for the session.");
-    } else {
-        req.session.visits++;
-        console.log(`This user has visited ${req.session.visits} times.`);
-    }
-    
-    res.sendStatus(200);
-});
 
 app.listen(process.env.PORT, () => {
     console.log(`server lisening on http://localhost:${process.env.PORT} `);

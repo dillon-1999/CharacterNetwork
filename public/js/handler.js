@@ -64,3 +64,10 @@ if(document.getElementById('loginForm')){
     login(email, password);
 });
 }
+
+if(document.getElementById('anchor')){
+    document.getElementById('anchor').addEventListener('click', (event) => {
+    event.preventDefault();
+    window.location.replace(`${window.location.origin}/createUser`);
+});
+}

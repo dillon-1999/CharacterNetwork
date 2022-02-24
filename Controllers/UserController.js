@@ -7,6 +7,7 @@ module.exports = (app) =>{
     app.get('/newUser', (req, res) => {
         res.render('newUser');
     });
+    
     app.get('/users/homepage', (req, res) => {
         res.render('homepage', {session: req.session});
     });

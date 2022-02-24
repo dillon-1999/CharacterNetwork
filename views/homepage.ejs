@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Character Network - Homepage</title>
     <link rel="stylesheet" type="text/css">
+    <script src='/js/listeners.js' defer></script>
 </head>
 <body>
     <div>
@@ -18,9 +19,11 @@
                 <h1>Hello <%= session.username %>!</h1>
                 <h1>This is your homepage</h1>
             </div>
-            <!-- <div>
-                <input type="button" id="">
-            </div> -->
+            <div>
+                <input type="button" id="projectsView" value="View Your Projects">
+                <input type="button" id="friendsView" value="View Your Friends">
+                <input type="button" id="favoritesView" value="View Your Favorites">
+            </div>
         <% }  else { %>
             <%- include('partials/accessDenied.ejs') %>
            <% } %>
