@@ -20,122 +20,133 @@ class UserModel {
         }
     }
 
-    setBio(bio, userID) {
-        try {
-            const sql = `UPDATE
-                         SET
-                            bio=@bio
-                        where 
-                            userID=@userID`
-            db.prepare(sql).run({bio, userID});
-            return true;
-        } catch (e) {
-            console.error(e);
+    updateUser(userID, updatesObj){
+        let options = ['username', 'avatarAddress', 'passwordHash',
+                       'email', 'bio', 'role', 'emailVerified'];
+        let validObj = {};
+        for(const i in updatesObj){
+            if(options.includes(i) && updatesObj[i]){
+                validObj[i] = updatesObj[i];
+            }
+        }
+        if(Object.keys(validObj).length === 0){
             return false;
         }
-    }
-
-    changeEmailAddress (newEmailAddr, userID) {
+        let updates = Object.keys(validObj).map(x => x + `=@${x}`).join(' and ');
+        validObj["userID"] = userID;
         try{
-            const sql = `
-                UPDATE Users
-                SET
-                    email=@newEmailAddr
-                WHERE
-                    userID=@userID
-            `;
-            db.prepare(sql).run({newEmailAddr, userID});
+            const sql = `UPDATE Users
+                        SET
+                            ${updates}
+                        where
+                            userID=@userID`;
+            db.prepare(sql).run(validObj);
             return true;
-        } catch (e){
+        } catch(e){
             console.error(e);
             return false;
         }
     }
 
-    changeUsername (newUsername, userID) {
-        try{
-            const sql = `
-                UPDATE Users
-                SET
-                    username=@newUsername
-                WHERE
-                    userID=@userID
-            `;
-            db.prepare(sql).run({newUsername, userID});
-            return true;
-        } catch (e){
-            console.error(e);
-            return false;
-        }
-    }
+    // setBio(bio, userID) {
+    //     try {
+    //         const sql = `UPDATE
+    //                      SET
+    //                         bio=@bio
+    //                     where 
+    //                         userID=@userID`
+    //         db.prepare(sql).run({bio, userID});
+    //         return true;
+    //     } catch (e) {
+    //         console.error(e);
+    //         return false;
+    //     }
+    // }
 
-    upgradeToAdmin (userID) {
-        try{
-            const sql = `
-                UPDATE Users
-                SET
-                    role=1
-                WHERE
-                    userID=@userID
-            `;
-            db.prepare(sql).run({userID});
-            return true;
-        } catch (e){
-            console.error(e);
-            return false;
-        }
-    }
+    // changeEmailAddress (newEmailAddr, userID) {
+    //     try{
+    //         const sql = `
+    //             UPDATE Users
+    //             SET
+    //                 email=@newEmailAddr
+    //             WHERE
+    //                 userID=@userID
+    //         `;
+    //         db.prepare(sql).run({newEmailAddr, userID});
+    //         return true;
+    //     } catch (e){
+    //         console.error(e);
+    //         return false;
+    //     }
+    // }
 
-    revokeAdmin (userID) {
-        try{
-            const sql = `
-                UPDATE Users
-                SET
-                    role=0
-                WHERE
-                    userID=@userID
-            `;
-            db.prepare(sql).run({userID});
-            return true;
-        } catch (e){
-            console.error(e);
-            return false;
-        }
-    }
+    // changeUsername (newUsername, userID) {
+    //     try{
+    //         const sql = `
+    //             UPDATE Users
+    //             SET
+    //                 username=@newUsername
+    //             WHERE
+    //                 userID=@userID
+    //         `;
+    //         db.prepare(sql).run({newUsername, userID});
+    //         return true;
+    //     } catch (e){
+    //         console.error(e);
+    //         return false;
+    //     }
+    // }
 
-    emailVerified (userID) {
-        try{
-            const sql = `
-                UPDATE Users
-                SET
-                    didVerifyEmail=1
-                WHERE
-                    userID=@userID
-            `;
-            db.prepare(sql).run({userID});
-            return true;
-        } catch (e){
-            console.error(e);
-            return false;
-        }
-    }
+    // upgradeToAdmin (userID) {
+    //     try{
+    //         const sql = `
+    //             UPDATE Users
+    //             SET
+    //                 role=1
+    //             WHERE
+    //                 userID=@userID
+    //         `;
+    //         db.prepare(sql).run({userID});
+    //         return true;
+    //     } catch (e){
+    //         console.error(e);
+    //         return false;
+    //     }
+    // }
 
-    updatePassword(userID, passwordHash){
-        try {
-            const sql = `
-                UPDATE Users
-                SET
-                    passwordHash=@passwordHash
-                WHERE
-                    userID=@userID
-            `;
-            db.prepare(sql).run({userID,  passwordHash});
-            return true;
-        } catch (e){
-            console.error(e);
-            return false;
-        }
-    }
+    // revokeAdmin (userID) {
+    //     try{
+    //         const sql = `
+    //             UPDATE Users
+    //             SET
+    //                 role=0
+    //             WHERE
+    //                 userID=@userID
+    //         `;
+    //         db.prepare(sql).run({userID});
+    //         return true;
+    //     } catch (e){
+    //         console.error(e);
+    //         return false;
+    //     }
+    // }
+
+    // updatePassword(userID, passwordHash){
+    //     try {
+    //         const sql = `
+    //             UPDATE Users
+    //             SET
+    //                 passwordHash=@passwordHash
+    //             WHERE
+    //                 userID=@userID
+    //         `;
+    //         db.prepare(sql).run({userID,  passwordHash});
+    //         return true;
+    //     } catch (e){
+    //         console.error(e);
+    //         return false;
+    //     }
+    // }
 
     deleteUser (userID) {
         try{
@@ -216,5 +227,7 @@ class UserModel {
     }
 }
 let u = new UserModel(db);
-console.log(u.getUsers());
+u.updateUser('af42e7f1-d7a9-4192-97f6-78e6980b404c', {username: 'bri'});
+// console.log(u.getUsers());
+
 exports.userModel = new UserModel(db);

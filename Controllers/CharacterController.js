@@ -1,8 +1,9 @@
 "use strict";
 
-const express = require("express");
-const charactersRouter = express.Router();
 const argon2 = require("argon2");
 const { characterModel } = require("../Models/CharacterModel");
+const {schemas, VALIDATION_OPTIONS} = require("../validators/validatorContainer");
 
-module.exports = charactersRouter;
+module.exports = (app) => {
+    
+}
