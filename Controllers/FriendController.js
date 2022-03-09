@@ -22,19 +22,25 @@ module.exports = (app) =>{
             return res.sendStatus(500);
         }
     });
-
-    app.get('/users/friends', async (req,res) => {
-        console.log("GET /users/friends");
-        if(!req.session.isLoggedIn){
-            return res.sendStatus(404);
-        }
-        const userID = req.session.userID;
-        try{
-            const friends = friendModel.getUsersFriends(userID);
-            return res.status(200).json(friends);
-        } catch(e){
-            console.error(e);
-            return res.sendStatus(500);
-        }
-    });
+    app.get('/users/')
+    
+    
+    // get a list of users friends
+    // renders a new page with just friends
+    // TODO: add links to their page
+    // app.get('/users/friends', async (req,res) => {
+    //     console.log("GET /users/friends");
+    //     if(!req.session.isLoggedIn){
+    //         return res.sendStatus(404);
+    //     }
+    //     const userID = req.session.userID;
+    //     try{
+    //         const friends = friendModel.getUsersFriends(userID);
+    //         const success = friends ? true : false;
+    //         return res.render(friends, {session: req.session, friends, s});
+    //     } catch(e){
+    //         console.error(e);
+    //         return res.sendStatus(500);
+    //     }
+    // });
 }

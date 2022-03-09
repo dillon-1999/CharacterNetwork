@@ -1,6 +1,10 @@
 "use strict";
 const argon2 = require("argon2");
 const { userModel } = require("../Models/UserModel");
+const { friendModel } = require("../Models/FriendModel");
+const { characterModel } = require("../Models/CharacterModel");
+const { projectModel } = require("../Models/ProjectModel");
+
 const {schemas, VALIDATION_OPTIONS} = require("../validators/validatorContainer");
 
 module.exports = (app) =>{
@@ -78,6 +82,18 @@ module.exports = (app) =>{
             console.error(e);
             return res.sendStatus(500);
         }
+    });
+
+    // renders users homepage
+    app.get('/users/homepage', (req, res) => {
+        if(!req.session.isLoggedIn){
+            return res.sendStatus(404);
+        }
+
+        // send:
+        // friends, individual characters, projects, some userInfo
+        const friends = friendModel.getUsersFriends(req.session.userID);
+        const chars = characterModel.getCharsByUser(req.session.userID);
     });
 
     app.post('/logout', (req, res) => {

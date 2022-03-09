@@ -226,8 +226,5 @@ class UserModel {
         }
     }
 }
-let u = new UserModel(db);
-u.updateUser('af42e7f1-d7a9-4192-97f6-78e6980b404c', {username: 'bri'});
-// console.log(u.getUsers());
 
 exports.userModel = new UserModel(db);

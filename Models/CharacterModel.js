@@ -79,18 +79,16 @@ class CharacterModel {
             return false;
         }
     }
+
+    getCharsByUser(creator){
+        try{
+            const sql = `SELECT * FROM CHARACTERS where creator=@creator`;
+            return db.prepare(sql).all({creator});
+        } catch(e){
+            console.error(e);
+            return false;
+        }
+    }
 }
-let c = new CharacterModel(db);
-// c.createCharacter('af42e7f1-d7a9-4192-97f6-78e6980b404c', {name: 'bob', 
-//                                eyeColor:'red', 
-//                                hairColor:'red',
-//                                skinColor: 'blue',
-//                                feetTall: '5',
-//                                inchesTall: '3',
-//                                gender: 'Male',
-//                                characterTraits: '123',
-//                                backstory: "add backstory later" 
-// })
-// c.updateCharacter('af42e7f1-d7a9-4192-97f6-78e6980b404c','93ab6d1e-933c-4e47-a68d-c040624e2228', {chad: 'fred'});
-// console.log(c.getChars());
+
 exports.characterModel = new CharacterModel(db);
