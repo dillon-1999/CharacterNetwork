@@ -10,7 +10,7 @@ class FriendModel {
     createFriend(userID, friendID){
         try {
             const sql = `INSERT INTO Friends (userID, friendID)
-                         VALUES (@userID, friendID)`;
+                         VALUES (@userID, @friendID)`;
             db.prepare(sql).run({userID, friendID});
             return true;
         } catch (e){
@@ -57,6 +57,17 @@ class FriendModel {
             return false;
         }
     }
-}
 
+    getFriends(){
+        try {
+            const sql = `SELECT * FROM Friends`;
+            return db.prepare(sql).all();
+        } catch (e) {
+            console.error(e);
+            return false;
+        }
+    }
+}
+let x = new FriendModel(db);
+console.log(x.getFriends())
 exports.friendModel = new FriendModel(db);

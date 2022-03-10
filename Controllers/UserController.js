@@ -42,6 +42,7 @@ module.exports = (app) =>{
     });
 
     app.post("/login", async (req, res) => {
+        console.log(req.body);
         const {value, error} = schemas.loginSchema.validate(req.body, VALIDATION_OPTIONS);
         if(error){
             const errorMessages = error.details.map(error => error.message);
@@ -72,7 +73,6 @@ module.exports = (app) =>{
                     req.session.username = username;
                     req.session.role = role;
                     req.session.isLoggedIn = true;
-                    console.log(req.session)
                     res.redirect('/users/homepage');
                 });
             } else {
@@ -94,8 +94,47 @@ module.exports = (app) =>{
         // friends, individual characters, projects, some userInfo
         const friends = friendModel.getUsersFriends(req.session.userID);
         const chars = characterModel.getCharsByUser(req.session.userID);
+        const projects = projectModel.getUsersProjects(req.session.userID);
+        const userInfo = userModel.getUserData(req.session.userID);
     });
 
+    // query param as userID
+    app.post('/upgrade', (req, res) => {
+        if(req.session.role !== 1 || !req.query.userID){
+            return res.sendStatus(404);
+        }
+
+        try {
+            const upgraded = userModel.updateUser(req.query.userID, {role: 1});
+            if(upgraded){
+                res.sendStatus(200);
+            } else {
+                res.sendStatus(500);
+            }
+        } catch(err) {
+            console.error(err);
+            return res.sendStatus(500);
+        }
+    });
+
+    app.post('/revoke', (req, res) => {
+        if(req.session.role !== 1 || !req.query.userID){
+            return res.sendStatus(404);
+        }
+
+        try {
+            const upgraded = userModel.updateUser(req.query.userID, {role: 0});
+            if(upgraded){
+                res.sendStatus(200);
+            } else {
+                res.sendStatus(500);
+            }
+        } catch(err) {
+            console.error(err);
+            return res.sendStatus(500);
+        }
+    });
+    
     app.post('/logout', (req, res) => {
         req.session.destroy((err) => {
             if(err){
