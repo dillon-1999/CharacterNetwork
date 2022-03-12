@@ -50,6 +50,15 @@ class StarsInModel {
         }
     }
 
+    getProjectByChar(charID){
+        try {
+            const sql = `SELECT projectID FROM StarsIn WHERE charID=@charID`;
+            return db.prepare(sql).get({charID});
+        } catch (e){
+            console.error(e);
+            return false;
+        }
+    }
 
 }
 

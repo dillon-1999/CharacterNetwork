@@ -225,7 +225,32 @@ class UserModel {
             return false;
         }
     }
+
+    getAvatarHash(userID){
+        try{
+            const sql = `SELECT avatarAddress
+                         FROM Users
+                         WHERE userID=@userID
+                        `;
+            return db.prepare(sql).get({userID});
+        } catch(e){
+            console.error(e);
+            return false;
+        }
+    }
+
+    uploadAvatar(userID, avatarAddress){
+        try{
+            const sql = `UPDATE Users
+                         SET avatarAddress=@avatarAddress
+                         WHERE userID=@userID`;
+            db.prepare(sql).run({userID, avatarAddress});
+            return true;
+        } catch(e){
+            console.error(e);
+            return false;
+        }
+    }
 }
 let x = new UserModel(db);
-console.log(x.getUsers())
 exports.userModel = new UserModel(db);

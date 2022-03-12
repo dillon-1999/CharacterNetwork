@@ -1,18 +1,46 @@
 "use strict";
 const argon2 = require("argon2");
 const { userModel } = require("../Models/UserModel");
-const { friendModel } = require("../Models/FriendModel");
 const { characterModel } = require("../Models/CharacterModel");
 const { projectModel } = require("../Models/ProjectModel");
-
 const {schemas, VALIDATION_OPTIONS} = require("../validators/validatorContainer");
 
+const fs = require('fs');
+const multer = require('multer');
+const crypto = require('crypto');
+
+let storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, '../userAvatars');
+    },
+
+    filename: (req, file, cb) => {
+        const randomName = crypto.randomBytes(12).toString('hex');
+        const [extension] = file.originalname.split(".").slice(-1);
+        cb(null, `${randomName}.${extension}`);
+    },
+
+    fileFilter: (req, file, cb) => {
+        if(!req.session){
+            return cb(null, false);
+        }
+        const [extension] = file.originalname.split(".").slice(-1);
+        if(extension != 'jpg'){
+            return cb(null, false)
+        } else {
+            cb(null, true);
+        }
+    }
+});
+
+let upload = multer({storage});
+
 module.exports = (app) =>{
-    app.get('/newUser', (req, res) => {
+    app.get('/newUser', async (req, res) => {
         res.render('newUser');
     });
 
-    app.get('/users/homepage', (req, res) => {
+    app.get('/users/homepage', async (req, res) => {
         // send:
         // individual characters, projects, some userInfo
         // const friends = friendModel.getUsersFriends(req.session.userID);
@@ -48,7 +76,6 @@ module.exports = (app) =>{
     });
 
     app.post("/login", async (req, res) => {
-        console.log(req.body);
         const {value, error} = schemas.loginSchema.validate(req.body, VALIDATION_OPTIONS);
         if(error){
             const errorMessages = error.details.map(error => error.message);
@@ -66,9 +93,6 @@ module.exports = (app) =>{
             const {passwordHash} = pass;
             if(await argon2.verify(passwordHash, password)){
                 const {userID, username, role} = userModel.getUserDataByEmail(email);
-                console.log(userID);
-                console.log(username);
-                console.log(role);
                 req.session.regenerate((err) => {
                     if(err){
                         res.sendStatus(401);
@@ -91,7 +115,7 @@ module.exports = (app) =>{
     });
 
     // query param as userID
-    app.post('/upgrade', (req, res) => {
+    app.post('/upgrade', async (req, res) => {
         if(req.session.role !== 1 || !req.query.userID){ // just an admin functionality
             return res.sendStatus(404);
         }
@@ -110,7 +134,7 @@ module.exports = (app) =>{
     });
 
     // expects query param userID
-    app.post('/revoke', (req, res) => {
+    app.post('/revoke', async (req, res) => {
         if(req.session.role !== 1 || !req.query.userID){ // just an admin functionality
             return res.sendStatus(404);
         }
@@ -137,4 +161,26 @@ module.exports = (app) =>{
             res.redirect('/login');
         })
     });
+
+    app.post('/users/uploadImage/', upload.single('file'), (req,res) => {
+        if(!req.session.userID){
+            return res.sendStatus(404);
+        }
+        try{
+            const previousFile = userModel.getAvatarHash(req.session.userID);
+            const didUpload = userModel.uploadAvatar(req.session.userID, req.file.filename);
+            if(didUpload){
+                if(previousFile){ // this deletes the old file 
+                    fs.unlinkSync(`../userAvatars/${previousFile.avatarAddress}`);
+                }
+                return res.sendStatus(200);
+            } else {
+                return res.sendStatus(400);
+            }
+
+        } catch(e){
+            res.send(e);
+        }
+    });
+
 }

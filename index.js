@@ -29,6 +29,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public"), {
     extensions: ['html'],
 }));
+app.use(express.static("characterAvatars"));
+app.use(express.static("userAvatars"));
+
 app.use(
     "/css",
     express.static(path.join(__dirname, "node_modules/bootstrap/dist/css"))
@@ -59,6 +62,9 @@ app.get('/createUser', (req, res) => {
     res.render('createUser');
 })
 
+app.get('/search', (req, res) => {
+    res.render('searchPage');
+})
 app.listen(process.env.PORT, () => {
     console.log(`server lisening on http://localhost:${process.env.PORT} `);
 });

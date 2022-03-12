@@ -23,6 +23,7 @@ CREATE TABLE IF NOT EXISTS Projects (
     projectName TEXT NOT NULL,
     projectType TEXT NOT NULL,
     genre  TEXT NOT NULL,
+    projectDescription TEXT NOT NULL,
     public INTEGER DEFAULT 0 -- default not public
 );
 

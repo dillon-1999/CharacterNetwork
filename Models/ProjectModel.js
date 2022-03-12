@@ -7,12 +7,12 @@ class ProjectModel {
         this.db = db;
     }
 
-    createProject(userID, projectName, projectType, genre){
+    createProject(userID, projectName, projectType, projectDescription, genre,){
         try {
-            const sql = `INSERT INTO Projects (projectID, userID, projectName, projectType, genre)
-                         VALUES (@projectID, @userID, @projectName, @projectType, @genre)`;
+            const sql = `INSERT INTO Projects (projectID, userID, projectName, projectType,projectDescription, genre)
+                         VALUES (@projectID, @userID, @projectName, @projectType, @projectDescription, @genre)`;
             const projectID = uuidV4();
-            db.prepare(sql).run({projectID, userID, projectName, projectType, genre});
+            db.prepare(sql).run({projectID, userID, projectName, projectType,projectDescription, genre});
             return true;
         } catch (e){
             console.error(e);
@@ -40,6 +40,19 @@ class ProjectModel {
                          SET projectName=@projectName
                          WHERE userID=@userID AND projectID=@projectID`;
             db.prepare(sql).run({userID, projectID, projectName});
+            return true;
+        } catch (e){
+            console.error(e);
+            return false;
+        }
+    }
+
+    changeProjectDescription(userID, projectID, projectDescription){
+        try {
+            const sql = `UPDATE Projects
+                         SET projectDescription=@projectDescription
+                         WHERE userID=@userID AND projectID=@projectID`;
+            db.prepare(sql).run({userID, projectID, projectDescription});
             return true;
         } catch (e){
             console.error(e);
@@ -110,6 +123,16 @@ class ProjectModel {
                          WHERE userID=@userID AND projectID=@projectID`;
             db.prepare(sql).run({userID, projectID, genre});
             return true;
+        } catch (e){
+            console.error(e);
+            return false;
+        }
+    }
+
+    getProjectNameByID(projectID){
+        try {
+            const sql = `SELECT projectName FROM Projects WHERE projectID=@projectID`;
+            return db.prepare(sql).get({projectID});
         } catch (e){
             console.error(e);
             return false;

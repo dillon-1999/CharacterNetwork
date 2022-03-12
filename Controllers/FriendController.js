@@ -4,6 +4,11 @@ const { friendModel } = require("../Models/FriendModel");
 // const {schemas, VALIDATION_OPTIONS} = require("../validators/validatorContainer");
 
 module.exports = (app) =>{
+    app.get('/users/friends', async (req, res) => {
+        const friends = getUsersFriends(req.session.userID);
+        res.render('friends', {session: req.session, friends: friends});
+    });
+
     app.post('/users/friendUser', async (req, res) => {
         console.log("POST /users/friendUser");
         // add friend validation
