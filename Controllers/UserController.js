@@ -11,19 +11,25 @@ module.exports = (app) =>{
     app.get('/newUser', (req, res) => {
         res.render('newUser');
     });
-    
+
     app.get('/users/homepage', (req, res) => {
-        res.render('homepage', {session: req.session});
+        // send:
+        // individual characters, projects, some userInfo
+        // const friends = friendModel.getUsersFriends(req.session.userID);
+        const chars = characterModel.getCharsByUser(req.session.userID);
+        const projects = projectModel.getUsersProjects(req.session.userID);
+        const userInfo = userModel.getUserData(req.session.userID);
+        try {
+            res.render('homepage', {session: req.session, chars, projects, userInfo});
+        } catch(e){
+            console.error(e);
+            return res.sendStatus(500)
+        }
     });
-
-    // app.get('/users/friends', (req,res) => {
-
-    // });
 
     app.post('/newUser/attemptRegister', async (req, res) => {
         console.log("POST /newUser/attemptRegister");
         const {value, error} = schemas.userSchema.validate(req.body, VALIDATION_OPTIONS); 
-        console.log(req.body)
         if (error){
             const errorMessages = error.details.map(error => error.message);
             return res.status(400).json(errorMessages);
@@ -84,23 +90,9 @@ module.exports = (app) =>{
         }
     });
 
-    // renders users homepage
-    app.get('/users/homepage', (req, res) => {
-        if(!req.session.isLoggedIn){
-            return res.sendStatus(404);
-        }
-
-        // send:
-        // friends, individual characters, projects, some userInfo
-        const friends = friendModel.getUsersFriends(req.session.userID);
-        const chars = characterModel.getCharsByUser(req.session.userID);
-        const projects = projectModel.getUsersProjects(req.session.userID);
-        const userInfo = userModel.getUserData(req.session.userID);
-    });
-
     // query param as userID
     app.post('/upgrade', (req, res) => {
-        if(req.session.role !== 1 || !req.query.userID){
+        if(req.session.role !== 1 || !req.query.userID){ // just an admin functionality
             return res.sendStatus(404);
         }
 
@@ -117,8 +109,9 @@ module.exports = (app) =>{
         }
     });
 
+    // expects query param userID
     app.post('/revoke', (req, res) => {
-        if(req.session.role !== 1 || !req.query.userID){
+        if(req.session.role !== 1 || !req.query.userID){ // just an admin functionality
             return res.sendStatus(404);
         }
 
@@ -134,7 +127,7 @@ module.exports = (app) =>{
             return res.sendStatus(500);
         }
     });
-    
+
     app.post('/logout', (req, res) => {
         req.session.destroy((err) => {
             if(err){
