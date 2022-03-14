@@ -23,4 +23,10 @@ module.exports = (app) =>{
         }
         
     });
+
+    // render project page
+    // query params: projectID
+    app.get('/projects/project', async (req, res) => {
+        
+    });
 }
