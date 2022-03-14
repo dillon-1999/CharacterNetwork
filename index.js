@@ -56,15 +56,15 @@ app.get('/', (req, res) => {
 
 app.get('/login', (req, res) => {
     res.render('login');
-})
+});
 
 app.get('/createUser', (req, res) => {
     res.render('createUser');
-})
+});
 
 app.get('/search', (req, res) => {
     res.render('searchPage');
-})
+});
 app.listen(process.env.PORT, () => {
     console.log(`server lisening on http://localhost:${process.env.PORT} `);
 });
