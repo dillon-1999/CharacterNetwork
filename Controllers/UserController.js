@@ -47,6 +47,7 @@ module.exports = (app) =>{
         const chars = characterModel.getCharsByUser(req.session.userID);
         const projects = projectModel.getUsersProjects(req.session.userID);
         const userInfo = userModel.getUserData(req.session.userID);
+        console.log(userInfo);
         try {
             res.render('homepage', {session: req.session, chars, projects, userInfo});
         } catch(e){

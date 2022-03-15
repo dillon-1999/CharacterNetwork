@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS Users (
     userID TEXT PRIMARY KEY,
     username TEXT UNIQUE NOT NULL,
-    avatarAddress TEXT DEFAULT NULL,
+    avatarAddress TEXT DEFAULT 'http://localhost:8000/usersAvatars/pic.jpg',
     passwordHash TEXT NOT NULL,
     email TEXT UNIQUE NOT NULL,
     emailVerified INTEGER DEFAULT 0, -- no boolean datatype in sqlite
