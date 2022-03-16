@@ -50,9 +50,16 @@
 <body>
     <div>
         <% if(session.isLoggedIn === true) { %>
-            <form class='right-align' action = "/logout" method="POST" id="logoutForm">
-                <button class='fancy-button'>Logout</button>
-            </form>
+            <!-- logout and search -->
+            <div>
+                <a href="http://localhost:8000/"> <img src="http://localhost:8000/systemImages/search.png" height=20px width=20px/> </a> <!--not the right link; should go to search page -->
+                
+                <form class='right-align' action = "/logout" method="POST" id="logoutForm">
+                    <button class='fancy-button'>Logout</button>
+                </form>
+            </div>
+            
+            
             <%- include('partials/header.ejs') %>
             
             <!--profile pic and username -->
