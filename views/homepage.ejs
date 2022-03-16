@@ -10,16 +10,40 @@
     <style>
         .text-center {
             text-align: center;
-            color: darkblue;
+        }
+        
+        .block-center {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .circle-pic {
+            border-radius: 50%;
         }
         
         .right-align {
             text-align: right;
         }
         
+        .color1 {
+            color: darkblue;
+        }
+        
         .fancy-button {
             background-color: lightblue;
         }
+        
+        .big-button {
+            height: 40px;
+            width: 15%;
+        }
+        
+        .bio {
+            padding: 15px;
+            box-shadow: 1px 1px 10px gray;
+        }
+        
         
         
     </style>
@@ -29,21 +53,61 @@
         <!-- <img src="http://localhost:8006/userAvatars/81dd9f959438fc0db82acbcb.jpg" > -->
         <!-- <img src="http://localhost:8006/userAvatars/ <%= 81dd9f959438fc0db82acbcb.jpg %>"> -->
         <% if(session.isLoggedIn === true) { %>
-            <form class='right-align' action = "/logout" method="POST" id="logoutForm">
-                <button class='fancy-button'>Logout</button>
-            </form>
+            <!-- logout and search -->
+            <table style="width: 100%">
+                <tr>
+                    <td>
+                        <a href="http://localhost:8000/"> <img src="http://localhost:8000/systemImages/search.png" height=20px width=20px/> </a> <!--not the right link; should go to search page -->
+                    </td>
+                    <td>
+                        <form class='right-align' action = "/logout" method="POST" id="logoutForm">
+                            <button class='fancy-button'>Logout</button>
+                        </form>
+                    </td>
+                </tr>
+            </table>
+            
+            
             <%- include('partials/header.ejs') %>
-            <p class='text-center'>
-                
-            </p>
+            
+            <!--profile pic and username -->
+            <img src=<%= userInfo.avatarAddress %> alt="Couldn't load" 
+                 height="50px" width="50px" class="block-center circle-pic"/>
             <div>
                 <h3 class='text-center'><%= session.username %></h3>
             </div>
-            <div>
-                <input class='fancy-button' type="button" id="projectsView" value="View Your Projects">
-                <input class='fancy-button' type="button" id="friendsView" value="View Your Friends">
-                <input class='fancy-button' type="button" id="favoritesView" value="View Your Favorites">
+            
+            <!--adding a friend -->
+            <% if(session.userID == userInfo.userID) { %> <!--IMPORTANT: I'm pretty sure this will always evaluate to false. Need to fix logic. Also need to add formatting for if friend or not-->
+                <form action = "http://localhost:8000/users/friends" method="postman" id="friendForm">
+                    <button class='block-center'>Friend</button>
+                </form>
+            <% } %>
+            
+            <!-- navigation buttons -->
+            <br/>
+            <div class='text-center'>
+                <input class='fancy-button big-button' type="button" id="projectsView" value="View Your Projects">
+                <input class='fancy-button big-button' type="button" id="friendsView" value="View Your Friends"
+                       onclick="window.location.href='http://localhost:8000/';"> <!--link is wrong -->
+                <input class='fancy-button big-button' type="button" id="favoritesView" value="View Your Favorites">
+                <input class='fancy-button big-button' type="button" id="createCharacterPage" value="Create a New Character"> <!--double check ID name-->
+                <input class='fancy-button big-button' type="button" id="createProject" value="Create a New Project"> <!--double check ID name-->
             </div>
+            
+            <!-- bio to the left, characters to the right -->
+            <br/> <br/> <br/>
+            <table style="width: 100%">
+                <tr>
+                    <th style="width: 20%">Bio</th>
+                    <th>Characters</th>
+                </tr>
+                <tr>
+                    <td class="bio"><%= userInfo.bio %> <br/> <br/> <i>joined <%= (userInfo.dateCreated).slice(0,10) %></i> </td>
+                    <td style="padding-left: 25px">This is where another table of chacters will go. <!--<%=chars.name%>--> </td>
+                </tr>
+            </table>
+            
         <% }  else { %>
             <%- include('partials/accessDenied.ejs') %>
            <% } %>

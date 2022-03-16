@@ -171,7 +171,7 @@ class UserModel {
 
     getUserData (userID) {
         try{
-            const sql = `SELECT userID, username, role, bio, avatarAddress
+            const sql = `SELECT userID, username, role, bio, avatarAddress, dateCreated
                          FROM Users 
                          WHERE userID = @userID
             `;
