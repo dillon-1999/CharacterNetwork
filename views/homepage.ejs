@@ -79,7 +79,7 @@
             </div>
             
             <!--adding a friend -->
-            <% if(session.userID == userInfo.userID) { %> <!--IMPORTANT: I'm pretty sure this will always evaluate to false. Need to fix logic. Also need to add formatting for if friend or not-->
+            <% if(session.userID != userInfo.userID) { %> <!--IMPORTANT: I'm pretty sure this will always evaluate to false. Need to fix logic. Also need to add formatting for if friend or not-->
                 <form action="/users/friendUser?friendID=<%= userInfo.userID %>" method="post" id="friendForm">
                     <button class='block-center'>Friend</button>
                 </form>
