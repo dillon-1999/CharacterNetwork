@@ -26,12 +26,16 @@
 </head>
 <body>
     <div>
+        <!-- <img src="http://localhost:8006/userAvatars/81dd9f959438fc0db82acbcb.jpg" > -->
+        <!-- <img src="http://localhost:8006/userAvatars/ <%= 81dd9f959438fc0db82acbcb.jpg %>"> -->
         <% if(session.isLoggedIn === true) { %>
             <form class='right-align' action = "/logout" method="POST" id="logoutForm">
                 <button class='fancy-button'>Logout</button>
             </form>
             <%- include('partials/header.ejs') %>
-            <p class='text-center'>PFP goes here</p>
+            <p class='text-center'>
+                
+            </p>
             <div>
                 <h3 class='text-center'><%= session.username %></h3>
             </div>

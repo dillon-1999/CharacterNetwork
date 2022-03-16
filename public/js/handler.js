@@ -26,7 +26,6 @@ async function login(email, password){
             },
             "body": JSON.stringify({email, password})
         });
-        console.log('here')
         if(response.redirected){ // not sending back status, so if redirect then ok
             window.location.replace(response.url);
         } else if(response.status >= 400 && response.status < 500){
@@ -35,6 +34,35 @@ async function login(email, password){
     } catch (e){
         document.querySelector('.error').textContent = "Server error...";
     }
+}
+
+async function uploadFile(userID){
+    try{
+        let form = document.getElementById('uploadForm');
+        let formData = new FormData(form);
+        const response = await fetch(`${window.location.origin}/users/uploadImage/${userID}`, {
+            "method": "POST",
+            "body": formData
+        });
+        if(response.ok){
+            console.log('upload success');
+            window.location.replace(`${window.location.origin}/users/homepage`);
+        } else {
+            document.querySelector('.error').textContent = "An error has occurred...";
+        }
+    } catch(err) {
+        console.error(err)
+    }
+}
+if(document.getElementById('uploadAvatar')){
+    document.getElementById('uploadAvatar').addEventListener('click', (event) => {
+        event.preventDefault();
+        if(uploadFile(document.getElementById('uploadAvatar').value)){
+            console.log("Yooooo");
+        } else {
+            console.log("nooooo")
+        }
+    })
 }
 
 if(document.getElementById('registerForm')){

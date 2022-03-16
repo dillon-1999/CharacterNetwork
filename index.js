@@ -31,7 +31,7 @@ app.use(express.static(path.join(__dirname, "public"), {
 }));
 app.use(express.static("characterAvatars"));
 app.use(express.static("userAvatars"));
-
+app.use(express.static('public'));
 app.use(
     "/css",
     express.static(path.join(__dirname, "node_modules/bootstrap/dist/css"))

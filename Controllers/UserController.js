@@ -8,24 +8,26 @@ const {schemas, VALIDATION_OPTIONS} = require("../validators/validatorContainer"
 const fs = require('fs');
 const multer = require('multer');
 const crypto = require('crypto');
+const path = require('path');
 
 let storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, '../userAvatars');
+        cb(null, path.join(__dirname, '/../public/userAvatars/'));
     },
-
+    
     filename: (req, file, cb) => {
         const randomName = crypto.randomBytes(12).toString('hex');
         const [extension] = file.originalname.split(".").slice(-1);
         cb(null, `${randomName}.${extension}`);
     },
-
+    
     fileFilter: (req, file, cb) => {
+        console.log('here')
         if(!req.session){
             return cb(null, false);
         }
         const [extension] = file.originalname.split(".").slice(-1);
-        if(extension != 'jpg'){
+        if(extension != 'jpg' || extention != 'png'){
             return cb(null, false)
         } else {
             cb(null, true);
@@ -39,7 +41,10 @@ module.exports = (app) =>{
     app.get('/newUser', async (req, res) => {
         res.render('newUser');
     });
-
+    app.get('/testing', async (req, res) => {
+        const userInfo = userModel.getUserData(req.session.userID);
+        res.render('test-upload', {session: req.session, userInfo});
+    });
     app.get('/users/homepage', async (req, res) => {
         // send:
         // individual characters, projects, some userInfo
@@ -47,6 +52,7 @@ module.exports = (app) =>{
         const chars = characterModel.getCharsByUser(req.session.userID);
         const projects = projectModel.getUsersProjects(req.session.userID);
         const userInfo = userModel.getUserData(req.session.userID);
+        console.log(userInfo)
         try {
             res.render('homepage', {session: req.session, chars, projects, userInfo});
         } catch(e){
@@ -99,8 +105,6 @@ module.exports = (app) =>{
                         return console.error(err);
                     }
                     req.session.userID = userID;
-                    req.session.email = email;
-                    req.session.username = username;
                     req.session.role = role;
                     req.session.isLoggedIn = true;
                     res.redirect('/users/homepage');
@@ -162,16 +166,18 @@ module.exports = (app) =>{
         })
     });
 
-    app.post('/users/uploadImage/', upload.single('file'), (req,res) => {
-        if(!req.session.userID){
+    app.post('/users/uploadImage/:userID', upload.single('file'), (req,res) => {
+        if(!req.session.userID || req.session.userID !== req.params.userID){
             return res.sendStatus(404);
         }
+
         try{
             const previousFile = userModel.getAvatarHash(req.session.userID);
             const didUpload = userModel.uploadAvatar(req.session.userID, req.file.filename);
             if(didUpload){
                 if(previousFile){ // this deletes the old file 
-                    fs.unlinkSync(`../userAvatars/${previousFile.avatarAddress}`);
+                    // path will need to be changed on the server
+                    fs.unlinkSync(`/Users/dillonboatman/Desktop/CharacterNetwork/public/userAvatars/${previousFile.avatarAddress}`);
                 }
                 return res.sendStatus(200);
             } else {
