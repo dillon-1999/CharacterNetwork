@@ -36,7 +36,7 @@
         
         .big-button {
             height: 40px;
-            width: 20%;
+            width: 15%;
         }
         
         .bio {
@@ -63,8 +63,8 @@
             </div>
             
             <!--adding a friend -->
-            <% if(session.userID != userInfo.userID) { %> <!--IMPORTANT: I'm pretty sure this will always evaluate to false. Need to fix logic-->
-                <form action = "/friends" method="POST" id="friendForm">
+            <% if(session.userID == userInfo.userID) { %> <!--IMPORTANT: I'm pretty sure this will always evaluate to false. Need to fix logic. Also need to add formatting for if friend or not-->
+                <form action = "http://localhost:8000/users/friends" method="postman" id="friendForm">
                     <button class='block-center'>Friend</button>
                 </form>
             <% } %>
@@ -76,6 +76,8 @@
                 <input class='fancy-button big-button' type="button" id="friendsView" value="View Your Friends"
                        onclick="window.location.href='http://localhost:8000/';"> <!--link is wrong -->
                 <input class='fancy-button big-button' type="button" id="favoritesView" value="View Your Favorites">
+                <input class='fancy-button big-button' type="button" id="createCharacterPage" value="Create a New Character"> <!--double check ID name-->
+                <input class='fancy-button big-button' type="button" id="createProject" value="Create a New Project"> <!--double check ID name-->
             </div>
             
             <!-- bio to the left, characters to the right -->
