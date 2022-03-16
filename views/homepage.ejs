@@ -105,7 +105,16 @@
                 </tr>
                 <tr>
                     <td class="bio"><%= userInfo.bio %> <br/> <br/> <i>joined <%= (userInfo.dateCreated).slice(0,10) %></i> </td>
-                    <td style="padding-left: 25px">This is where another table of chacters will go. <!--<%=chars.name%>--> </td>
+                    <% for(let i = 0; i < chars.length; i++) { %>
+                        <div>
+                            <td>
+                                <div id="charPhotoContainer" name="<%= chars[i].charAvatar %>"> <!-- Hold image in here -->
+                                    <img id="charPhoto" src="" alt="character image" height="100px" width="100px">
+                                </div>
+                            </td>
+                    <% } %>
+                        </div>
+                    <!-- <td style="padding-left: 25px">This is where another table of chacters will go.--> </td>
                 </tr>
             </table>
             
