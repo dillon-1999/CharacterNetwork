@@ -1,3 +1,14 @@
+document.addEventListener('readystatechange', () => {    
+  if (document.readyState == 'complete'){
+      let photo = document.getElementById('profilePhotoContainer');
+      let avatarAddress = photo.getAttribute('name');
+      let child = photo.firstChild.nextElementSibling;
+      console.log(child);
+      child.src = `${window.location.origin}/userAvatars/${avatarAddress}`
+  }
+});
+
+
 async function newUser(email, password, username) {
     try {
         const response = await fetch(`${window.location.origin}/newUser/attemptRegister`, {

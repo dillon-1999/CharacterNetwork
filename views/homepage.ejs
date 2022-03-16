@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Character Network - Homepage</title>
     <link rel="stylesheet" type="text/css">
-    <script src='/js/listeners.js' defer></script>
+    <script src='/js/handler.js' defer></script>
     <style>
         .text-center {
             text-align: center;
@@ -50,8 +50,6 @@
 </head>
 <body>
     <div>
-        <!-- <img src="http://localhost:8006/userAvatars/81dd9f959438fc0db82acbcb.jpg" > -->
-        <!-- <img src="http://localhost:8006/userAvatars/ <%= 81dd9f959438fc0db82acbcb.jpg %>"> -->
         <% if(session.isLoggedIn === true) { %>
             <!-- logout and search -->
             <table style="width: 100%">
@@ -71,8 +69,12 @@
             <%- include('partials/header.ejs') %>
             
             <!--profile pic and username -->
-            <img src=<%= userInfo.avatarAddress %> alt="Couldn't load" 
-                 height="50px" width="50px" class="block-center circle-pic"/>
+            <div id="profilePhotoContainer" name="<%= userInfo.avatarAddress %>"> <!-- Hold image in here -->
+                <img id="profilePhoto" src="" alt="profile photo"
+                    height="50px" width="50px" class="block-center circle-pic">
+            </div>
+            <!-- <img src=<%= userInfo.avatarAddress %> alt="Couldn't load" 
+                 height="50px" width="50px" class="block-center circle-pic"/> -->
             <div>
                 <h3 class='text-center'><%= session.username %></h3>
             </div>
@@ -88,8 +90,8 @@
             <br/>
             <div class='text-center'>
                 <input class='fancy-button big-button' type="button" id="projectsView" value="View Your Projects">
-                <input class='fancy-button big-button' type="button" id="friendsView" value="View Your Friends"
-                       onclick="window.location.href='http://localhost:8000/';"> <!--link is wrong -->
+                <!-- <input class='fancy-button big-button' type="button" id="friendsView" value="View Your Friends"
+                       onclick="window.location.href='http://localhost:8000/';"> -->
                 <input class='fancy-button big-button' type="button" id="favoritesView" value="View Your Favorites">
                 <input class='fancy-button big-button' type="button" id="createCharacterPage" value="Create a New Character"> <!--double check ID name-->
                 <input class='fancy-button big-button' type="button" id="createProject" value="Create a New Project"> <!--double check ID name-->
