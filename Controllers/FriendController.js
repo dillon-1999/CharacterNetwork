@@ -5,7 +5,7 @@ const { friendModel } = require("../Models/FriendModel");
 
 module.exports = (app) =>{
     app.get('/users/friends', async (req, res) => {
-        const friends = getUsersFriends(req.session.userID);
+        const friends = friendModel.getUsersFriends(req.session.userID);
         res.render('friends', {session: req.session, friends: friends});
     });
 
