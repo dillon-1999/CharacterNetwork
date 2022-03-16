@@ -80,7 +80,7 @@
             
             <!--adding a friend -->
             <% if(session.userID == userInfo.userID) { %> <!--IMPORTANT: I'm pretty sure this will always evaluate to false. Need to fix logic. Also need to add formatting for if friend or not-->
-                <form action = "http://localhost:8000/users/friends" method="postman" id="friendForm">
+                <form action="/users/friendUser?friendID=<%= userInfo.userID %>" method="post" id="friendForm">
                     <button class='block-center'>Friend</button>
                 </form>
             <% } %>

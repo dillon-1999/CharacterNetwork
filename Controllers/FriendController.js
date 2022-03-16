@@ -18,11 +18,13 @@ module.exports = (app) =>{
         
         const friendID = req.query.friendID;
         const userID = req.session.userID;
-        if(userID == friendID || !friendID){ // cant friend themselves!
+        const testFriend = friendModel.isFriend(friendID);
+        console.log(testFriend);
+        if(userID == friendID || !testFriend){ // cant friend themselves!
             return res.sendStatus(404);
         }
         
-        try{
+        try{ 
             const added = friendModel.createFriend(userID, friendID);
             added ? res.sendStatus(200) : res.sendStatus(400);
         } catch (e){

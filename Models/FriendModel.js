@@ -67,6 +67,17 @@ class FriendModel {
             return false;
         }
     }
+
+    isFriend(friendID){
+        try{
+            const sql = `SELECT * FROM Friends WHERE friendID=@friendID`;
+            const friend = db.prepare(sql).get({friendID});
+            return friend;
+        } catch(e) {
+            console.error(e);
+            return false;
+        }
+    }
 }
 let x = new FriendModel(db);
 console.log(x.getFriends())
