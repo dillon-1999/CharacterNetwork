@@ -15,7 +15,7 @@ module.exports = (app) =>{
                                                      projectName,
                                                      projectType,
                                                      projectDescription,
-                                                     genre)
+                                                     genre);
             added ? res.redirect('/users/homepage') : res.sendStatus(500);
         } catch(e){
             console.error(e);
