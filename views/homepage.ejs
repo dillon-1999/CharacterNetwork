@@ -34,6 +34,10 @@
             background-color: lightblue;
         }
         
+        .fancy-button2 {
+            background-color: aliceblue;
+        }
+        
         .big-button {
             height: 40px;
             width: 15%;
@@ -43,6 +47,15 @@
             padding: 15px;
             box-shadow: 1px 1px 5px lightgray;
             border: 1px solid lightgray;  
+        }
+        
+        a {
+            text-decoration: none; 
+        }
+        
+        .clickable:hover {
+            text-decoration: underline;
+            cursor: pointer;
         }
         
         
@@ -63,7 +76,7 @@
                     </td>
                     <td>
                         <form class='right-align' action = "/logout" method="POST" id="logoutForm">
-                            <button class='fancy-button'>Logout</button>
+                            <button class='fancy-button clickable'>Logout</button>
                         </form>
                     </td>
                 </tr>
@@ -76,6 +89,9 @@
             <div id="profilePhotoContainer" name="<%= userInfo.avatarAddress %>"> <!-- Hold image in here -->
                 <img id="profilePhoto" src="" alt="profile photo"
                     height="50px" width="50px" class="block-center circle-pic">
+                 <% if(session.userID == userInfo.userID) { %>
+                    <a href="../testing"><button class='block-center fancy-button2 clickable' type="button">Edit Avatar</button></a>
+                <% } %>
             </div>
             
             <div>
@@ -83,20 +99,20 @@
             </div>
             
             <!--adding a friend -->
-            <% if(session.userID != userInfo.userID) { %> <!--IMPORTANT: I'm pretty sure this will always evaluate to false. Need to fix logic. Also need to add formatting for if friend or not-->
+            <% if(session.userID != userInfo.userID) { %> 
                 <form action="/users/friendUser?friendID=<%= userInfo.userID %>" method="post" id="friendForm">
-                    <button class='block-center'>Friend</button>
+                    <button class='block-center fancy-button2'>Friend</button>
                 </form>
             <% } %>
             
             <!-- navigation buttons -->
             <br/>
             <div class='text-center'>
-                <a href="../projects"><input class='fancy-button big-button' type="button" id="projectsView" value="View Your Projects"></a>
-                <a href="friends"><input class='fancy-button big-button' type="button" id="friendsView" value="View Your Friends"></a>
-                <input class='fancy-button big-button' type="button" id="favoritesView" value="View Your Favorites">
-                <a href="../characters/newCharacter"><input class='fancy-button big-button' type="button" id="createCharacterPage" value="Create a New Character"></a> <!--double check ID name-->
-                <a href="../projects/createProject"><input class='fancy-button big-button' type="button" id="createProject" value="Create a New Project"></a> <!--double check ID name-->
+                <a href="../projects"><input class='fancy-button big-button clickable' type="button" id="projectsView" value="View Your Projects"></a>
+                <a href="friends"><input class='fancy-button big-button clickable' type="button" id="friendsView" value="View Your Friends"></a>
+                <input class='fancy-button big-button clickable' type="button" id="favoritesView" value="View Your Favorites">
+                <a href="../characters/newCharacter"><input class='fancy-button big-button clickable' type="button" id="createCharacterPage" value="Create a New Character"></a> <!--double check ID name-->
+                <a href="../projects/createProject"><input class='fancy-button big-button clickable' type="button" id="createProject" value="Create a New Project"></a> <!--double check ID name-->
             </div>
             
             <!-- bio to the left, characters to the right -->
