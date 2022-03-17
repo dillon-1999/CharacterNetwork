@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS Characters (
     gender TEXT CHECK (gender = 'Male' or gender = 'Female'),
     characterTraits TEXT DEFAULT "",
     backstory TEXT DEFAULT "",
-    charAvatar TEXT DEFAUlT "http://localhost:8000/charAvatars/defaultChar.png", -- upload an image (address), we dont facilitate 3d rendering at this point
+    charAvatar TEXT DEFAUlT "defaultChar.png", -- upload an image (address), we dont facilitate 3d rendering at this point
     FOREIGN KEY (creator) REFERENCES Users(userID)
         ON DELETE CASCADE   --if a user account is deleted, all their characters should also be deleted
 );

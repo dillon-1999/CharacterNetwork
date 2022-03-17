@@ -56,7 +56,10 @@
             <table style="width: 100%">
                 <tr>
                     <td>
-                        <a href="http://localhost:8000/"> <img src="http://localhost:8000/systemImages/search.png" height=20px width=20px/> </a> <!--not the right link; should go to search page -->
+                        <a href="http://localhost:8000/"> 
+                            <div id="searchPhotoContainer" name="search.png"> <!-- Hold image in here -->
+                                    <img id="searchPhoto" src="" alt="search image" height="20px" width="20px">
+                            </div> </a>  </a> <!--not the right link; should go to search page -->
                     </td>
                     <td>
                         <form class='right-align' action = "/logout" method="POST" id="logoutForm">
@@ -104,7 +107,10 @@
                     <th>Characters</th>
                 </tr>
                 <tr>
+                    <!--BIO-->
                     <td class="bio"><%= userInfo.bio %> <br/> <br/> <i>joined <%= (userInfo.dateCreated).slice(0,10) %></i> </td>
+                    
+                    <!--Character Avatars-->
                     <% for(let i = 0; i < chars.length; i++) { %>
                         <div>
                             <td>
