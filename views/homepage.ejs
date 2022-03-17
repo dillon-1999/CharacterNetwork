@@ -12,6 +12,10 @@
             text-align: center;
         }
         
+        .color1 {
+            color: darkblue;
+        }
+        
         .block-center {
             display: block;
             margin-left: auto;
@@ -24,10 +28,6 @@
         
         .right-align {
             text-align: right;
-        }
-        
-        .color1 {
-            color: darkblue;
         }
         
         .fancy-button {
@@ -58,6 +58,16 @@
             cursor: pointer;
         }
         
+        .header {
+            border: 1px solid purple;
+            box-shadow: 1px 1px 10px lightgray;
+            background-color: aliceblue;
+        }
+        
+        body {
+            background-color: white;
+        }
+        
         
         
     </style>
@@ -65,11 +75,12 @@
 <body>
     <div>
         <% if(session.isLoggedIn === true) { %>
+        <div class="header">
             <!-- logout and search -->
             <table style="width: 100%">
                 <tr>
                     <td>
-                        <a href="http://localhost:8000/"> 
+                        <a href="../search"> 
                             <div id="searchPhotoContainer" name="search.png"> <!-- Hold image in here -->
                                     <img id="searchPhoto" src="" alt="search image" height="20px" width="20px">
                             </div> </a>  </a> <!--not the right link; should go to search page -->
@@ -113,6 +124,9 @@
                 <input class='fancy-button big-button clickable' type="button" id="favoritesView" value="View Your Favorites">
                 <a href="../characters/newCharacter"><input class='fancy-button big-button clickable' type="button" id="createCharacterPage" value="Create a New Character"></a> <!--double check ID name-->
                 <a href="../projects/createProject"><input class='fancy-button big-button clickable' type="button" id="createProject" value="Create a New Project"></a> <!--double check ID name-->
+            </div>
+            <br/>
+            
             </div>
             
             <!-- bio to the left, characters to the right -->
