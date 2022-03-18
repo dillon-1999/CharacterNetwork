@@ -35,7 +35,7 @@ class FriendModel {
 
     getUsersFriends(userID){
         try {
-            const sql = `SELECT friendID, dateFriended FROM Friends WHERE userID=@userID`;
+            const sql = `SELECT friend.username, friendID, dateFriended FROM Friends, Users user, Users friend WHERE user.userID=@userID AND friendID=friend.userID`;
             return db.prepare(sql).all({userID});
         } catch (e) {
             console.error(e);
