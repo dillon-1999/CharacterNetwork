@@ -15,10 +15,69 @@
     .color1 {
         color: darkblue;
     }
+    
+    .longtext {
+        height:200px;
+        width: 750px;
+    }
+    
+    .fancy-button {
+            background-color: lightblue;
+    }
+        
+    .big-button {
+            height: 40px;
+            width: 15%;
+    }
 </style>
 <body>
     <div>
         <%- include('partials/header.ejs') %>
     </div>
+    
+    <h2 class="text-center">Create a Character</h2>
+    
+    <!--The random values will have to be set in a function by an onclick listener for the random button-->
+    <!--The below values are only so the code will run until that is set; delete these variables later-->
+    <%let randomName = ""%>
+    <%let randomEyes = ""%>
+    <%let randomHair = ""%>
+    <%let randomSkin = ""%>
+    <%let randomFeet = ""%>
+    <%let randomInches = ""%>
+    
+    <form action="/createCharacter">
+        <label for="name">Name:</label><br>
+        <input type="text" id="name" name="name" value="<%=randomName%>"><br>
+        
+        <label for="eyes">Eye Color:</label><br>
+        <input type="text" id="eyes" name="eyes" value="<%randomEyes%>"><br>
+        
+        <label for="hair">Hair Color:</label><br>
+        <input type="text" id="hair" name="hair" value="<%randomHair%>"><br>
+        
+        <label for="skin">Skin Color:</label><br>
+        <input type="text" id="skin" name="skin" value="<%randomSkin%>"><br>
+        
+        <label for="feet">Feet Tall:</label><br>
+        <input type="text" id="feet" name="feet" value="<%randomFeet%>"><br>
+        
+        <label for="inches">Inches Tall:</label><br>
+        <input type="text" id="inches" name="inches" value="<%randomInches%>"><br><br>
+        
+        <label for="gender">Gender:</label><br>
+        <select id="gender" name="gender"><br>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+        </select><br><br>
+        
+        <label for="traits">Character Traits:</label><br>
+        <input type="text" class="longtext" id="traits" name="traits" value=""><br>
+        
+        <label for="backstory">Backstory:</label><br>
+        <input type="text" class="longtext" id="backstory" name="backstory" value=""><br><br>
+        
+        <input type="submit" class="fancy-button big-button" value="Create!">
+    </form>
 </body>
 </html>
