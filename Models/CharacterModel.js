@@ -18,7 +18,7 @@ class CharacterModel {
             character.charID = uuidV4();
             character.creator = userID;
             db.prepare(sql).run(character);
-            return true;
+            return character;
         } catch (e){
             console.error(e);
             return false;

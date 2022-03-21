@@ -1,11 +1,27 @@
 "use strict";
 // const argon2 = require("argon2");
 const { projectModel } = require("../Models/ProjectModel");
+const { starsInModel } = require("../Models/StarsInModel");
+
 // const {schemas, VALIDATION_OPTIONS} = require("../validators/validatorContainer");
 
 module.exports = (app) =>{
     app.get('/projects/newProject', async (req, res) => {
         res.render('createProject');
+    });
+
+    // view page for an individual project
+    // query param: projectID
+    app.get('/projects/projectPage', async (req, res) => {
+        const {projectID} = req.query;
+        if(!projectID){
+            return res.sendStatus(404);
+        }
+
+        const projectInfo = projectModel.getProjectInfoByID(projectID); 
+        const projectsCharacters = starsInModel.getCharactersByProject(projectID);
+        
+
     });
 
     // query param = userID

@@ -42,11 +42,6 @@ module.exports = (app) =>{
         res.render('newUser');
     });
 
-    // app.get('/testing', async (req, res) => {
-    //     const userInfo = userModel.getUserData(req.session.userID);
-    //     res.render('test-upload', {session: req.session, userInfo});
-    // });
-
     app.get('/users/homepage', async (req, res) => {
         // send:
         // individual characters, projects, some userInfo

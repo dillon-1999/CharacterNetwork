@@ -42,9 +42,12 @@ module.exports = (app) => {
 
     app.post('/characters/createCharacter', async (req, res) => {
         const character = req.body;
-
+        console.log(req.body);
         try {
             const added = characterModel.createCharacter(req.session.userID, character);
+            if(character.project){ // if user wanted to add to a project
+                starsInModel.addStar(character.project, added.charID);
+            }
             added ? res.redirect('/users/homepage') : res.sendStatus(500);
         } catch(e){
             console.error(e);
@@ -83,7 +86,7 @@ module.exports = (app) => {
         }
         const charData = characterModel.getCharInfo(charID);
         const charProjectID = starsInModel.getProjectByChar(charID);
-        const projectName = (charProjectID) ? projectModel.getProjectNameByID(charProjectID) : "";
+        const projectName = (charProjectID) ? projectModel.getProjectInfoByID(charProjectID).projectName : "";
         try{
             res.render('characterPage', {session: req.session, charData, projectName: projectName});
         } catch(e){

@@ -18,7 +18,7 @@ const sessionConfig = {
     name: "session",
     cookie: {
         httpOnly: true,
-        maxAge: 1000 * 60 * 8 // 8 hours
+        maxAge: 10000 * 60 * 8 // 8 hours
     }
 };
 

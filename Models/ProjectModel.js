@@ -20,13 +20,20 @@ class ProjectModel {
         }
     }
 
-    deleteProject(userID, projectID){
+    // deletes all characters along with a project deletion
+    deleteProjectTransaction(userID, projectID){
         try {
-            const sql = `DELETE FROM Projects
-                         WHERE projectID=@projectID
-                         AND
-                         userID=@userID`;
-            db.prepare(sql).run({userID, projectID});
+            const data = {userID, projectID};
+            const sql_statements = [
+                'DELETE FROM Characters WHERE charID IN (SELECT * FROM StarsIn WHERE projectID=@projectID)',
+                'DELETE FROM Projects WHERE projectID=@projectID AND userID=@userID'
+            ].map(stmt => db.prepare(stmt));
+            const trans = db.transaction( (data) => {
+                for (const i of sql_statements){
+                    i.run(data)
+                }
+            });
+            trans(data);
             return true;
         } catch (e){
             console.error(e);
@@ -34,6 +41,17 @@ class ProjectModel {
         }
     }
 
+    deleteProject(userID, projectID){
+        try {
+            const sql = 'DELETE FROM Projects WHERE userID=@userID AND projectID=@projectID';
+            db.prepare(sql).run({projectID, userID});
+            return true;
+        } catch (e){
+            console.error(e);
+            return false;
+        }
+    }
+    
     changeProjectName(userID, projectID, projectName){
         try {
             const sql = `UPDATE Projects
@@ -139,9 +157,19 @@ class ProjectModel {
         }
     }
 
-    getProjectNameByID(projectID){
+    // getProjectNameByID(projectID){
+    //     try {
+    //         const sql = `SELECT projectName FROM Projects WHERE projectID=@projectID`;
+    //         return db.prepare(sql).get({projectID});
+    //     } catch (e){
+    //         console.error(e);
+    //         return false;
+    //     }
+    // }
+
+    getProjectInfoByID(projectID){
         try {
-            const sql = `SELECT projectName FROM Projects WHERE projectID=@projectID`;
+            const sql = `SELECT * FROM Projects WHERE projectID=@projectID`;
             return db.prepare(sql).get({projectID});
         } catch (e){
             console.error(e);
@@ -149,6 +177,5 @@ class ProjectModel {
         }
     }
 }
-let x = new ProjectModel(db);
-console.log(x.getUserProjects('074e6d16-f74e-4c62-a9c0-64a9ac0f1457'));
+
 exports.projectModel = new ProjectModel(db); 
