@@ -10,15 +10,17 @@ document.addEventListener('readystatechange', () => {
   }
 });
 
-// document.addEventListener('readystatechange', () => {    
-//   if (document.readyState == 'complete'){
-//       let photo = document.getElementById('charPhotoContainer');
-//       let avatarAddress = photo.getAttribute('name');
-//       let child = photo.firstChild.nextElementSibling;
-//       console.log(child);
-//       child.src = `${window.location.origin}/charAvatars/${avatarAddress}`
-//   }
-// });
+document.addEventListener('readystatechange', () => {    
+    if (document.readyState == 'complete'){
+        if(document.getElementById('charPhotoContainer')){
+            let photo = document.getElementById('charPhotoContainer');
+            let avatarAddress = photo.getAttribute('name');
+            let child = photo.firstChild.nextElementSibling;
+            console.log(child);
+            child.src = `${window.location.origin}/charAvatars/${avatarAddress}`
+        }
+    }
+});
 
 document.addEventListener('readystatechange', () => {    
     if (document.readyState == 'complete'){

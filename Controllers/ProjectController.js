@@ -12,7 +12,7 @@ module.exports = (app) =>{
 
     // view page for an individual project
     // query param: projectID
-    app.get('/projects/projectPage', async (req, res) => {
+    app.post('/projects/projectPage', async (req, res) => {
         const {projectID} = req.query;
         if(!projectID){
             return res.sendStatus(404);
@@ -20,8 +20,7 @@ module.exports = (app) =>{
 
         const projectInfo = projectModel.getProjectInfoByID(projectID); 
         const projectsCharacters = starsInModel.getCharactersByProject(projectID);
-        
-
+        res.render('projectPage', {session: req.session, projectInfo, projectsCharacters});
     });
 
     // query param = userID

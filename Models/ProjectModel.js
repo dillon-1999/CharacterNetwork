@@ -51,7 +51,7 @@ class ProjectModel {
             return false;
         }
     }
-    
+
     changeProjectName(userID, projectID, projectName){
         try {
             const sql = `UPDATE Projects
@@ -156,16 +156,6 @@ class ProjectModel {
             return false;
         }
     }
-
-    // getProjectNameByID(projectID){
-    //     try {
-    //         const sql = `SELECT projectName FROM Projects WHERE projectID=@projectID`;
-    //         return db.prepare(sql).get({projectID});
-    //     } catch (e){
-    //         console.error(e);
-    //         return false;
-    //     }
-    // }
 
     getProjectInfoByID(projectID){
         try {

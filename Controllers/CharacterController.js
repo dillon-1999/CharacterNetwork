@@ -10,7 +10,7 @@ const crypto = require('crypto');
 
 let storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, '../characterAvatars');
+        cb(null, '../charAvatars');
     },
 
     filename: (req, file, cb) => {
@@ -42,7 +42,6 @@ module.exports = (app) => {
 
     app.post('/characters/createCharacter', async (req, res) => {
         const character = req.body;
-        console.log(req.body);
         try {
             const added = characterModel.createCharacter(req.session.userID, character);
             if(character.project){ // if user wanted to add to a project
