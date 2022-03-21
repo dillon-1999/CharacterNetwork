@@ -8,6 +8,16 @@ module.exports = (app) =>{
         res.render('createProject');
     });
 
+    // query param = userID
+    app.post('/projects/allUserProjects', async (req, res) => {
+        let {userID} = req.query;
+        if(!userID || req.session.userID !== userID){
+            return res.sendStatus(404);
+        }
+        const projects = projectModel.getUserProjects(userID);
+        res.render('listProjectsPage', {session: req.session, userID, projects});
+    });
+
     app.post('/projects/createProject', async (req, res) => {
         const {projectName, projectType, projectDescription, genre} = req.body;
         try {

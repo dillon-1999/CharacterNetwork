@@ -96,12 +96,14 @@
             
             <%- include('partials/header.ejs') %>
             
-            <!--profile pic and username -->
+            <!--profile pic and username --> 
             <div id="profilePhotoContainer" name="<%= userInfo.avatarAddress %>"> <!-- Hold image in here -->
                 <img id="profilePhoto" src="" alt="profile photo"
                     height="50px" width="50px" class="block-center circle-pic">
-                 <% if(session.userID == userInfo.userID) { %>
-                    <a href="../testing"><button class='block-center fancy-button2 clickable' type="button">Edit Avatar</button></a>
+                 <% if(session.userID === userInfo.userID) { %>
+                    <form action="/users/uploadAvatarPage?userID=<%= session.userID %>" method="post">
+                        <button class='block-center fancy-button2 clickable'>Edit Avatar</button>
+                    </form>
                 <% } %>
             </div>
             
@@ -119,11 +121,28 @@
             <!-- navigation buttons -->
             <br/>
             <div class='text-center'>
-                <a href="../projects"><input class='fancy-button big-button clickable' type="button" id="projectsView" value="View Your Projects"></a>
-                <a href="friends"><input class='fancy-button big-button clickable' type="button" id="friendsView" value="View Your Friends"></a>
-                <input class='fancy-button big-button clickable' type="button" id="favoritesView" value="View Your Favorites">
-                <a href="../characters/newCharacter"><input class='fancy-button big-button clickable' type="button" id="createCharacterPage" value="Create a New Character"></a> <!--double check ID name-->
-                <a href="../projects/createProject"><input class='fancy-button big-button clickable' type="button" id="createProject" value="Create a New Project"></a> <!--double check ID name-->
+                <% if(session.userID === userInfo.userID){ %>
+                    <!-- Change all of these to forms, bad practice to use <a> -->
+                    <form action="/projects/allUserProjects?userID=<%= session.userID %>" method="post">
+                        <input class='fancy-button big-button clickable' type="submit" id="projectsView" value="View Your Projects">
+                    </form>
+
+                    <form action="/users/friends">
+                        <input class='fancy-button big-button clickable' type="submit" id="friendsView" value="View Your Friends">
+                    </form>
+
+                    <form>
+                        <input class='fancy-button big-button clickable' type="submit" id="favoritesView" value="View Your Favorites">
+                    </form>
+
+                    <form action="/characters/newCharacter">
+                        <input class='fancy-button big-button clickable' type="submit" id="createCharacterPage" value="Create a New Character"> <!--double check ID name-->
+                    </form>
+                    
+                    <form action="/projects/newProject">
+                        <input class='fancy-button big-button clickable' type="submit" id="createProject" value="Create a New Project"> <!--double check ID name-->
+                    </form>
+                <% } %>
             </div>
             <br/>
             

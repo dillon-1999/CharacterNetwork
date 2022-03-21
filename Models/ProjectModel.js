@@ -93,6 +93,16 @@ class ProjectModel {
         }
     }
 
+    getUserProjects(userID){
+        try {
+            const sql = `SELECT * FROM Projects WHERE userID=@userID`;
+            return db.prepare(sql).all({userID});
+        } catch (e){
+            console.error(e);
+            return false;
+        }
+    }
+
     getProjectsByType(projectType){
         try {
             const sql = `SELECT * FROM Projects WHERE projectType=@projectType`;
@@ -139,5 +149,6 @@ class ProjectModel {
         }
     }
 }
-
-exports.projectModel = new ProjectModel(db);
+let x = new ProjectModel(db);
+console.log(x.getUserProjects('074e6d16-f74e-4c62-a9c0-64a9ac0f1457'));
+exports.projectModel = new ProjectModel(db); 

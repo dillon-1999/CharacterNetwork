@@ -6,10 +6,52 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Character Network</title>
     <link rel="stylesheet" type="text/css">
+    <script src="/js/handler.js" defer></script>
+    <style>
+        .longtext {
+            height:200px;
+            width: 750px;
+        }
+    </style>
 </head>
 <body>
     <div>
         <%- include('partials/header.ejs') %>
+    </div>
+    <div>
+        <form id="createProjectForm" >
+            <div>
+                <label for="name">Project Name</label>
+                <input id="name" name="name" type="text" required>
+                <br><br>
+            </div>
+            <div>
+                <label for="type">Project Type</label>
+                <select id="type" name="type" required><br>
+                    <option value="novel">Novel</option>
+                    <option value="short-story">Short Story</option>
+                    <option value="poem">Poem</option>
+                </select><br><br>
+            </div>
+            <div>
+                <label for="genre">Project Genre:</label>
+                <select id="genre" name="genre" required><br>
+                    <option value="horror">Horror</option>
+                    <option value="comedy">Comedy</option>
+                    <option value="drama">Drama</option>
+                    <option value="comedy">Comedy</option>
+                    <option value="adventure">Adventure</option>
+                    <option value="action">Action</option>
+                    <option value="thriller">Thriller</option>
+                    <option value="romance">Romance</option>
+                </select><br><br>
+            </div>
+            <div>
+                <label for="description">Description:</label><br>
+                <input type="text" class="longtext" id="description" name="description" required><br><br>
+            </div>
+            <button type="submit">Create Project!</button>
+        </form>
     </div>
 </body>
 </html>

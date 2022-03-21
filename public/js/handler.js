@@ -1,31 +1,35 @@
 document.addEventListener('readystatechange', () => {    
   if (document.readyState == 'complete'){
-      let photo = document.getElementById('profilePhotoContainer');
-      let avatarAddress = photo.getAttribute('name');
-      let child = photo.firstChild.nextElementSibling;
-      console.log(child);
-      child.src = `${window.location.origin}/userAvatars/${avatarAddress}`
+    if(document.getElementById('profilePhotoContainer')){
+        let photo = document.getElementById('profilePhotoContainer');
+        let avatarAddress = photo.getAttribute('name');
+        let child = photo.firstChild.nextElementSibling;
+        console.log(child);
+        child.src = `${window.location.origin}/userAvatars/${avatarAddress}`
+    }
   }
 });
 
-document.addEventListener('readystatechange', () => {    
-  if (document.readyState == 'complete'){
-      let photo = document.getElementById('charPhotoContainer');
-      let avatarAddress = photo.getAttribute('name');
-      let child = photo.firstChild.nextElementSibling;
-      console.log(child);
-      child.src = `${window.location.origin}/charAvatars/${avatarAddress}`
-  }
-});
+// document.addEventListener('readystatechange', () => {    
+//   if (document.readyState == 'complete'){
+//       let photo = document.getElementById('charPhotoContainer');
+//       let avatarAddress = photo.getAttribute('name');
+//       let child = photo.firstChild.nextElementSibling;
+//       console.log(child);
+//       child.src = `${window.location.origin}/charAvatars/${avatarAddress}`
+//   }
+// });
 
 document.addEventListener('readystatechange', () => {    
-  if (document.readyState == 'complete'){
-      let photo = document.getElementById('searchPhotoContainer');
-      let avatarAddress = photo.getAttribute('name');
-      let child = photo.firstChild.nextElementSibling;
-      console.log(child);
-      child.src = `${window.location.origin}/systemImages/${avatarAddress}`;
-  }
+    if (document.readyState == 'complete'){
+        if(document.getElementById('profilePhotoContainer')){
+            let photo = document.getElementById('searchPhotoContainer');
+            let avatarAddress = photo.getAttribute('name');
+            let child = photo.firstChild.nextElementSibling;
+            console.log(child);
+            child.src = `${window.location.origin}/systemImages/search.png`;
+        }
+    }
 });
 
 
@@ -85,6 +89,26 @@ async function uploadFile(userID){
         console.error(err)
     }
 }
+
+async function createProject(projectName, projectType, genre, projectDescription){
+    try{
+        const response = await fetch (`${window.location.origin}/projects/createProject`, {
+            "method": "POST",
+            "headers": {
+                "Content-Type": "application/json"
+            },
+            "body": JSON.stringify({projectName, projectType, genre, projectDescription})
+        });
+        if(response.redirected){ // not sending back status, so if redirect then ok
+            window.location.replace(response.url);
+        } else if(response.status >= 400 && response.status < 500){
+            document.querySelector('.error').textContent = "Invalid Username or Password";
+        }
+    } catch (e){
+        document.querySelector('.error').textContent = "Server error...";
+    }
+}
+
 if(document.getElementById('uploadAvatar')){
     document.getElementById('uploadAvatar').addEventListener('click', (event) => {
         event.preventDefault();
@@ -121,6 +145,17 @@ if(document.getElementById('loginForm')){
     let email = document.getElementById('email').value;
     let password = document.getElementById('password').value;
     login(email, password);
+});
+}
+
+if(document.getElementById('createProjectForm')){
+    document.getElementById('createProjectForm').addEventListener('submit', (event) => {
+    event.preventDefault();
+    let name = document.getElementById('name').value;
+    let type = document.getElementById('type').value;
+    let genre = document.getElementById('genre').value;
+    let description = document.getElementById('description').value;
+    createProject(name, type, genre, description);
 });
 }
 

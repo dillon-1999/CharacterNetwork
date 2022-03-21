@@ -36,7 +36,8 @@ let upload = multer({storage});
 
 module.exports = (app) => {
     app.get('/characters/newCharacter', async (req, res) => {
-        res.render('createCharacterPage');
+        const projects = projectModel.getUsersProjects(req.session.userID);
+        res.render('createCharacterPage', {session: req.session, projects});
     });
 
     app.post('/characters/createCharacter', async (req, res) => {

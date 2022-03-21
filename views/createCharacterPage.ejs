@@ -46,27 +46,27 @@
     <%let randomFeet = ""%>
     <%let randomInches = ""%>
     
-    <form action="/createCharacter">
+    <form action="/characters/createCharacter" method="post">
         <label for="name">Name:</label><br>
-        <input type="text" id="name" name="name" value="<%=randomName%>"><br>
+        <input type="text" id="name" name="name" value="<%=randomName%>" required><br>
         
         <label for="eyes">Eye Color:</label><br>
-        <input type="text" id="eyes" name="eyes" value="<%randomEyes%>"><br>
+        <input type="text" id="eyes" name="eyes" value="<%randomEyes%>" required><br>
         
         <label for="hair">Hair Color:</label><br>
-        <input type="text" id="hair" name="hair" value="<%randomHair%>"><br>
+        <input type="text" id="hair" name="hair" value="<%randomHair%>" required><br>
         
         <label for="skin">Skin Color:</label><br>
-        <input type="text" id="skin" name="skin" value="<%randomSkin%>"><br>
+        <input type="text" id="skin" name="skin" value="<%randomSkin%>" required><br>
         
         <label for="feet">Feet Tall:</label><br>
-        <input type="text" id="feet" name="feet" value="<%randomFeet%>"><br>
+        <input type="text" id="feet" name="feet" value="<%randomFeet%>" required><br>
         
         <label for="inches">Inches Tall:</label><br>
-        <input type="text" id="inches" name="inches" value="<%randomInches%>"><br><br>
+        <input type="text" id="inches" name="inches" value="<%randomInches%>" required><br><br>
         
         <label for="gender">Gender:</label><br>
-        <select id="gender" name="gender"><br>
+        <select id="gender" name="gender" required><br>
             <option value="Male">Male</option>
             <option value="Female">Female</option>
         </select><br><br>
@@ -77,6 +77,14 @@
         <label for="backstory">Backstory:</label><br>
         <input type="text" class="longtext" id="backstory" name="backstory" value=""><br><br>
         
+        <label for="project">Select a Project to Add to</label><br>
+        <select id="projects" name="project">
+            <option value="">None</option>
+            <% for(let i = 0; i < projects.length; i++){ %>
+                <option value="<%= projects[i].projectID %>"> <%=projects[i].projectName%></option>
+            <%  } %>
+        </select><br><br>
+
         <input type="submit" class="fancy-button big-button" value="Create!">
     </form>
 </body>

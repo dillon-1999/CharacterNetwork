@@ -20,5 +20,13 @@
     <div>
         <%- include('partials/header.ejs') %>
     </div>
+    <div>
+        <% if(friends.length === 0){ %>
+                <h1> No friends to display!</h1>
+            <% } %>
+        <% for(let i = 0; i < friends.length; ++i){ %>
+            <p><%= friends[i].friendID %></p> <br><br>
+        <% } %>
+    </div>
 </body>
 </html>

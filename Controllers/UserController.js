@@ -41,10 +41,12 @@ module.exports = (app) =>{
     app.get('/newUser', async (req, res) => {
         res.render('newUser');
     });
-    app.get('/testing', async (req, res) => {
-        const userInfo = userModel.getUserData(req.session.userID);
-        res.render('test-upload', {session: req.session, userInfo});
-    });
+
+    // app.get('/testing', async (req, res) => {
+    //     const userInfo = userModel.getUserData(req.session.userID);
+    //     res.render('test-upload', {session: req.session, userInfo});
+    // });
+
     app.get('/users/homepage', async (req, res) => {
         // send:
         // individual characters, projects, some userInfo
@@ -52,7 +54,6 @@ module.exports = (app) =>{
         const chars = characterModel.getCharsByUser(req.session.userID);
         const projects = projectModel.getUsersProjects(req.session.userID);
         const userInfo = userModel.getUserData(req.session.userID);
-        console.log(userInfo);
         try {
             res.render('homepage', {session: req.session, chars, projects, userInfo});
         } catch(e){
@@ -164,6 +165,15 @@ module.exports = (app) =>{
             }
             res.redirect('/login');
         })
+    });
+
+    app.post('/users/uploadAvatarPage', async (req, res) => {
+        console.log("GET /users/uploadAvatarPage")
+        if(req.session.userID !== req.query.userID){
+            return res.sendStatus(404);
+        }
+
+        res.render('userUpload', {session: req.session});
     });
 
     app.post('/users/uploadImage/:userID', upload.single('file'), (req,res) => {
