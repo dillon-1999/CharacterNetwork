@@ -83,7 +83,7 @@ async function uploadFile(userID){
         });
         if(response.ok){
             console.log('upload success');
-            window.location.replace(`${window.location.origin}/users/homepage`);
+            window.location.replace(`${window.location.origin}/users/homepage?userID=${userID}`);
         } else {
             document.querySelector('.error').textContent = "An error has occurred...";
         }

@@ -47,7 +47,7 @@ module.exports = (app) => {
             if(character.project){ // if user wanted to add to a project
                 starsInModel.addStar(character.project, added.charID);
             }
-            added ? res.redirect('/users/homepage') : res.sendStatus(500);
+            added ? res.redirect('/users/homepage?userID=' + req.session.userID) : res.sendStatus(500);
         } catch(e){
             console.error(e);
             return res.sendStatus(500);

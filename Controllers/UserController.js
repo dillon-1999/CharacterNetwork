@@ -42,13 +42,27 @@ module.exports = (app) =>{
         res.render('newUser');
     });
 
+    // app.get('/users/homepage', async (req, res) => {
+    //     // send:
+    //     // individual characters, projects, some userInfo
+    //     // const friends = friendModel.getUsersFriends(req.session.userID);
+    //     const chars = characterModel.getCharsByUser(req.session.userID);
+    //     const projects = projectModel.getUsersProjects(req.session.userID);
+    //     const userInfo = userModel.getUserData(req.session.userID);
+    //     try {
+    //         res.render('homepage', {session: req.session, chars, projects, userInfo});
+    //     } catch(e){
+    //         console.error(e);
+    //         return res.sendStatus(500)
+    //     }
+    // });
+
     app.get('/users/homepage', async (req, res) => {
-        // send:
-        // individual characters, projects, some userInfo
-        // const friends = friendModel.getUsersFriends(req.session.userID);
-        const chars = characterModel.getCharsByUser(req.session.userID);
-        const projects = projectModel.getUsersProjects(req.session.userID);
-        const userInfo = userModel.getUserData(req.session.userID);
+        // quick fix for viewing other peoples pages
+        const {userID} = req.query;
+        const chars = characterModel.getCharsByUser(userID);
+        const projects = projectModel.getUsersProjects(userID);
+        const userInfo = userModel.getUserData(userID);
         try {
             res.render('homepage', {session: req.session, chars, projects, userInfo});
         } catch(e){
@@ -103,7 +117,7 @@ module.exports = (app) =>{
                     req.session.userID = userID;
                     req.session.role = role;
                     req.session.isLoggedIn = true;
-                    res.redirect('/users/homepage');
+                    res.redirect('/users/homepage?userID=' + userID );
                 });
             } else {
                 return res.sendStatus(400);

@@ -71,7 +71,7 @@ module.exports = (app) =>{
                 console.log('in try')
                 return res.sendStatus(404);
             }
-            changeVisibility ? res.redirect(307, url.format({pathname: '/projects/projectPage', query: {"projectID": projectID}})) : res.sendStatus(500);
+            changeVisibility ? res.redirect(307, '/projects/allUserProjects?userID=' + req.session.userID) : res.sendStatus(500);
         } catch(e){
             console.error(e);
             return res.sendStatus(500);
