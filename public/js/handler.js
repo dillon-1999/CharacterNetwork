@@ -111,6 +111,25 @@ async function createProject(projectName, projectType, genre, projectDescription
     }
 }
 
+async function changeVisibility(visibility, projectID){
+    try{
+        const response = await fetch (`${window.location.origin}/projects/changeVisibility`, {
+            "method": "POST",
+            "headers": {
+                "Content-Type": "application/json"
+            },
+            "body": JSON.stringify({visibility, projectID})
+        });
+        if(response.redirected){ // not sending back status, so if redirect then ok
+            window.location.replace(response.url);
+        } else if(response.status >= 400 && response.status < 500){
+            document.querySelector('.error').textContent = "Invalid Username or Password";
+        }
+    } catch (e){
+        document.querySelector('.error').textContent = "Server error...";
+    }
+}
+
 if(document.getElementById('uploadAvatar')){
     document.getElementById('uploadAvatar').addEventListener('click', (event) => {
         event.preventDefault();
@@ -167,3 +186,19 @@ if(document.getElementById('anchor')){
     window.location.replace(`${window.location.origin}/createUser`);
 });
 }
+
+// if(document.getElementById('private-button')){
+//     document.getElementById('private-button').addEventListener('click', (event) => {
+//         event.preventDefault();
+//         const id = document.getElementById('private-button').name;
+//         changeVisibility(0, id);
+//     });
+// }
+
+// if(document.getElementById('public-button')){
+//     document.getElementById('public-button').addEventListener('click', (event) => {
+//         event.preventDefault();
+//         const id = document.getElementById('public-button').name;
+//         changeVisibility(0, id);
+//     });
+// }

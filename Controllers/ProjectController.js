@@ -2,7 +2,7 @@
 // const argon2 = require("argon2");
 const { projectModel } = require("../Models/ProjectModel");
 const { starsInModel } = require("../Models/StarsInModel");
-
+const url = require('url');
 // const {schemas, VALIDATION_OPTIONS} = require("../validators/validatorContainer");
 
 module.exports = (app) =>{
@@ -49,9 +49,34 @@ module.exports = (app) =>{
         
     });
 
-    // render project page
-    // query params: projectID
-    app.get('/projects/project', async (req, res) => {
-        
+    app.post('/projects/changeVisibility', async (req,res) => {
+        const {visibility, projectID} = req.query;
+        if(!req.session.userID){
+            console.log('not logged in')
+            return res.sendStatus(404);
+        }
+        const checkProjectOwner = projectModel.checkProjectOwner(projectID, req.session.userID);
+        if(!checkProjectOwner){
+            console.log('not owner')
+            return res.sendStatus(404);
+        }
+
+        try{
+            let changeVisibility;
+            if(visibility === '0'){
+                changeVisibility = projectModel.setPublic(req.session.userID, projectID);
+            } else if(visibility === '1'){
+                changeVisibility = projectModel.setPrivate(req.session.userID, projectID);
+            } else{
+                console.log('in try')
+                return res.sendStatus(404);
+            }
+            changeVisibility ? res.redirect(307, url.format({pathname: '/projects/projectPage', query: {"projectID": projectID}})) : res.sendStatus(500);
+        } catch(e){
+            console.error(e);
+            return res.sendStatus(500);
+        }
     });
 }
+
+// http://localhost:8006/projects/projectPage?projectID=e6b62489-3a2d-4ca8-a519-ee7b52c1f86b

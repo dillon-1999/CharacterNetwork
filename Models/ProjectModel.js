@@ -136,7 +136,7 @@ class ProjectModel {
             const sql = `UPDATE Projects
                          SET public=1
                          WHERE userID=@userID AND projectID=@projectID`;
-            db.prepare(sql).run({userID, projectID, genre});
+            db.prepare(sql).run({userID, projectID});
             return true;
         } catch (e){
             console.error(e);
@@ -149,7 +149,7 @@ class ProjectModel {
             const sql = `UPDATE Projects
                          SET public=0
                          WHERE userID=@userID AND projectID=@projectID`;
-            db.prepare(sql).run({userID, projectID, genre});
+            db.prepare(sql).run({userID, projectID});
             return true;
         } catch (e){
             console.error(e);
@@ -162,6 +162,16 @@ class ProjectModel {
             const sql = `SELECT * FROM Projects WHERE projectID=@projectID`;
             return db.prepare(sql).get({projectID});
         } catch (e){
+            console.error(e);
+            return false;
+        }
+    }
+
+    checkProjectOwner(projectID, userID){
+        try{
+            const sql = `select * from Projects where projectID=@projectID and userID=@userID`;
+            return db.prepare(sql).get({projectID, userID});
+        }catch(e){
             console.error(e);
             return false;
         }
