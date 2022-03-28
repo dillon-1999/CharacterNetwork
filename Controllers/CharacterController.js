@@ -85,7 +85,12 @@ module.exports = (app) => {
         }
         const charData = characterModel.getCharInfo(charID);
         const charProjectID = starsInModel.getProjectByChar(charID);
-        const projectName = (charProjectID) ? projectModel.getProjectInfoByID(charProjectID).projectName : "";
+
+        let projectName = "";
+        if(charProjectID){
+            projectName = projectModel.getProjectInfoByID(charProjectID.projectID).projectName;
+        }
+        
         try{
             res.render('characterPage', {session: req.session, charData, projectName: projectName});
         } catch(e){
