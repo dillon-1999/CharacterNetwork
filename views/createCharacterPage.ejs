@@ -7,6 +7,7 @@
     <title>Character Network</title>
     <link rel="stylesheet" type="text/css">
 </head>
+<script src='/js/handler.js' defer></script>
 <style>
     .text-center {
             text-align: center;
@@ -45,6 +46,8 @@
     <%let randomSkin = ""%>
     <%let randomFeet = ""%>
     <%let randomInches = ""%>
+    
+    <button type="button" id="randomButton">Generate Random Character!</button>
     
     <form action="/characters/createCharacter" method="post">
         <label for="name">Name:</label><br>

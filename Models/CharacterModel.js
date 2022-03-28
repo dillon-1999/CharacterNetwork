@@ -127,6 +127,13 @@ class CharacterModel {
             return false;
         }
     }
+    
+    getRandomHair() {
+        const hairColor = ["brown", "black", "blonde", "red", "gold", "silver"];
+        index = Math.floor(Math.random() * hairColor.length);
+  
+        return hairColor[index];
+    }
 }
 
 exports.characterModel = new CharacterModel(db);
