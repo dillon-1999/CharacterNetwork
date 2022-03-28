@@ -88,7 +88,7 @@ module.exports = (app) => {
 
         let projectName = "";
         if(charProjectID){
-            projectName = projectModel.getProjectInfoByID(charProjectID.projectID);
+            projectName = projectModel.getProjectInfoByID(charProjectID.projectID).projectName;
         }
         
         try{
