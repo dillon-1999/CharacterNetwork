@@ -27,8 +27,12 @@
     }
         
     .big-button {
-            height: 40px;
-            width: 15%;
+        height: 40px;
+        width: 15%;
+    }
+    
+    .tdPadding {
+        padding-left: 50px;
     }
 </style>
 <body>
@@ -40,55 +44,55 @@
     
     <!--The random values will have to be set in a function by an onclick listener for the random button-->
     <!--The below values are only so the code will run until that is set; delete these variables later-->
-    <%let randomName = ""%>
-    <%let randomEyes = ""%>
-    <%let randomHair = ""%>
-    <%let randomSkin = ""%>
-    <%let randomFeet = ""%>
-    <%let randomInches = ""%>
-    
-    <button type="button" id="randomButton">Generate Random Character!</button>
-    
+        
     <form action="/characters/createCharacter" method="post">
-        <label for="name">Name:</label><br>
-        <input type="text" id="name" name="name" value="<%=randomName%>" required><br>
-        
-        <label for="eyes">Eye Color:</label><br>
-        <input type="text" id="eyes" name="eyeColor" value="<%randomEyes%>" required><br>
-        
-        <label for="hair">Hair Color:</label><br>
-        <input type="text" id="hair" name="hairColor" value="<%randomHair%>" required><br>
-        
-        <label for="skin">Skin Color:</label><br>
-        <input type="text" id="skin" name="skinColor" value="<%randomSkin%>" required><br>
-        
-        <label for="feet">Feet Tall:</label><br>
-        <input type="text" id="feet" name="feetTall" value="<%randomFeet%>" required><br>
-        
-        <label for="inches">Inches Tall:</label><br>
-        <input type="text" id="inches" name="inchesTall" value="<%randomInches%>" required><br><br>
-        
-        <label for="gender">Gender:</label><br>
-        <select id="gender" name="gender" required><br>
-            <option value="Male">Male</option>
-            <option value="Female">Female</option>
-        </select><br><br>
-        
-        <label for="traits">Character Traits:</label><br>
-        <input type="text" class="longtext" id="traits" name="characterTraits" value=""><br>
-        
-        <label for="backstory">Backstory:</label><br>
-        <input type="text" class="longtext" id="backstory" name="backstory" value=""><br><br>
-        
-        <label for="project">Select a Project to Add to</label><br>
-        <select id="projects" name="project">
-            <option value="">None</option>
-            <% for(let i = 0; i < projects.length; i++){ %>
-                <option value="<%= projects[i].projectID %>"> <%=projects[i].projectName%></option>
-            <%  } %>
-        </select><br><br>
-        
+        <table>
+            <tr>
+                <td>
+                    <label for="name">Name:</label><br>
+                    <input type="text" id="name" name="name" value="" required><br>
+                    <label for="eyes">Eye Color:</label><br>
+                    <input type="text" id="eyes" name="eyeColor" value="" required><br>
+                    <label for="hair">Hair Color:</label><br>
+                    <input type="text" id="hair" name="hairColor" value="" required><br>
+                    <label for="skin">Skin Color:</label><br>
+                    <input type="text" id="skin" name="skinColor" value="" required><br>
+                </td>
+                <td class="tdPadding">
+                    <label for="traits">Character Traits:</label><br>
+                    <input type="text" class="longtext" id="traits" name="characterTraits" value=""><br>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="feet">Feet Tall:</label><br>
+                    <input type="text" id="feet" name="feetTall" value="" required><br>
+                    
+                    <label for="inches">Inches Tall:</label><br>
+                    <input type="text" id="inches" name="inchesTall" value="" required><br><br>
+                    
+                    <label for="gender">Gender:</label><br>
+                    <select id="gender" name="gender" required><br>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                    </select><br><br>
+                    
+                    <label for="project">Select a Project to Add to</label><br>
+                    <select id="projects" name="project">
+                        <option value="">None</option>
+                        <% for(let i = 0; i < projects.length; i++){ %>
+                            <option value="<%= projects[i].projectID %>"> <%=projects[i].projectName%></option>
+                        <%  } %>
+                    </select><br><br>
+                </td>
+                <td class="tdPadding">
+                    <label for="backstory">Backstory:</label><br>
+                    <input type="text" class="longtext" id="backstory" name="backstory" value=""><br><br>
+                </td>
+            </tr>
+        </table>
 
+        <button type="button" id="randomButton" class="fancy-button">Generate Randomly!</button><br/><br/>
         <input type="submit" class="fancy-button big-button" value="Create!">
     </form>
 </body>
