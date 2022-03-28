@@ -25,7 +25,12 @@
                 <h1> No friends to display!</h1>
             <% } %>
         <% for(let i = 0; i < friends.length; ++i){ %>
-            <p><%= friends[i].friendID %></p> <br><br>
+            <div>
+                <p><%= friends[i].friendID %></p> <br><br>
+                <form action="/users/unfriendUser?friendID=<%= friends[i].friendID %>&userID=<%= session.userID %>">
+                    <button type="submit">Unfriend User</button>
+                </form>
+            </div>
         <% } %>
     </div>
 </body>

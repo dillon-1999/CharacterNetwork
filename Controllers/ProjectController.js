@@ -41,7 +41,7 @@ module.exports = (app) =>{
                                                      projectType,
                                                      projectDescription,
                                                      genre);
-            added ? res.redirect('/users/homepage') : res.sendStatus(500);
+            added ? res.redirect(307, '/users/homepage?userID=' + req.session.userID) : res.sendStatus(500);
         } catch(e){
             console.error(e);
             return res.sendStatus(500);
