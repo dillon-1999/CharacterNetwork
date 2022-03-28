@@ -35,7 +35,7 @@
         <!-- display characters in this project -->
             <div>
                 <% for(let i = 0; i < projectsCharacters.length; ++i){ %>
-                    <p><%= projectsCharacters[i].name %></p>
+                    <a href="../../characters/charpage?charID=<%=projectsCharacters[i].charID%>"><p><%= projectsCharacters[i].name %></p></a>
                <% } %>
             </div>
         <% } %>

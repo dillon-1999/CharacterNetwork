@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Character Network - Homepage</title>
     <link rel="stylesheet" type="text/css">
-    <script src='/js/handler.js' defer></script>
+    <script src='/js/handler.js' defer>
+    </script>
     <style>
         .text-center {
             text-align: center;
@@ -148,7 +149,7 @@
             
             </div>
             
-            <!-- bio to the left, characters to the right -->
+            <!-- bio to the left, character picture in the middle, character names to the right -->
             <br/> <br/> <br/>
             <table style="width: 100%">
                 <tr>
@@ -160,17 +161,22 @@
                     <td class="bio"><%= userInfo.bio %> <br/> <br/> <i>joined <%= (userInfo.dateCreated).slice(0,10) %></i> </td>
                     
                     <!--Character Avatars-->
+                    <td style="padding-left: 25px">
+                    <table>
                     <% for(let i = 0; i < chars.length; i++) { %>
-                        <div>
+                        <tr>
                             <td>
-                                <div id="charPhotoContainer" name="<%= chars[i].charAvatar %>"> <!-- Hold image in here -->
-                                    <img id="charPhoto" src="" alt="character image" height="100px" width="100px">
-                                </div>
+                                <a href="../characters/charpage?charID=<%=chars[i].charID%>"><div id="charPhotoContainer" name="<%= chars[i].charAvatar %>"> <!-- Hold image in here -->
+                                    <img id="charPhoto" src="" alt="character image" height="100px" width="70px">
+                                </div></a>
                             </td>
+                            <td><%= chars[i].name %> </td>
                     <% } %>
-                        </div>
-                    <!-- <td style="padding-left: 25px">This is where another table of chacters will go.--> </td>
+                        </tr>
+                    <!-- <td style="padding-left: 25px">This is where another table of chacters will go.-->
                 </tr>
+                </table>
+                </td>
             </table>
             
         <% }  else { %>

@@ -187,6 +187,13 @@ if(document.getElementById('anchor')){
 });
 }
 
+//Aly Nichols, pulling from https://stackoverflow.com/questions/45261807/why-inserting-the-same-image-object-twice-in-html-does-not-work
+var img = new Image();
+img.src = 'defaultChar.png';
+img.onload = function(){
+    $('.pic').html(img);
+};
+
 // if(document.getElementById('private-button')){
 //     document.getElementById('private-button').addEventListener('click', (event) => {
 //         event.preventDefault();
