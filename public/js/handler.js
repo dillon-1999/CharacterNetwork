@@ -191,7 +191,6 @@ if(document.getElementById('anchor')){
 }
 
 //Aly Nichols random generation
-
 //name stuff
 function pick_cons(name)
 {

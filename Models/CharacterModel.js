@@ -128,11 +128,40 @@ class CharacterModel {
         }
     }
     
-    getRandomHair() {
-        const hairColor = ["brown", "black", "blonde", "red", "gold", "silver"];
-        index = Math.floor(Math.random() * hairColor.length);
-  
-        return hairColor[index];
+    checkCharacterOwner(charID, userID){
+        try{
+            const sql = `select * from Characters where charID=@charID and creator=@userID`;
+            return db.prepare(sql).get({charID, userID});
+        }catch(e){
+            console.error(e);
+            return false;
+        }
+    }
+    
+    setPublic(userID, charID){
+        try {
+            const sql = `UPDATE Characters
+                         SET public=1
+                         WHERE creator=@userID AND charID=@charID`;
+            db.prepare(sql).run({userID, charID});
+            return true;
+        } catch (e){
+            console.error(e);
+            return false;
+        }
+    }
+
+    setPrivate(userID, charID){
+        try {
+            const sql = `UPDATE Characters
+                         SET public=0
+                         WHERE creator=@userID AND charID=@charID`;
+            db.prepare(sql).run({userID, charID});
+            return true;
+        } catch (e){
+            console.error(e);
+            return false;
+        }
     }
 }
 
