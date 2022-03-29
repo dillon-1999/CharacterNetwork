@@ -18,8 +18,9 @@
     }
     
     .longtext {
-        height:200px;
+        height:150px;
         width: 750px;
+        overflow-wrap: break-word;
     }
     
     .fancy-button {
@@ -60,7 +61,7 @@
                 </td>
                 <td class="tdPadding">
                     <label for="traits">Character Traits:</label><br>
-                    <input type="text" class="longtext" id="traits" name="characterTraits" value=""><br>
+                    <textarea id="traits" name="characterTraits" value="" rows="10" cols="90" wrap="hard"></textarea><br>
                 </td>
             </tr>
             <tr>
@@ -69,7 +70,7 @@
                     <input type="text" id="feet" name="feetTall" value="" required><br>
                     
                     <label for="inches">Inches Tall:</label><br>
-                    <input type="text" id="inches" name="inchesTall" value="" required><br><br>
+                    <input type="text" id="inches" name="inchesTall" value="" required><br>
                     
                     <label for="gender">Gender:</label><br>
                     <select id="gender" name="gender" required><br>
@@ -87,7 +88,7 @@
                 </td>
                 <td class="tdPadding">
                     <label for="backstory">Backstory:</label><br>
-                    <input type="text" class="longtext" id="backstory" name="backstory" value=""><br><br>
+                    <textarea id="backstory" name="backstory" value="" rows="10" cols="90" wrap="hard"></textarea><br><br>
                 </td>
             </tr>
         </table>
