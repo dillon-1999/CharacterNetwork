@@ -267,6 +267,7 @@ function makeName()
 }
 
 //random output
+if(document.getElementById('randomButton')){
 document.getElementById('randomButton').addEventListener("click", () => {
   //name
     document.getElementById('name').value = makeName();
@@ -300,15 +301,18 @@ document.getElementById('randomButton').addEventListener("click", () => {
     document.getElementById('gender').value = gender[index];
     
 });
+}
 
 
 
 //Aly Nichols
-
-document.getElementById("test").addEventListener("click", () => {
+if(document.getElementById('test')){
+  console.log("Hey");
+  document.getElementById("test").addEventListener("click", () => {
     document.getElementById("test").innerHTML = "Boo";
+  });
     //window.location.replace(`${window.location.origin}/users/homepage?userID=${req.session.userID}`);
-});
+}
  
  //if(document.getElementById('header')){
     //document.getElementById('header').addEventListener('click', (event) => {

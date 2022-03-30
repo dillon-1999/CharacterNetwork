@@ -123,7 +123,10 @@ module.exports = (app) => {
                 console.log('in try')
                 return res.sendStatus(404);
             }
-            changeVisibility ? res.redirect(307, '../users/homepage?userID=' + req.session.userID) : res.sendStatus(500);
+            //if(changeVisibility){
+              //  res.redirect(307, '/users/homepage?userID=')
+            //}
+            changeVisibility ? res.redirect('../users/homepage?userID=' + req.session.userID) : res.sendStatus(500);
         } catch(e){
             console.error(e);
             return res.sendStatus(500);

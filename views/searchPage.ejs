@@ -7,9 +7,16 @@
     <title>Character Network</title>
     <link rel="stylesheet" type="text/css">
 </head>
+<script src='/js/handler.js' defer></script>
 <body>
     <div>
         <%- include('partials/header.ejs') %>
     </div>
+    <form action="/search/results" method="post">
+        <input type="text" id="search" placeholder="Search the Network..." required>
+        <input type="radio" name="user" value="Search for a User">
+        <input type="radio" name="char" value="Search for a Character">
+        <input type="radio" name="project" value="Search for a Project">
+    </form>
 </body>
 </html>
