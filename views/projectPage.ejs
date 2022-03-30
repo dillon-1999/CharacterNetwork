@@ -8,6 +8,51 @@
     <link rel="stylesheet" type="text/css">
     <script src='/js/handler.js' defer></script>
 </head>
+<style>
+    .color1 {
+        color: darkblue;
+    }
+    
+    .fancy-button2 {
+        background-color: aliceblue;
+    }
+        
+    td {
+        padding-right: 15px;
+        padding-left: 5px;
+    }
+    
+    table, td {
+        border: 1px solid;
+        border-collapse: collapse;
+    }
+    
+    th {
+        background-color: lightblue;
+        height: 75px;
+        font-size: 20px;
+    }
+    
+    table {
+        width: 950px;
+    }
+    
+    .longtextData {
+        height: 100px;
+    }
+    
+    .centerData {
+        text-align: center;
+    }
+    
+    p:hover {
+        background-color: aliceblue;
+    }
+    
+    a {
+        color: darkblue;
+    }
+</style>
 <body>
     <div>
         <%- include('partials/header.ejs') %>
@@ -15,29 +60,48 @@
     <% if(projectInfo.public === 0 && session.userID !== projectInfo.userID){ %>
             <h1>This project isn't public!</h1>
        <% } else { %>
-        <div>
-            <p><%= projectInfo.projectName %></p><br>
-            <p><%= projectInfo.projectType %></p><br>
-            <p><%= projectInfo.genre %></p><br>
-            <p><%= projectInfo.projectDescription %></p><br>
-            <% if(session.userID === projectInfo.userID){ %>
-                <% if( projectInfo.public === 0){ %>
-                    <form action="/projects/changeVisibility?projectID=<%=projectInfo.projectID%>&visibility=0" method="post">
-                        <button id="private-button" name="<%= projectInfo.projectID %>">make private</button><br>
-                    </form>
-                <% } else{ %>
-                    <form action="/projects/changeVisibility?projectID=<%=projectInfo.projectID%>&visibility=1" method="post">
-                        <button id="public-button" name="<%= projectInfo.projectID %>">make public</button><br>
-                    </form>
-                <% } %>
-            <%  } %>
-        </div>
+        <table>
+            <col style="width:20%;">
+                <tr>
+                    <th colspan="2"> Name: <%=projectInfo.projectName%> </th>                    
+                </tr>
+            <tr>
+                <td class="centerData"> Type: </td>
+                <td> <%= projectInfo.projectType %></td>
+            </tr>
+            <tr>
+                <td class="centerData"> Genre: </td>
+                <td> <%= projectInfo.genre %></td>
+            </tr>
+            <tr>
+                <td class="centerData longtextData"> Description: </td>
+                <td> <%= projectInfo.projectDescription %></td>
+            </tr>
+            <tr>
+                <td class="centerData"> Characters: </td>
+                <td>
+                    <div>
+                        <% for(let i = 0; i < projectsCharacters.length; ++i){ %>
+                            <a href="../../characters/charpage?charID=<%=projectsCharacters[i].charID%>"><p><%= projectsCharacters[i].name %></p></a>
+                       <% } %>
+                    </div>
+                </td>
+            </tr>
+        </table> <br>
         <!-- display characters in this project -->
-            <div>
-                <% for(let i = 0; i < projectsCharacters.length; ++i){ %>
-                    <a href="../../characters/charpage?charID=<%=projectsCharacters[i].charID%>"><p><%= projectsCharacters[i].name %></p></a>
-               <% } %>
-            </div>
+            
         <% } %>
+        
+        <% if(session.userID === projectInfo.userID){ %>
+            <% if( projectInfo.public === 0){ %>
+                <form action="/projects/changeVisibility?projectID=<%=projectInfo.projectID%>&visibility=0" method="post">
+                    <button id="private-button" class="fancy-button2" name="<%= projectInfo.projectID %>">make private</button><br>
+                </form>
+            <% } else{ %>
+                <form action="/projects/changeVisibility?projectID=<%=projectInfo.projectID%>&visibility=1" method="post">
+                    <button id="public-button" class="fancy-button2" name="<%= projectInfo.projectID %>">make public</button><br>
+                </form>
+            <% } %>
+        <%  } %>
 </body>
 </html>
