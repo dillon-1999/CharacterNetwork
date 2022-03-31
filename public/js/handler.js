@@ -304,15 +304,14 @@ document.getElementById('randomButton').addEventListener("click", () => {
 }
 
 
-
 //Aly Nichols
-if(document.getElementById('test')){
-  console.log("Hey");
-  document.getElementById("test").addEventListener("click", () => {
-    document.getElementById("test").innerHTML = "Boo";
-  });
+//if(document.getElementById('test')){
+ // console.log("Hey");
+  //document.getElementById("test").addEventListener("click", () => {
+    //document.getElementById("test").innerHTML = "Boo";
+  //});
     //window.location.replace(`${window.location.origin}/users/homepage?userID=${req.session.userID}`);
-}
+//}
  
  //if(document.getElementById('header')){
     //document.getElementById('header').addEventListener('click', (event) => {

@@ -13,10 +13,14 @@
         <%- include('partials/header.ejs') %>
     </div>
     <form action="/search/results" method="post">
-        <input type="text" id="search" placeholder="Search the Network..." required>
-        <input type="radio" name="user" value="Search for a User">
-        <input type="radio" name="char" value="Search for a Character">
-        <input type="radio" name="project" value="Search for a Project">
+        <input type="text" id="search" placeholder="Search the Network..." required> <br>
+        <input type="radio" name="searchType" id="user" value="user" required> 
+        <label for="user">Search for a User</label> <br>
+        <input type="radio" name="searchType" id="char" value="char" required>
+        <label for="user">Search for a Character</label>   <br>
+        <input type="radio" name="searchType" id="project" value="project" required> 
+        <label for="user">Search for a Project</label> <br> <br>
+        <input type="submit" value="Search!">
     </form>
 </body>
 </html>
