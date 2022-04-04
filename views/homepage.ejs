@@ -123,8 +123,11 @@
                 <img id="profilePhoto" src="" alt="profile photo"
                     height="50px" width="50px" class="block-center circle-pic">
                  <% if(session.userID === userInfo.userID) { %>
-                    <form action="/users/uploadAvatarPage?userID=<%= session.userID %>" method="post">
+                    <!-- <form action="/users/uploadAvatarPage?userID=<%= session.userID %>" method="post">
                         <button class='block-center fancy-button2 clickable'>Edit Avatar</button>
+                    </form> -->
+                    <form action="/users/editUserInfo?userID=<%= session.userID %>" method="post">
+                        <button class='block-center fancy-button2 clickable'>Edit Information</button>
                     </form>
                 <% } %>
             </div>

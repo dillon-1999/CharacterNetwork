@@ -46,7 +46,7 @@ require("./Controllers/UserController.js")(app);
 require("./Controllers/FriendController.js")(app);
 require("./Controllers/ProjectController.js")(app);
 require("./Controllers/CharacterController.js")(app);
-require("./Controllers/SearchController.js")(app);
+// require("./Controllers/SearchController.js")(app);
 // require("./Controllers/FavoriteController.js")(app);
 // require("./Controllers/StarsInController.js")(app);
 
