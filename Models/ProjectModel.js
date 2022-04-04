@@ -166,6 +166,16 @@ class ProjectModel {
             return false;
         }
     }
+    
+    getProjectByName(projectName){
+        try {
+            const sql = `SELECT * FROM Projects WHERE projectName LIKE %@projectID%`;
+            return db.prepare(sql).get({projectName});
+        } catch (e){
+            console.error(e);
+            return false;
+        }
+    }
 
     checkProjectOwner(projectID, userID){
         try{

@@ -98,4 +98,38 @@ module.exports = (app) => {
             return res.sendStatus(500);
         }
     });
+    
+    
+    
+    app.post('/characters/changeVisibility', async (req,res) => {
+        const {visibility, charID} = req.query;
+        if(!req.session.userID){
+            console.log('not logged in')
+            return res.sendStatus(404);
+        }
+        const checkProjectOwner = characterModel.checkCharacterOwner(charID, req.session.userID);
+        if(!checkProjectOwner){
+            console.log('not owner')
+            return res.sendStatus(404);
+        }
+
+        try{
+            let changeVisibility;
+            if(visibility === '0'){
+                changeVisibility = characterModel.setPublic(req.session.userID, charID);
+            } else if(visibility === '1'){
+                changeVisibility = characterModel.setPrivate(req.session.userID, charID);
+            } else{
+                console.log('in try')
+                return res.sendStatus(404);
+            }
+            //if(changeVisibility){
+              //  res.redirect(307, '/users/homepage?userID=')
+            //}
+            changeVisibility ? res.redirect('../users/homepage?userID=' + req.session.userID) : res.sendStatus(500);
+        } catch(e){
+            console.error(e);
+            return res.sendStatus(500);
+        }
+    });
 }

@@ -78,6 +78,17 @@ class CharacterModel {
             return false;
         }
     }
+    
+    getCharByName(name){
+        try{
+            const sql = `SELECT * FROM Characters WHERE name LIKE %@name%`;
+            return db.prepare(sql).get({name});
+        } catch(e){
+            console.error(e);
+            return false;
+        }
+    }
+    
 
     getChars(){
         try{
@@ -123,6 +134,42 @@ class CharacterModel {
             db.prepare(sql).run({creator, charID, charAvatar});
             return true;
         } catch(e){
+            console.error(e);
+            return false;
+        }
+    }
+    
+    checkCharacterOwner(charID, userID){
+        try{
+            const sql = `select * from Characters where charID=@charID and creator=@userID`;
+            return db.prepare(sql).get({charID, userID});
+        }catch(e){
+            console.error(e);
+            return false;
+        }
+    }
+    
+    setPublic(userID, charID){
+        try {
+            const sql = `UPDATE Characters
+                         SET public=1
+                         WHERE creator=@userID AND charID=@charID`;
+            db.prepare(sql).run({userID, charID});
+            return true;
+        } catch (e){
+            console.error(e);
+            return false;
+        }
+    }
+
+    setPrivate(userID, charID){
+        try {
+            const sql = `UPDATE Characters
+                         SET public=0
+                         WHERE creator=@userID AND charID=@charID`;
+            db.prepare(sql).run({userID, charID});
+            return true;
+        } catch (e){
             console.error(e);
             return false;
         }

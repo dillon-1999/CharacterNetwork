@@ -181,6 +181,19 @@ class UserModel {
             return false;
         }
     }
+    
+    getUserByName (name) {
+        try{
+            const sql = `SELECT userID, username,
+                         FROM Users 
+                         WHERE username LIKE %@name%
+            `;
+            return db.prepare(sql).get({name});
+        } catch(e) {
+            console.error(e);
+            return false;
+        }
+    }
 
     getUserNameByID (userID) {
         try {

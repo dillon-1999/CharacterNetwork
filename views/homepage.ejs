@@ -6,73 +6,81 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Character Network - Homepage</title>
     <link rel="stylesheet" type="text/css">
-    <script src='/js/handler.js' defer>
-    </script>
-    <style>
-        .text-center {
-            text-align: center;
-        }
-        
-        .color1 {
-            color: darkblue;
-        }
-        
-        .block-center {
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        
-        .circle-pic {
-            border-radius: 50%;
-        }
-        
-        .right-align {
-            text-align: right;
-        }
-        
-        .fancy-button {
-            background-color: lightblue;
-        }
-        
-        .fancy-button2 {
-            background-color: aliceblue;
-        }
-        
-        .big-button {
-            height: 40px;
-            width: 15%;
-        }
-        
-        .bio {
-            padding: 15px;
-            box-shadow: 1px 1px 5px lightgray;
-            border: 1px solid lightgray;  
-        }
-        
-        a {
-            text-decoration: none; 
-        }
-        
-        .clickable:hover {
-            text-decoration: underline;
-            cursor: pointer;
-        }
-        
-        .header {
-            border: 1px solid purple;
-            box-shadow: 1px 1px 10px lightgray;
-            background-color: aliceblue;
-        }
-        
-        body {
-            background-color: white;
-        }
-        
-        
-        
-    </style>
 </head>
+<script src='/js/handler.js' defer></script>
+<style>
+    .text-center {
+        text-align: center;
+    }
+    
+    .color1 {
+        color: darkblue;
+    }
+    
+    .block-center {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    .circle-pic {
+        border-radius: 50%;
+    }
+    
+    .right-align {
+        text-align: right;
+    }
+    
+    .fancy-button {
+        background-color: lightblue;
+    }
+    
+    .fancy-button2 {
+        background-color: aliceblue;
+    }
+    
+    .big-button {
+        height: 40px;
+    }
+    
+    .bio {
+        padding: 15px;
+        box-shadow: 1px 1px 5px lightgray;
+        border: 1px solid lightgray;  
+    }
+    
+    a {
+        text-decoration: none; 
+    }
+    
+    .clickable:hover {
+        text-decoration: underline;
+        cursor: pointer;
+    }
+    
+    .header {
+        border: 1px solid purple;
+        box-shadow: 1px 1px 10px lightgray;
+        background-color: aliceblue;
+    }
+    
+    body {
+        background-color: white;
+    }
+    
+    .flex-parent {
+        display: flex;
+    }
+
+    .justify-center {
+      justify-content: center;
+    }
+
+    .rightSide {
+        margin-right: 20px;
+    }
+    
+</style>
 <body>
     <div>
         <% if(session.isLoggedIn === true) { %>
@@ -124,23 +132,23 @@
             
             <!-- navigation buttons -->
             <br/>
-            <div class='text-center'>
+            <div class='flex-parent justify-center'>
                 <% if(session.userID === userInfo.userID){ %>
                     <!-- Change all of these to forms, bad practice to use <a> -->
                     <form action="/projects/allUserProjects?userID=<%= session.userID %>" method="post">
-                        <input class='fancy-button big-button clickable' type="submit" id="projectsView" value="View Your Projects">
+                        <input class='fancy-button big-button clickable rightSide' type="submit" id="projectsView" value="View Your Projects">
                     </form>
 
                     <form action="/users/friends">
-                        <input class='fancy-button big-button clickable' type="submit" id="friendsView" value="View Your Friends">
+                        <input class='fancy-button big-button clickable rightSide' type="submit" id="friendsView" value="View Your Friends">
                     </form>
 
                     <form>
-                        <input class='fancy-button big-button clickable' type="submit" id="favoritesView" value="View Your Favorites">
+                        <input class='fancy-button big-button clickable rightSide' type="submit" id="favoritesView" value="View Your Favorites">
                     </form>
 
                     <form action="/characters/newCharacter">
-                        <input class='fancy-button big-button clickable' type="submit" id="createCharacterPage" value="Create a New Character"> <!--double check ID name-->
+                        <input class='fancy-button big-button clickable rightSide' type="submit" id="createCharacterPage" value="Create a New Character"> <!--double check ID name-->
                     </form>
                     
                     <form action="/projects/newProject">
@@ -169,7 +177,8 @@
                     <% for(let i = 0; i < chars.length; i++) { %>
                         <tr>
                             <td>
-                                <a href="../characters/charpage?charID=<%=chars[i].charID%>"><div id="charPhotoContainer" name="<%= chars[i].charAvatar %>"> <!-- Hold image in here -->
+                                <a href="../characters/charpage?charID=<%=chars[i].charID%>">
+                                <div id="charPhotoContainer" name="<%= chars[i].charAvatar %>"> <!-- Hold image in here -->
                                     <img id="charPhoto" src="" alt="character image" height="100px" width="70px">
                                 </div></a>
                             </td>
