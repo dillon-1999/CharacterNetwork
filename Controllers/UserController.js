@@ -4,11 +4,13 @@ const { userModel } = require("../Models/UserModel");
 const { characterModel } = require("../Models/CharacterModel");
 const { projectModel } = require("../Models/ProjectModel");
 const {schemas, VALIDATION_OPTIONS} = require("../validators/validatorContainer");
- 
+const {express}  = require('express');
 const fs = require('fs');
 const multer = require('multer');
 const crypto = require('crypto');
 const path = require('path');
+
+
 
 let storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -38,6 +40,8 @@ let storage = multer.diskStorage({
 let upload = multer({storage});
 
 module.exports = (app) =>{
+    app.use(upload.array()); 
+
     app.get('/newUser', async (req, res) => {
         res.render('newUser');
     });
@@ -199,6 +203,26 @@ module.exports = (app) =>{
             res.sendStatus(404);
         }
         res.render('editUserPage', {session: req.session});
+    });
+
+    app.post('/users/updateUser', async (req, res) => {
+        const {userID} = req.query;
+        const body = req.body;
+        if(req.session.userID !== userID || !req.session.isLoggedIn){
+            return res.sendStatus(404);
+        }
+        if(body.password){
+            body.passwordHash = await argon2.hash(body.password, {hashLength: 5});
+            delete body.password;
+        }
+        try{
+            const didUpdate = userModel.updateUser(userID, body);
+            didUpdate ? res.sendStatus(200) : res.sendStatus(500);
+        } catch(e){
+            console.error(e);
+            return res.sendStatus(500);
+        }
+
     });
 
 }

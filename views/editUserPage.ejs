@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Character Network</title>
     <link rel="stylesheet" type="text/css">
+    <script src="/js/handler.js" defer></script>
 </head>
 <body>
     <div>
@@ -15,25 +16,23 @@
         <form id="updateForm" >
             <div>
                 <label></label></br>
-                <input type="email" id="email" name="email" placeholder="Email Address" required>
+                <input type="email" id="email" name="email" placeholder="Email Address">
             </div>
             <div>
                 <label></label>
-                <input type="password" id="password" name="password" placeholder="Password (Min 8 Characters)" required>
+                <input type="text" id="username" name="username" placeholder="Username">
             </div>
             <div>
                 <label></label>
-                <input type="text" id="username" name="username" placeholder="Username" required>
+                <input type="password" id="password" name="password" placeholder="Password">
             </div>
             <div>
-                <input type="file" name="file"  />
-                        <!-- <button 
-                        id='uploadAvatar'
-                        type="submit"
-                        value="<%= session.userID %>" -->
+                <label></label>
+                <input type="text" id="bio" name="bio" placeholder="Bio">
             </div>
-            <button>Submit</button>
+            <button id='uploadUpdate'value="<%= session.userID %>">Submit</button>
         </form>
+        <p class="error"></p>
     </div>
 </body>
 </html>

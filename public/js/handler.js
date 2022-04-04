@@ -93,6 +93,26 @@ async function uploadFile(userID){
     }
 }
 
+async function updateForm(userID){
+    try{
+        let form = document.getElementById('updateForm');
+        let formData = new FormData(form);
+        const response = await fetch(`${window.location.origin}/users/updateUser/?userID=${userID}`, {
+            "method": "POST",
+            "Content-Type": "application/json",
+            "body": formData
+        });
+        if(response.ok){
+            console.log('upload success');
+            window.location.replace(`${window.location.origin}/users/homepage?userID=${userID}`);
+        } else {
+            document.querySelector('.error').textContent = "An error has occurred...";
+        }
+    } catch(err) {
+        console.error(err)
+    }
+}
+
 async function createProject(projectName, projectType, genre, projectDescription){
     try{
         const response = await fetch (`${window.location.origin}/projects/createProject`, {
@@ -140,6 +160,17 @@ if(document.getElementById('uploadAvatar')){
             console.log("Yooooo");
         } else {
             console.log("nooooo")
+        }
+    })
+}
+
+if(document.getElementById('uploadUpdate')){
+    document.getElementById('uploadUpdate').addEventListener('click', (event) => {
+        event.preventDefault();
+        if(updateForm(document.getElementById('uploadUpdate').value)){
+            console.log("success");
+        } else {
+            console.log("fail")
         }
     })
 }
