@@ -169,7 +169,7 @@ class ProjectModel {
     
     getProjectByName(projectName){
         try {
-            const sql = `SELECT * FROM Projects WHERE projectName LIKE %@projectID%`;
+            const sql = `SELECT * FROM Projects WHERE projectName = @projectName`;
             return db.prepare(sql).get({projectName});
         } catch (e){
             console.error(e);

@@ -81,7 +81,7 @@ class CharacterModel {
     
     getCharByName(name){
         try{
-            const sql = `SELECT * FROM Characters WHERE name LIKE %@name%`;
+            const sql = `SELECT * FROM Characters WHERE name = @name`;
             return db.prepare(sql).get({name});
         } catch(e){
             console.error(e);
