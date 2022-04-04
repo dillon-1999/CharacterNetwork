@@ -6,24 +6,207 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Character Network - Homepage</title>
     <link rel="stylesheet" type="text/css">
-    <script src='/js/listeners.js' defer></script>
 </head>
+<script src='/js/handler.js' defer></script>
+<style>
+    .text-center {
+        text-align: center;
+    }
+    
+    .color1 {
+        color: darkblue;
+    }
+    
+    .block-center {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    .circle-pic {
+        border-radius: 50%;
+    }
+    
+    .right-align {
+        text-align: right;
+    }
+    
+    .fancy-button {
+        background-color: lightblue;
+    }
+    
+    .fancy-button2 {
+        background-color: aliceblue;
+    }
+    
+    .big-button {
+        height: 40px;
+    }
+    
+    .bio {
+        padding: 15px;
+        box-shadow: 1px 1px 5px lightgray;
+        border: 1px solid lightgray;  
+    }
+    
+    a {
+        text-decoration: none; 
+    }
+    
+    .clickable:hover {
+        text-decoration: underline;
+        cursor: pointer;
+    }
+    
+    .header {
+        border: 1px solid purple;
+        box-shadow: 1px 1px 10px lightgray;
+        background-color: aliceblue;
+    }
+    
+    body {
+        background-color: white;
+    }
+    
+    .flex-parent {
+        display: flex;
+    }
+
+    .justify-center {
+      justify-content: center;
+    }
+
+    .rightSide {
+        margin-right: 20px;
+    }
+    
+    .emphasis-name {
+        letter-spacing: 2px;
+    }
+    
+    .bottom-border {
+        border-bottom-style: black;
+    }
+    
+    .left-align {
+        text-align: left;
+        padding-left: 20px;
+    }
+    
+</style>
 <body>
     <div>
-        <%- include('partials/header.ejs') %>
         <% if(session.isLoggedIn === true) { %>
-            <form action = "/logout" method="POST" id="logoutForm">
-                <button>Logout</button>
-            </form>
-            <div>
-                <h1>Hello <%= session.username %>!</h1>
-                <h1>This is your homepage</h1>
+        <div class="header">
+            <!-- logout and search -->
+            <table style="width: 100%">
+                <tr>
+                    <td>
+                        <a href="../search"> 
+                            <div id="searchPhotoContainer" name="search.png"> <!-- Hold image in here -->
+                                    <img id="searchPhoto" src="" alt="search image" height="20px" width="20px">
+                            </div> </a>  </a> <!--not the right link; should go to search page -->
+                    </td>
+                    <td>
+                        <form class='right-align' action = "/logout" method="POST" id="logoutForm">
+                            <button class='fancy-button clickable'>Logout</button>
+                        </form>
+                    </td>
+                </tr>
+            </table>
+            
+            
+            <%- include('partials/header.ejs') %>
+            
+            <!--profile pic and username --> 
+            <div id="profilePhotoContainer" name="<%= userInfo.avatarAddress %>"> <!-- Hold image in here -->
+                <img id="profilePhoto" src="" alt="profile photo"
+                    height="50px" width="50px" class="block-center circle-pic">
+                 <% if(session.userID === userInfo.userID) { %>
+                    <!-- <form action="/users/uploadAvatarPage?userID=<%= session.userID %>" method="post">
+                        <button class='block-center fancy-button2 clickable'>Edit Avatar</button>
+                    </form> -->
+                    <form action="/users/editUserInfo?userID=<%= session.userID %>" method="post">
+                        <button class='block-center fancy-button2 clickable'>Edit Information</button>
+                    </form>
+                <% } %>
             </div>
+            
             <div>
-                <input type="button" id="projectsView" value="View Your Projects">
-                <input type="button" id="friendsView" value="View Your Friends">
-                <input type="button" id="favoritesView" value="View Your Favorites">
+                <h3 class='text-center'><%= session.username %></h3>
             </div>
+            
+            <!--adding a friend -->
+            <% if(session.userID != userInfo.userID) { %> 
+                <form action="/users/friendUser?friendID=<%= userInfo.userID %>" method="post" id="friendForm">
+                    <button class='block-center fancy-button2'>Friend</button>
+                </form>
+            <% } %>
+            
+            <!-- navigation buttons -->
+            <br/>
+            <div class='flex-parent justify-center'>
+                <% if(session.userID === userInfo.userID){ %>
+                    <!-- Change all of these to forms, bad practice to use <a> -->
+                    <form action="/projects/allUserProjects?userID=<%= session.userID %>" method="post">
+                        <input class='fancy-button big-button clickable rightSide' type="submit" id="projectsView" value="View Your Projects">
+                    </form>
+
+                    <form action="/users/friends">
+                        <input class='fancy-button big-button clickable rightSide' type="submit" id="friendsView" value="View Your Friends">
+                    </form>
+
+                    <form>
+                        <input class='fancy-button big-button clickable rightSide' type="submit" id="favoritesView" value="View Your Favorites">
+                    </form>
+
+                    <form action="/characters/newCharacter">
+                        <input class='fancy-button big-button clickable rightSide' type="submit" id="createCharacterPage" value="Create a New Character"> <!--double check ID name-->
+                    </form>
+                    
+                    <form action="/projects/newProject">
+                        <input class='fancy-button big-button clickable' type="submit" id="createProject" value="Create a New Project"> <!--double check ID name-->
+                    </form>
+                <% } %>
+            </div>
+            <br/>
+            
+            </div>
+            
+            <!-- bio to the left, character picture in the middle, character names to the right -->
+            <br/> <br/> <br/>
+            <table style="width: 100%">
+                <tr>
+                    <th style="width: 20%">Bio</th>
+                    <th style="width: 40%">Characters</th>
+                </tr>
+                <tr>
+                    <!--BIO-->
+                    <td class="bio">
+                        <%= userInfo.bio %> <br/> <br/>
+                        <i>joined <%= (userInfo.dateCreated).slice(0,10) %></i> </td>
+                    
+                    <!--Character Avatars-->
+                    <td style="padding-left: 25px">
+                    <table>
+                    <% for(let i = 0; i < chars.length; i++) { %>
+                        <tr>
+                            <td>
+                               
+                                <!--<div id="charPhotoContainer" name="<%= chars[i].charAvatar %>">
+                                    <img id="charPhoto" src="" alt="character image" height="100px" width="70px">
+                                </div> -->
+                              
+                            </td>
+                            <td class="emphasis-name"> <a href="../characters/charpage?charID=<%=chars[i].charID%>" class="clickable"> <li><%= chars[i].name %> </li> </td>  </a>
+                    <% } %>
+                        </tr>
+                    <!-- <td style="padding-left: 25px">This is where another table of chacters will go.-->
+                </tr>
+                </table>
+                </td>
+            </table>
+            
         <% }  else { %>
             <%- include('partials/accessDenied.ejs') %>
            <% } %>

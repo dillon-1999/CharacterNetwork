@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Character Network</title>
+    <link rel="stylesheet" type="text/css">
+</head>
+<style>
+        
+    .color1 {
+        color: darkblue;
+    }
+    
+    .fancy-button2 {
+        background-color: aliceblue;
+    }
+        
+    td {
+        padding-right: 15px;
+        padding-left: 5px;
+    }
+    
+    table, td {
+        border: 1px solid;
+        border-collapse: collapse;
+    }
+    
+    th {
+        background-color: lightblue;
+        height: 75px;
+        font-size: 20px;
+    }
+    
+    table {
+        width: 950px;
+    }
+    
+    .longtextData {
+        height: 100px;
+    }
+    
+    .centerData {
+        text-align: center;
+    }
+    
+    .invisible {
+        border: none;
+    }
+    
+</style>
+<body>
+    <div>
+        <%- include('partials/header.ejs') %>
+    </div>
+    <div id="header" style="height:15%;width:90%;">
+        <div style="float:right">
+            <img src="/charAvatars/<%=charData.charAvatar%>" width="250px" style="margin-left:15%;margin-top:5%"/>
+        </div>
+        <div>
+            <table>
+                <col style="width:20%;">
+                <tr>
+                    <th colspan="2"> Name: <%=charData.name%> </th>                    
+                </tr>
+                <tr>
+                    <td class="centerData"> Eye Color: </td>
+                    <td> <%=charData.eyeColor%> </td>
+                </tr>
+                <tr>
+                    <td class="centerData"> Hair Color: </td>
+                    <td> <%=charData.hairColor%> </td>
+                </tr>
+                <tr>
+                    <td class="centerData"> Skin Color: </td>
+                    <td> <%=charData.skinColor%> </td>
+                </tr>
+                <tr>
+                    <td class="centerData"> Height: </td>
+                    <td> <%=charData.feetTall%>' <%=charData.inchesTall%>'' </td>
+                </tr>
+                <tr>
+                    <td class="centerData"> Gender: </td>
+                    <td> <%=charData.gender%> </td>
+                </tr>
+                <tr>
+                    <td class="longtextData centerData">Character Traits:</td>
+                    <td> <%=charData.characterTraits%> </td>
+                </tr>
+                <tr>
+                    <td class="longtextData centerData">Backstory:</td>
+                    <td> <%=charData.backstory%> </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <br>
+    
+    <% if(session.userID != charData.creator) { %>
+        <!--CHECK FORM: only hypothetical URL as favorite functionality hasn't been built yet -->
+        <form action="../users/favoriteCharacter?charID=<%= charData.charID %>&userID=<%= session.userID %>" method="post" id="favoriteForm">
+            <button class='block-center fancy-button2'>Favorite</button>
+        </form>
+    <% } %>
+    <% if(session.userID == charData.creator) { %>
+    <table class="invisible">
+        <tr>
+            <td class="invisible" style="width:10px">
+            <!--CHECK FORM: only hypothetical URL as edit functionality hasn't been built yet -->
+            <form action="/editCharacter?charID=<%= charData.charID %>" method="post" id="favoriteForm">
+                <button class='block-center fancy-button2'>Edit</button>
+            </form>
+            </td>
+            
+            <td class="invisible">
+            <% if( charData.public === 0){ %>
+                <form action="/characters/changeVisibility?charID=<%=charData.charID%>&visibility=0" method="post">
+                    <button class="fancy-button2" id="private-button" name="<%= charData.charID %>">make private</button><br>
+                </form>
+            <% } else{ %>
+                <form action="/characters/changeVisibility?charID=<%=charData.charID%>&visibility=1" method="post">
+                    <button class="fancy-button2" id="public-button" name="<%= charData.charID %>">make public</button><br>
+                </form>
+            <% } %>
+            </td>
+        </tr>
+    </table>
+    <% } %>
+        
+</body>
+</html>

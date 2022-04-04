@@ -1,7 +1,7 @@
 "use strict";
 
 require("dotenv").config();
-const isProduction = process.env.MODE === "production";
+// const isProduction = process.env.MODE === "production";
 const express = require("express");
 const app = express();
 const path = require("path");
@@ -18,7 +18,7 @@ const sessionConfig = {
     name: "session",
     cookie: {
         httpOnly: true,
-        maxAge: 1000 * 60 * 8 // 8 hours
+        maxAge: 10000 * 60 * 8 // 8 hours
     }
 };
 
@@ -29,20 +29,24 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public"), {
     extensions: ['html'],
 }));
+app.use(express.static("characterAvatars"));
+app.use(express.static("userAvatars"));
+app.use(express.static('public'));
 app.use(
     "/css",
     express.static(path.join(__dirname, "node_modules/bootstrap/dist/css"))
-  )
+);
 app.use(
 "/js",
 express.static(path.join(__dirname, "node_modules/bootstrap/dist/js"))
-)
-app.use("/js", express.static(path.join(__dirname, "node_modules/jquery/dist")))
+);
+app.use("/js", express.static(path.join(__dirname, "node_modules/jquery/dist")));
 
 require("./Controllers/UserController.js")(app);
 require("./Controllers/FriendController.js")(app);
-// require("./Controllers/ProjectController.js")(app);
+require("./Controllers/ProjectController.js")(app);
 require("./Controllers/CharacterController.js")(app);
+// require("./Controllers/SearchController.js")(app);
 // require("./Controllers/FavoriteController.js")(app);
 // require("./Controllers/StarsInController.js")(app);
 
@@ -53,11 +57,15 @@ app.get('/', (req, res) => {
 
 app.get('/login', (req, res) => {
     res.render('login');
-})
+});
 
 app.get('/createUser', (req, res) => {
     res.render('createUser');
-})
+});
+
+app.get('/search', (req, res) => {
+    res.render('searchPage');
+});
 
 app.listen(process.env.PORT, () => {
     console.log(`server lisening on http://localhost:${process.env.PORT} `);

@@ -7,12 +7,33 @@ class ProjectModel {
         this.db = db;
     }
 
-    createProject(userID, projectName, projectType, genre){
+    createProject(userID, projectName, projectType, projectDescription, genre,){
         try {
-            const sql = `INSERT INTO Projects (projectID, userID, projectName, projectType, genre)
-                         VALUES (@projectID, @userID, @projectName, @projectType, @genre)`;
+            const sql = `INSERT INTO Projects (projectID, userID, projectName, projectType,projectDescription, genre)
+                         VALUES (@projectID, @userID, @projectName, @projectType, @projectDescription, @genre)`;
             const projectID = uuidV4();
-            db.prepare(sql).run({projectID, userID, projectName, projectType, genre});
+            db.prepare(sql).run({projectID, userID, projectName, projectType,projectDescription, genre});
+            return true;
+        } catch (e){
+            console.error(e);
+            return false;
+        }
+    }
+
+    // deletes all characters along with a project deletion
+    deleteProjectTransaction(userID, projectID){
+        try {
+            const data = {userID, projectID};
+            const sql_statements = [
+                'DELETE FROM Characters WHERE charID IN (SELECT * FROM StarsIn WHERE projectID=@projectID)',
+                'DELETE FROM Projects WHERE projectID=@projectID AND userID=@userID'
+            ].map(stmt => db.prepare(stmt));
+            const trans = db.transaction( (data) => {
+                for (const i of sql_statements){
+                    i.run(data)
+                }
+            });
+            trans(data);
             return true;
         } catch (e){
             console.error(e);
@@ -22,11 +43,8 @@ class ProjectModel {
 
     deleteProject(userID, projectID){
         try {
-            const sql = `DELETE FROM Projects
-                         WHERE projectID=@projectID
-                         AND
-                         userID=@userID`;
-            db.prepare(sql).run({userID, projectID});
+            const sql = 'DELETE FROM Projects WHERE userID=@userID AND projectID=@projectID';
+            db.prepare(sql).run({projectID, userID});
             return true;
         } catch (e){
             console.error(e);
@@ -40,6 +58,19 @@ class ProjectModel {
                          SET projectName=@projectName
                          WHERE userID=@userID AND projectID=@projectID`;
             db.prepare(sql).run({userID, projectID, projectName});
+            return true;
+        } catch (e){
+            console.error(e);
+            return false;
+        }
+    }
+
+    changeProjectDescription(userID, projectID, projectDescription){
+        try {
+            const sql = `UPDATE Projects
+                         SET projectDescription=@projectDescription
+                         WHERE userID=@userID AND projectID=@projectID`;
+            db.prepare(sql).run({userID, projectID, projectDescription});
             return true;
         } catch (e){
             console.error(e);
@@ -80,6 +111,16 @@ class ProjectModel {
         }
     }
 
+    getUserProjects(userID){
+        try {
+            const sql = `SELECT * FROM Projects WHERE userID=@userID`;
+            return db.prepare(sql).all({userID});
+        } catch (e){
+            console.error(e);
+            return false;
+        }
+    }
+
     getProjectsByType(projectType){
         try {
             const sql = `SELECT * FROM Projects WHERE projectType=@projectType`;
@@ -95,7 +136,7 @@ class ProjectModel {
             const sql = `UPDATE Projects
                          SET public=1
                          WHERE userID=@userID AND projectID=@projectID`;
-            db.prepare(sql).run({userID, projectID, genre});
+            db.prepare(sql).run({userID, projectID});
             return true;
         } catch (e){
             console.error(e);
@@ -108,13 +149,43 @@ class ProjectModel {
             const sql = `UPDATE Projects
                          SET public=0
                          WHERE userID=@userID AND projectID=@projectID`;
-            db.prepare(sql).run({userID, projectID, genre});
+            db.prepare(sql).run({userID, projectID});
             return true;
         } catch (e){
             console.error(e);
             return false;
         }
     }
+
+    getProjectInfoByID(projectID){
+        try {
+            const sql = `SELECT * FROM Projects WHERE projectID=@projectID`;
+            return db.prepare(sql).get({projectID});
+        } catch (e){
+            console.error(e);
+            return false;
+        }
+    }
+    
+    getProjectByName(projectName){
+        try {
+            const sql = `SELECT * FROM Projects WHERE projectName = @projectName`;
+            return db.prepare(sql).get({projectName});
+        } catch (e){
+            console.error(e);
+            return false;
+        }
+    }
+
+    checkProjectOwner(projectID, userID){
+        try{
+            const sql = `select * from Projects where projectID=@projectID and userID=@userID`;
+            return db.prepare(sql).get({projectID, userID});
+        }catch(e){
+            console.error(e);
+            return false;
+        }
+    }
 }
 
-exports.projectModel = new ProjectModel(db);
+exports.projectModel = new ProjectModel(db); 

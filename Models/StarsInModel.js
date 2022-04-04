@@ -40,9 +40,13 @@ class StarsInModel {
         }
     }
 
+    // this should really be in CharacterModel
     getCharactersByProject(projectID){
         try {
-            const sql = `SELECT charID FROM StarsIn WHERE projectID=@projectID`;
+            const sql = `SELECT name, charAvatar, Characters.charID
+                         FROM Characters
+                         JOIN StarsIn ON StarsIn.charID = Characters.charID AND StarsIn.projectID=@projectID;
+            `;
             return db.prepare(sql).all({projectID});
         } catch (e){
             console.error(e);
@@ -50,6 +54,15 @@ class StarsInModel {
         }
     }
 
+    getProjectByChar(charID){
+        try {
+            const sql = `SELECT projectID FROM StarsIn WHERE charID=@charID`;
+            return db.prepare(sql).get({charID});
+        } catch (e){
+            console.error(e);
+            return false;
+        }
+    }
 
 }
 

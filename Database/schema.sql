@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS Users (
     userID TEXT PRIMARY KEY,
     username TEXT UNIQUE NOT NULL,
-    avatarAddress TEXT DEFAULT NULL,
+    avatarAddress TEXT DEFAULT 'pic.jpg',
     passwordHash TEXT NOT NULL,
     email TEXT UNIQUE NOT NULL,
     emailVerified INTEGER DEFAULT 0, -- no boolean datatype in sqlite
@@ -23,6 +23,7 @@ CREATE TABLE IF NOT EXISTS Projects (
     projectName TEXT NOT NULL,
     projectType TEXT NOT NULL,
     genre  TEXT NOT NULL,
+    projectDescription TEXT NOT NULL,
     public INTEGER DEFAULT 0 -- default not public
 );
 
@@ -38,7 +39,8 @@ CREATE TABLE IF NOT EXISTS Characters (
     gender TEXT CHECK (gender = 'Male' or gender = 'Female'),
     characterTraits TEXT DEFAULT "",
     backstory TEXT DEFAULT "",
-    charAvatar TEXT DEFAUlT NULL, -- upload an image, we dont facilitate 3d rendering at this point
+    charAvatar TEXT DEFAUlT "defaultChar.png", -- upload an image (address), we dont facilitate 3d rendering at this point
+    public INTEGER DEFAULT 0, -- default not public
     FOREIGN KEY (creator) REFERENCES Users(userID)
         ON DELETE CASCADE   --if a user account is deleted, all their characters should also be deleted
 );
@@ -62,3 +64,9 @@ CREATE TABLE IF NOT EXISTS Favorites (
         ON DELETE CASCADE,   --if a user takes down a character, another user can't have it favorited
     PRIMARY KEY(userID, charID)
 );
+
+-- test values
+--INSERT INTO Characters (charID, creator, name, eyeColor, hairColor, skinColor, feetTall, inchesTall, gender)
+--VALUES
+  --  ('1', 'alynichols', 'Mr. Char', 'blue', 'brown', 'white', 5, 5, 'Male'),
+  --  ('2', 'alynichols', 'Mrs. Char', 'purple', 'white', 'black', 4, 2, 'Female');

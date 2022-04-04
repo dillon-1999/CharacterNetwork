@@ -1,29 +1,64 @@
 "use strict";
 const argon2 = require("argon2");
 const { userModel } = require("../Models/UserModel");
-const { friendModel } = require("../Models/FriendModel");
 const { characterModel } = require("../Models/CharacterModel");
 const { projectModel } = require("../Models/ProjectModel");
-
 const {schemas, VALIDATION_OPTIONS} = require("../validators/validatorContainer");
+ 
+const fs = require('fs');
+const multer = require('multer');
+const crypto = require('crypto');
+const path = require('path');
+
+let storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, path.join(__dirname, '/../public/userAvatars/'));
+    },
+    
+    filename: (req, file, cb) => {
+        const randomName = crypto.randomBytes(12).toString('hex');
+        const [extension] = file.originalname.split(".").slice(-1);
+        cb(null, `${randomName}.${extension}`);
+    },
+    
+    fileFilter: (req, file, cb) => {
+        console.log('here')
+        if(!req.session){
+            return cb(null, false);
+        }
+        const [extension] = file.originalname.split(".").slice(-1);
+        if(extension != 'jpg' || extention != 'png'){
+            return cb(null, false)
+        } else {
+            cb(null, true);
+        }
+    }
+});
+
+let upload = multer({storage});
 
 module.exports = (app) =>{
-    app.get('/newUser', (req, res) => {
+    app.get('/newUser', async (req, res) => {
         res.render('newUser');
     });
-    
-    app.get('/users/homepage', (req, res) => {
-        res.render('homepage', {session: req.session});
+
+    app.get('/users/homepage', async (req, res) => {
+        // quick fix for viewing other peoples pages
+        const {userID} = req.query;
+        const chars = characterModel.getCharsByUser(userID);
+        const projects = projectModel.getUsersProjects(userID);
+        const userInfo = userModel.getUserData(userID);
+        try {
+            res.render('homepage', {session: req.session, chars, projects, userInfo});
+        } catch(e){
+            console.error(e);
+            return res.sendStatus(500)
+        }
     });
-
-    // app.get('/users/friends', (req,res) => {
-
-    // });
 
     app.post('/newUser/attemptRegister', async (req, res) => {
         console.log("POST /newUser/attemptRegister");
         const {value, error} = schemas.userSchema.validate(req.body, VALIDATION_OPTIONS); 
-        console.log(req.body)
         if (error){
             const errorMessages = error.details.map(error => error.message);
             return res.status(400).json(errorMessages);
@@ -59,21 +94,15 @@ module.exports = (app) =>{
             const {passwordHash} = pass;
             if(await argon2.verify(passwordHash, password)){
                 const {userID, username, role} = userModel.getUserDataByEmail(email);
-                console.log(userID);
-                console.log(username);
-                console.log(role);
                 req.session.regenerate((err) => {
                     if(err){
                         res.sendStatus(401);
                         return console.error(err);
                     }
                     req.session.userID = userID;
-                    req.session.email = email;
-                    req.session.username = username;
                     req.session.role = role;
                     req.session.isLoggedIn = true;
-                    console.log(req.session)
-                    res.redirect('/users/homepage');
+                    res.redirect('/users/homepage?userID=' + userID );
                 });
             } else {
                 return res.sendStatus(400);
@@ -84,16 +113,42 @@ module.exports = (app) =>{
         }
     });
 
-    // renders users homepage
-    app.get('/users/homepage', (req, res) => {
-        if(!req.session.isLoggedIn){
+    // query param as userID
+    app.post('/upgrade', async (req, res) => {
+        if(req.session.role !== 1 || !req.query.userID){ // just an admin functionality
             return res.sendStatus(404);
         }
 
-        // send:
-        // friends, individual characters, projects, some userInfo
-        const friends = friendModel.getUsersFriends(req.session.userID);
-        const chars = characterModel.getCharsByUser(req.session.userID);
+        try {
+            const upgraded = userModel.updateUser(req.query.userID, {role: 1});
+            if(upgraded){
+                res.sendStatus(200);
+            } else {
+                res.sendStatus(500);
+            }
+        } catch(err) {
+            console.error(err);
+            return res.sendStatus(500);
+        }
+    });
+
+    // expects query param userID
+    app.post('/revoke', async (req, res) => {
+        if(req.session.role !== 1 || !req.query.userID){ // just an admin functionality
+            return res.sendStatus(404);
+        }
+
+        try {
+            const upgraded = userModel.updateUser(req.query.userID, {role: 0});
+            if(upgraded){
+                res.sendStatus(200);
+            } else {
+                res.sendStatus(500);
+            }
+        } catch(err) {
+            console.error(err);
+            return res.sendStatus(500);
+        }
     });
 
     app.post('/logout', (req, res) => {
@@ -105,4 +160,45 @@ module.exports = (app) =>{
             res.redirect('/login');
         })
     });
+
+    app.post('/users/uploadAvatarPage', async (req, res) => {
+        console.log("GET /users/uploadAvatarPage")
+        if(req.session.userID !== req.query.userID){
+            return res.sendStatus(404);
+        }
+
+        res.render('userUpload', {session: req.session});
+    });
+
+    app.post('/users/uploadImage/:userID', upload.single('file'), (req,res) => {
+        if(!req.session.userID || req.session.userID !== req.params.userID){
+            return res.sendStatus(404);
+        }
+
+        try{
+            const previousFile = userModel.getAvatarHash(req.session.userID);
+            const didUpload = userModel.uploadAvatar(req.session.userID, req.file.filename);
+            if(didUpload){
+                if(previousFile){ // this deletes the old file 
+                    // path will need to be changed on the server
+                    fs.unlinkSync(`/Users/dillonboatman/Desktop/CharacterNetwork/public/userAvatars/${previousFile.avatarAddress}`);
+                }
+                return res.sendStatus(200);
+            } else {
+                return res.sendStatus(400);
+            }
+
+        } catch(e){
+            res.send(e);
+        }
+    });
+
+    app.post('/users/editUserInfo', async (req, res) => {
+        const {userID} = req.query;
+        if(req.session.userID !== userID){
+            res.sendStatus(404);
+        }
+        res.render('editUserPage', {session: req.session});
+    });
+
 }

@@ -1,0 +1,54 @@
+
+body {
+    height: 100%;
+    max-height: 100%;
+    font-family: 'Droid Serif', serif;
+    font-size: 2.0rem;
+    line-height: 1.6em;
+    color: #3A4145;
+    }
+    
+    tr{align:center}
+    
+    html {
+    font-size: 62.5%;
+    }
+    
+    p{
+    margin: 1.6em 0;
+    text-align: center;
+    }
+    
+    button{
+        background-color:red;
+        color: white;
+        padding: 14px 20px;
+        margin: 8px 0;
+        border: none;
+        cursor: pointer;
+        width: 80%;
+    }
+
+
+    h1 {
+        font-size: 4rem;
+        line-height: 1.2em;
+        letter-spacing: -2px;
+        text-indent: -3px;
+        background: #DDA0DD;
+        }
+    
+    h2 {
+    font-size: 3.5rem;
+    line-height: 1.2em;
+    letter-spacing: -1px;
+    text-indent: -2px;
+    }
+    
+    h3 {
+    font-size: 3.5rem;
+    }
+    
+    h4 {
+    font-size: 3.5rem;
+    }

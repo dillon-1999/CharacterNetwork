@@ -18,7 +18,7 @@ class CharacterModel {
             character.charID = uuidV4();
             character.creator = userID;
             db.prepare(sql).run(character);
-            return true;
+            return character;
         } catch (e){
             console.error(e);
             return false;
@@ -69,6 +69,27 @@ class CharacterModel {
         }
     }
 
+    getCharInfo(charID){
+        try{
+            const sql = `SELECT * FROM Characters WHERE charID=@charID`;
+            return db.prepare(sql).get({charID});
+        } catch(e){
+            console.error(e);
+            return false;
+        }
+    }
+    
+    getCharByName(name){
+        try{
+            const sql = `SELECT * FROM Characters WHERE name = @name`;
+            return db.prepare(sql).get({name});
+        } catch(e){
+            console.error(e);
+            return false;
+        }
+    }
+    
+
     getChars(){
         try{
             const sql = `SELECT * FROM Characters`;
@@ -85,6 +106,70 @@ class CharacterModel {
             const sql = `SELECT * FROM CHARACTERS where creator=@creator`;
             return db.prepare(sql).all({creator});
         } catch(e){
+            console.error(e);
+            return false;
+        }
+    }
+
+    getAvatarHash(creator, charID){
+        try{
+            const sql = `SELECT charAvatar
+                         FROM CHARACTERS
+                         WHERE creator=@creator
+                               AND
+                               charID=@charaID
+                        `
+            return db.prepare(sql).get({creator, charID});
+        } catch(e){
+            console.error(e);
+            return false;
+        }
+    }
+
+    uploadAvatar(creator, charID, charAvatar){
+        try{
+            const sql = `UPDATE Characters
+                         SET charAvatar=@charAvatar
+                         WHERE creator=@creator AND charID=@charID`;
+            db.prepare(sql).run({creator, charID, charAvatar});
+            return true;
+        } catch(e){
+            console.error(e);
+            return false;
+        }
+    }
+    
+    checkCharacterOwner(charID, userID){
+        try{
+            const sql = `select * from Characters where charID=@charID and creator=@userID`;
+            return db.prepare(sql).get({charID, userID});
+        }catch(e){
+            console.error(e);
+            return false;
+        }
+    }
+    
+    setPublic(userID, charID){
+        try {
+            const sql = `UPDATE Characters
+                         SET public=1
+                         WHERE creator=@userID AND charID=@charID`;
+            db.prepare(sql).run({userID, charID});
+            return true;
+        } catch (e){
+            console.error(e);
+            return false;
+        }
+    }
+
+    setPrivate(userID, charID){
+        try {
+            const sql = `UPDATE Characters
+                         SET public=0
+                         WHERE creator=@userID AND charID=@charID`;
+            db.prepare(sql).run({userID, charID});
+            return true;
+        } catch (e){
             console.error(e);
             return false;
         }
