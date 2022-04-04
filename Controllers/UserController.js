@@ -42,21 +42,6 @@ module.exports = (app) =>{
         res.render('newUser');
     });
 
-    // app.get('/users/homepage', async (req, res) => {
-    //     // send:
-    //     // individual characters, projects, some userInfo
-    //     // const friends = friendModel.getUsersFriends(req.session.userID);
-    //     const chars = characterModel.getCharsByUser(req.session.userID);
-    //     const projects = projectModel.getUsersProjects(req.session.userID);
-    //     const userInfo = userModel.getUserData(req.session.userID);
-    //     try {
-    //         res.render('homepage', {session: req.session, chars, projects, userInfo});
-    //     } catch(e){
-    //         console.error(e);
-    //         return res.sendStatus(500)
-    //     }
-    // });
-
     app.get('/users/homepage', async (req, res) => {
         // quick fix for viewing other peoples pages
         const {userID} = req.query;
@@ -206,6 +191,14 @@ module.exports = (app) =>{
         } catch(e){
             res.send(e);
         }
+    });
+
+    app.post('/users/editUserInfo', async (req, res) => {
+        const {userID} = req.query;
+        if(req.session.userID !== userID){
+            res.sendStatus(404);
+        }
+        res.render('editUserPage', {session: req.session});
     });
 
 }
