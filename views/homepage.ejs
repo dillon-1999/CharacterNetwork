@@ -80,6 +80,19 @@
         margin-right: 20px;
     }
     
+    .emphasis-name {
+        letter-spacing: 2px;
+    }
+    
+    .bottom-border {
+        border-bottom-style: black;
+    }
+    
+    .left-align {
+        text-align: left;
+        padding-left: 20px;
+    }
+    
 </style>
 <body>
     <div>
@@ -162,11 +175,13 @@
             <table style="width: 100%">
                 <tr>
                     <th style="width: 20%">Bio</th>
-                    <th>Characters</th>
+                    <th style="width: 40%">Characters</th>
                 </tr>
                 <tr>
                     <!--BIO-->
-                    <td class="bio"><%= userInfo.bio %> <br/> <br/> <i>joined <%= (userInfo.dateCreated).slice(0,10) %></i> </td>
+                    <td class="bio">
+                        <%= userInfo.bio %> <br/> <br/>
+                        <i>joined <%= (userInfo.dateCreated).slice(0,10) %></i> </td>
                     
                     <!--Character Avatars-->
                     <td style="padding-left: 25px">
@@ -174,12 +189,13 @@
                     <% for(let i = 0; i < chars.length; i++) { %>
                         <tr>
                             <td>
-                                <a href="../characters/charpage?charID=<%=chars[i].charID%>">
-                                <div id="charPhotoContainer" name="<%= chars[i].charAvatar %>"> <!-- Hold image in here -->
+                               
+                                <!--<div id="charPhotoContainer" name="<%= chars[i].charAvatar %>">
                                     <img id="charPhoto" src="" alt="character image" height="100px" width="70px">
-                                </div></a>
+                                </div> -->
+                              
                             </td>
-                            <td><%= chars[i].name %> </td>
+                            <td class="emphasis-name"> <a href="../characters/charpage?charID=<%=chars[i].charID%>" class="clickable"> <li><%= chars[i].name %> </li> </td>  </a>
                     <% } %>
                         </tr>
                     <!-- <td style="padding-left: 25px">This is where another table of chacters will go.-->

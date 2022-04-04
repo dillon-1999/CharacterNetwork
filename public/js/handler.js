@@ -303,6 +303,59 @@ document.getElementById('randomButton').addEventListener("click", () => {
 });
 }
 
+//if(document.getElementById('searchButton')){
+ // document.getElementById('searchButton').addEventListener("click", () => {
+  //  if(document.getElementById('notFound')) {
+   //   document.getElementById('notFound').value = "Search not found. Check your spelling and try again!";
+   // }
+ // });
+//}
+
+
+async function searchDatabase(search, searchType){
+    try{
+        const response = await fetch(`${window.location.origin}/search/results`, {
+            "method": "POST",
+            "body": JSON.stringify({search, searchType})
+        });
+        if(response.ok){
+            console.log('upload success');
+            window.location.replace(`${window.location.origin}/search/results`);
+        } else {
+            document.querySelector('.error').textContent = "Search not found. Check your spelling and try again!";
+        }
+    } catch(err) {
+        console.error(err);
+    }
+}
+
+if (document.getElementById('searchButton')) {
+  document.getElementById('searchButton').addEventListener("click", (event) => {
+    event.preventDefault();
+    let userType = document.getElementById('user').checked;
+    let charType = document.getElementById('char').checked;
+    let projectType = document.getElementById('project').checked;
+    
+    let searchType;
+    
+    if (userType) {
+      searchType = 'user';
+    }
+    else if (charType) {
+      searchType = 'char';
+    }
+    else if (projectType) {
+      searchType = 'project';
+    }
+    else {
+      console.log("NOT WORKING");
+    }
+    
+    searchDatabase(document.getElementById('search').value, searchType);
+  });
+
+}
+
 
 //Aly Nichols
 //if(document.getElementById('test')){
