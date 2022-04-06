@@ -98,14 +98,19 @@
                     <!--Characters-->
                     <td style="padding-left: 25px">
                     <table>
+                    <div class="scrollbox">
+
                     <% for(let i = 0; i < chars.length; i++) { %>
-                        <tr>
+
+                            
                             <% if(chars[i].public) { %>
-                                <td class="emphasis-name"> <a href="../characters/charpage?charID=<%=chars[i].charID%>"> <li><%= chars[i].name %> </li> </td>  </a>
+                                <li class="emphasis-name"> <a href="../characters/charpage?charID=<%=chars[i].charID%>"><%= chars[i].name %> </li> </a>
                             <% } else if (session.userID === userInfo.userID ) { %>
-                                <td class="emphasis-name"> <a class="private" href="../characters/charpage?charID=<%=chars[i].charID%>"> <li><%= chars[i].name%> (private) </li> </td>  </a>
+                                <li class="emphasis-name"> <a class="private" href="../characters/charpage?charID=<%=chars[i].charID%>"><%= chars[i].name%> (private) </li>  </a>
                     <% }} %>
-                        </tr>
+                    
+                    </div>
+
                     <!-- <td style="padding-left: 25px">This is where another table of chacters will go.-->
                 </tr>
                 </table>

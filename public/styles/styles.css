@@ -95,7 +95,7 @@
     }
 
     .emphasis-name {
-            letter-spacing: 2px;
+        letter-spacing: 2px;
     }
     
     .emphasis-name:hover {
@@ -113,6 +113,17 @@
     
     .private {
         color: grey;
+    }
+    
+    .private:hover {
+        background-color: grey;
+    }
+    
+    .scrollbox {
+        height:150px;
+        width:90%;
+        border:1px solid darkblue;
+        overflow:auto;
     }
     /*index.ejs*/
 
