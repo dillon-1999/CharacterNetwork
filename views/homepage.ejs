@@ -100,15 +100,11 @@
                     <table>
                     <% for(let i = 0; i < chars.length; i++) { %>
                         <tr>
-                            <td>
-                               
-                                <!--<div id="charPhotoContainer" name="<%= chars[i].charAvatar %>">
-                                    <img id="charPhoto" src="" alt="character image" height="100px" width="70px">
-                                </div> -->
-                              
-                            </td>
-                            <td class="emphasis-name"> <a href="../characters/charpage?charID=<%=chars[i].charID%>"> <li><%= chars[i].name %> </li> </td>  </a>
-                    <% } %>
+                            <% if(chars[i].public) { %>
+                                <td class="emphasis-name"> <a href="../characters/charpage?charID=<%=chars[i].charID%>"> <li><%= chars[i].name %> </li> </td>  </a>
+                            <% } else if (session.userID === userInfo.userID ) { %>
+                                <td class="emphasis-name"> <a class="private" href="../characters/charpage?charID=<%=chars[i].charID%>"> <li><%= chars[i].name%> (private) </li> </td>  </a>
+                    <% }} %>
                         </tr>
                     <!-- <td style="padding-left: 25px">This is where another table of chacters will go.-->
                 </tr>

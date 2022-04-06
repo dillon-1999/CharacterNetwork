@@ -102,14 +102,18 @@
         background-color: lightblue;
     }
         
-        .bottom-border {
-            border-bottom-style: black;
-        }
-        
-        .left-align {
-            text-align: left;
-            padding-left: 20px;
-        }
+    .bottom-border {
+        border-bottom-style: black;
+    }
+    
+    .left-align {
+        text-align: left;
+        padding-left: 20px;
+    }
+    
+    .private {
+        color: grey;
+    }
     /*index.ejs*/
 
 
