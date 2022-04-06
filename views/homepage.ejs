@@ -69,11 +69,6 @@
                     <form action="/users/friends">
                         <input class='fancy-button big-button clickable rightSide' type="submit" id="friendsView" value="View Your Friends">
                     </form>
-
-                    <form>
-                        <input class='fancy-button big-button clickable rightSide' type="submit" id="favoritesView" value="View Your Favorites">
-                    </form>
-
                     <form action="/characters/newCharacter">
                         <input class='fancy-button big-button clickable rightSide' type="submit" id="createCharacterPage" value="Create a New Character"> <!--double check ID name-->
                     </form>
@@ -100,7 +95,7 @@
                         <%= userInfo.bio %> <br/> <br/>
                         <i>joined <%= (userInfo.dateCreated).slice(0,10) %></i> </td>
                     
-                    <!--Character Avatars-->
+                    <!--Characters-->
                     <td style="padding-left: 25px">
                     <table>
                     <% for(let i = 0; i < chars.length; i++) { %>
@@ -112,7 +107,7 @@
                                 </div> -->
                               
                             </td>
-                            <td class="emphasis-name"> <a href="../characters/charpage?charID=<%=chars[i].charID%>" class="clickable"> <li><%= chars[i].name %> </li> </td>  </a>
+                            <td class="emphasis-name"> <a href="../characters/charpage?charID=<%=chars[i].charID%>"> <li><%= chars[i].name %> </li> </td>  </a>
                     <% } %>
                         </tr>
                     <!-- <td style="padding-left: 25px">This is where another table of chacters will go.-->

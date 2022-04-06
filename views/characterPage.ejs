@@ -97,12 +97,6 @@
     </div>
     <br>
     
-    <% if(session.userID != charData.creator) { %>
-        <!--CHECK FORM: only hypothetical URL as favorite functionality hasn't been built yet -->
-        <form action="../users/favoriteCharacter?charID=<%= charData.charID %>&userID=<%= session.userID %>" method="post" id="favoriteForm">
-            <button class='block-center fancy-button2'>Favorite</button>
-        </form>
-    <% } %>
     <% if(session.userID == charData.creator) { %>
     <table class="invisible">
         <tr>

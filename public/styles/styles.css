@@ -89,13 +89,18 @@
     .justify-center {
       justify-content: center;
     }
+    
     .rightSide {
         margin-right: 20px;
     }
 
     .emphasis-name {
             letter-spacing: 2px;
-        }
+    }
+    
+    .emphasis-name:hover {
+        background-color: lightblue;
+    }
         
         .bottom-border {
             border-bottom-style: black;
