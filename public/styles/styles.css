@@ -98,7 +98,7 @@
         letter-spacing: 2px;
     }
     
-    .emphasis-name:hover {
+    .emphasis-hover:hover {
         background-color: lightblue;
     }
         
@@ -116,7 +116,7 @@
     }
     
     .private:hover {
-        background-color: grey;
+        background-color: lightgrey;
     }
     
     .scrollbox {

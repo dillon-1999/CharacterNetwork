@@ -104,9 +104,9 @@
 
                             
                             <% if(chars[i].public) { %>
-                                <li class="emphasis-name"> <a href="../characters/charpage?charID=<%=chars[i].charID%>"><%= chars[i].name %> </li> </a>
+                                <li class="emphasis-name emphasis-hover"> <a href="../characters/charpage?charID=<%=chars[i].charID%>"><%= chars[i].name %> </li> </a>
                             <% } else if (session.userID === userInfo.userID ) { %>
-                                <li class="emphasis-name"> <a class="private" href="../characters/charpage?charID=<%=chars[i].charID%>"><%= chars[i].name%> (private) </li>  </a>
+                                <li class="emphasis-name private"> <a class="private" href="../characters/charpage?charID=<%=chars[i].charID%>"><%= chars[i].name%> (private) </li>  </a>
                     <% }} %>
                     
                     </div>
