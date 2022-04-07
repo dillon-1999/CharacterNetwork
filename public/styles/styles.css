@@ -153,9 +153,16 @@
         height: 100px;
     }
     
+    .longtextData {
+        height: 100px;
+    }
     
-    p:hover {
-        background-color: aliceblue;
+    .centerData {
+        text-align: center;
+    }
+    
+    .invisible {
+        border: none;
     }
     
     a {

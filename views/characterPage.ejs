@@ -7,16 +7,7 @@
     <title>Character Network</title>
     <link rel="stylesheet" type="text/css" href="/styles/styles.css">
 </head>
-<style>
-        
-    .color1 {
-        color: darkblue;
-    }
-    
-    .fancy-button2 {
-        background-color: aliceblue;
-    }
-        
+<style>  
     td {
         padding-right: 15px;
         padding-left: 5px;
@@ -37,23 +28,11 @@
         width: 950px;
     }
     
-    .longtextData {
-        height: 100px;
-    }
-    
-    .centerData {
-        text-align: center;
-    }
-    
-    .invisible {
-        border: none;
-    }
-    
 </style>
 <body>
-    <div>
-        <%- include('partials/header.ejs') %>
-    </div>
+    <a href="../users/homepage?userID=<%=session.userID%>"><div class='text-center color1' id="header">
+        <h1>Character Network</h1>
+    </div></a>
     <div id="header" style="height:15%;width:90%;">
         <div style="float:right">
             <img src="/charAvatars/<%=charData.charAvatar%>" width="250px" style="margin-left:15%;margin-top:5%"/>

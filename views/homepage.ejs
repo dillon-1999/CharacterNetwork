@@ -30,8 +30,10 @@
             </table>
             
             
-            <%- include('partials/header.ejs') %>
-            
+            <a href="../users/homepage?userID=<%=session.userID%>"><div class='text-center color1' id="header">
+                <h1>Character Network</h1>
+            </div></a>
+                        
             <!--profile pic and username --> 
             <div id="profilePhotoContainer" name="<%= userInfo.avatarAddress %>"> <!-- Hold image in here -->
                 <img id="profilePhoto" src="" alt="profile photo"
@@ -104,9 +106,9 @@
 
                             
                             <% if(chars[i].public) { %>
-                                <li class="emphasis-name emphasis-hover"> <a href="../characters/charpage?charID=<%=chars[i].charID%>"><%= chars[i].name %> </li> </a>
+                                <a href="../characters/charpage?charID=<%=chars[i].charID%>"> <li class="emphasis-name emphasis-hover"> <%= chars[i].name %> </li> </a>
                             <% } else if (session.userID === userInfo.userID ) { %>
-                                <li class="emphasis-name private"> <a class="private" href="../characters/charpage?charID=<%=chars[i].charID%>"><%= chars[i].name%> (private) </li>  </a>
+                               <a class="private" href="../characters/charpage?charID=<%=chars[i].charID%>"> <li class="emphasis-name private"><%= chars[i].name%> (private) </li>  </a>
                     <% }} %>
                     
                     </div>

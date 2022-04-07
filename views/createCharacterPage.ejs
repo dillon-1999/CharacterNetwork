@@ -9,31 +9,11 @@
 </head>
 <script src='/js/handler.js' defer></script>
 <style>
-    .text-center {
-            text-align: center;
-        }
-        
-    .color1 {
-        color: darkblue;
-    }
-    
-    .fancy-button {
-            background-color: lightblue;
-    }
-        
-    .big-button {
-        height: 40px;
-        width: 15%;
-    }
-    
-    .tdPadding {
-        padding-left: 50px;
-    }
 </style>
 <body>
-    <div>
-        <%- include('partials/header.ejs') %>
-    </div>
+    <a href="../users/homepage?userID=<%=session.userID%>"><div class='text-center color1' id="header">
+        <h1>Character Network</h1>
+    </div></a>
     
     <h2 class="text-center">Create a Character</h2>
     

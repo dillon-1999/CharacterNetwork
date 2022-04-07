@@ -9,8 +9,10 @@
     <script src="/js/handler.js" defer></script>
 </head>
 <body>
-    <%- include('partials/header.ejs') %>
-    <div>
+        <a href="../users/homepage?userID=<%=session.userID%>"><div class='text-center color1' id="header">
+            <h1>Character Network</h1>
+        </div></a>
+        <div>
         <% if(session.isLoggedIn === true) { %>
                 <form id='uploadForm'>
                     <input type="file" name="file"  />
