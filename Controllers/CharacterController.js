@@ -116,9 +116,11 @@ module.exports = (app) => {
         try{
             let changeVisibility;
             if(visibility === '0'){
-                changeVisibility = characterModel.setPublic(req.session.userID, charID);
-            } else if(visibility === '1'){
+                console.log('here')
                 changeVisibility = characterModel.setPrivate(req.session.userID, charID);
+            } else if(visibility === '1'){
+                console.log('make public')
+                changeVisibility = characterModel.setPublic(req.session.userID, charID);
             } else{
                 console.log('in try')
                 return res.sendStatus(404);

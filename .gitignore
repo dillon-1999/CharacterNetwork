@@ -2,3 +2,6 @@ node_modules/
 .env
 dump.rdb
 Database/CharacterNetwork.db
+public/userAvatars
+public/systemImages
+public/charAvatars

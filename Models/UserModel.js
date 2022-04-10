@@ -266,4 +266,5 @@ class UserModel {
     }
 }
 let x = new UserModel(db);
+console.log(x.getUsers())
 exports.userModel = new UserModel(db);

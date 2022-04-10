@@ -8,7 +8,8 @@
     .fancy-button {
             background-color: lightblue;
     }
-        
+
+    
     .big-button {
         height: 40px;
         width: 15%;
@@ -116,7 +117,6 @@
     /*login.ejs*/
 
     /*projectPage.ejs*/ 
-<<<<<<< HEAD
     td {
         padding-right: 15px;
         padding-left: 5px;
@@ -137,8 +137,6 @@
         width: 950px;
     }
     
-=======
->>>>>>> c286ef31eaf7ad5e5cbb676d881f24ad4a24a302
     .longtextData {
         height: 100px;
     }
@@ -146,7 +144,6 @@
     .centerData {
         text-align: center;
     }
-<<<<<<< HEAD
     
     p:hover {
         background-color: aliceblue;
@@ -156,9 +153,6 @@
         color: darkblue;
     }
 
-=======
-   
->>>>>>> c286ef31eaf7ad5e5cbb676d881f24ad4a24a302
     /*searchPage.ejs*/
 
     /*userUpload.ejs*/

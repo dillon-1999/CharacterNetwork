@@ -4,7 +4,6 @@ const { userModel } = require("../Models/UserModel");
 const { characterModel } = require("../Models/CharacterModel");
 const { projectModel } = require("../Models/ProjectModel");
 const {schemas, VALIDATION_OPTIONS} = require("../validators/validatorContainer");
-const {express}  = require('express');
 const fs = require('fs');
 const multer = require('multer');
 const crypto = require('crypto');
@@ -24,7 +23,6 @@ let storage = multer.diskStorage({
     },
     
     fileFilter: (req, file, cb) => {
-        console.log('here')
         if(!req.session){
             return cb(null, false);
         }
@@ -40,7 +38,6 @@ let storage = multer.diskStorage({
 let upload = multer({storage});
 
 module.exports = (app) =>{
-    app.use(upload.array()); 
 
     app.get('/newUser', async (req, res) => {
         res.render('newUser');
@@ -183,6 +180,7 @@ module.exports = (app) =>{
             const previousFile = userModel.getAvatarHash(req.session.userID);
             const didUpload = userModel.uploadAvatar(req.session.userID, req.file.filename);
             if(didUpload){
+                console.log('in upload');
                 if(previousFile){ // this deletes the old file 
                     // path will need to be changed on the server
                     fs.unlinkSync(`/Users/dillonboatman/Desktop/CharacterNetwork/public/userAvatars/${previousFile.avatarAddress}`);
@@ -206,6 +204,7 @@ module.exports = (app) =>{
     });
 
     app.post('/users/updateUser', async (req, res) => {
+        console.log('POST /users/updateUser')
         const {userID} = req.query;
         const body = req.body;
         if(req.session.userID !== userID || !req.session.isLoggedIn){

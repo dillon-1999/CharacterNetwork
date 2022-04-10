@@ -63,9 +63,9 @@ module.exports = (app) =>{
 
         try{
             let changeVisibility;
-            if(visibility === '0'){
+            if(visibility === '1'){
                 changeVisibility = projectModel.setPublic(req.session.userID, projectID);
-            } else if(visibility === '1'){
+            } else if(visibility === '0'){
                 changeVisibility = projectModel.setPrivate(req.session.userID, projectID);
             } else{
                 console.log('in try')

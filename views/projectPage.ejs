@@ -94,12 +94,12 @@
         
         <% if(session.userID === projectInfo.userID){ %>
             <% if( projectInfo.public === 0){ %>
-                <form action="/projects/changeVisibility?projectID=<%=projectInfo.projectID%>&visibility=0" method="post">
-                    <button id="private-button" class="fancy-button2" name="<%= projectInfo.projectID %>">make private</button><br>
+                <form action="/projects/changeVisibility?projectID=<%=projectInfo.projectID%>&visibility=1" method="post">
+                    <button id="private-button" class="fancy-button2" name="<%= projectInfo.projectID %>">make public</button><br>
                 </form>
             <% } else{ %>
-                <form action="/projects/changeVisibility?projectID=<%=projectInfo.projectID%>&visibility=1" method="post">
-                    <button id="public-button" class="fancy-button2" name="<%= projectInfo.projectID %>">make public</button><br>
+                <form action="/projects/changeVisibility?projectID=<%=projectInfo.projectID%>&visibility=0" method="post">
+                    <button id="public-button" class="fancy-button2" name="<%= projectInfo.projectID %>">make private</button><br>
                 </form>
             <% } %>
         <%  } %>

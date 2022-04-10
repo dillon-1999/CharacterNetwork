@@ -16,22 +16,22 @@
     <div>
         <form id="updateForm" >
             <div>
-                <label></label></br>
+                <label for="email"></label></br>
                 <input type="email" id="email" name="email" placeholder="Email Address">
             </div>
             <div>
-                <label></label>
+                <label for="username"></label>
                 <input type="text" id="username" name="username" placeholder="Username">
             </div>
             <div>
-                <label></label>
+                <label for="password"></label>
                 <input type="password" id="password" name="password" placeholder="Password">
             </div>
             <div>
-                <label></label>
+                <label for="bio"></label>
                 <input type="text" id="bio" name="bio" placeholder="Bio">
             </div>
-            <button id='uploadUpdate'value="<%= session.userID %>">Submit</button>
+            <button id='uploadUpdate' type="submit" value="<%= session.userID %>">Submit</button>
         </form>
         <p class="error"></p>
     </div>

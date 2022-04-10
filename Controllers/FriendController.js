@@ -36,10 +36,11 @@ module.exports = (app) =>{
     app.post('/users/unfriendUser', async (req, res) => {
         console.log("POST /users/unfriendUser");
         // add friend validation
+        console.log(req.session)
         if(!req.session.isLoggedIn){
             return res.sendStatus(404);
         }
-        
+        console.log(req.query)
         const friendID = req.query.friendID;
         const userID = req.session.userID;
         if(userID == friendID || !friendID){ // cant friend themselves!

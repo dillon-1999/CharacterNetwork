@@ -115,12 +115,12 @@
             
             <td class="invisible">
             <% if( charData.public === 0){ %>
-                <form action="/characters/changeVisibility?charID=<%=charData.charID%>&visibility=0" method="post">
-                    <button class="fancy-button2" id="private-button" name="<%= charData.charID %>">make private</button><br>
+                <form action="/characters/changeVisibility?charID=<%=charData.charID%>&visibility=1" method="post">
+                    <button class="fancy-button2" id="private-button" name="<%= charData.charID %>">make public</button><br>
                 </form>
             <% } else{ %>
-                <form action="/characters/changeVisibility?charID=<%=charData.charID%>&visibility=1" method="post">
-                    <button class="fancy-button2" id="public-button" name="<%= charData.charID %>">make public</button><br>
+                <form action="/characters/changeVisibility?charID=<%=charData.charID%>&visibility=0" method="post">
+                    <button class="fancy-button2" id="public-button" name="<%= charData.charID %>">make private</button><br>
                 </form>
             <% } %>
             </td>

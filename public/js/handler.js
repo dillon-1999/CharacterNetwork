@@ -93,14 +93,16 @@ async function uploadFile(userID){
     }
 }
 
-async function updateForm(userID){
+async function updateForm(userID, username, email, bio, password){
     try{
-        let form = document.getElementById('updateForm');
-        let formData = new FormData(form);
-        const response = await fetch(`${window.location.origin}/users/updateUser/?userID=${userID}`, {
+        const response = await fetch(`${window.location.origin}/users/updateUser?userID=${userID}`, {
             "method": "POST",
-            "Content-Type": "application/json",
-            "body": formData
+            "headers":{
+
+                "Content-Type": "application/json"
+            },
+            "mode": "cors",
+            "body": JSON.stringify({username, email, bio, password})
         });
         if(response.ok){
             console.log('upload success');
@@ -151,8 +153,6 @@ async function changeVisibility(visibility, projectID){
     }
 }
 
-
-
 if(document.getElementById('uploadAvatar')){
     document.getElementById('uploadAvatar').addEventListener('click', (event) => {
         event.preventDefault();
@@ -164,14 +164,16 @@ if(document.getElementById('uploadAvatar')){
     })
 }
 
-if(document.getElementById('uploadUpdate')){
-    document.getElementById('uploadUpdate').addEventListener('click', (event) => {
+if(document.getElementById('updateForm')){
+    document.getElementById('updateForm').addEventListener('submit', (event) => {
         event.preventDefault();
-        if(updateForm(document.getElementById('uploadUpdate').value)){
-            console.log("success");
-        } else {
-            console.log("fail")
-        }
+        let email = document.getElementById('email').value;
+        let password = document.getElementById('password').value;
+        let bio = document.getElementById('bio').value;
+        let username = document.getElementById('username').value;
+        let userID = document.getElementById('uploadUpdate').value
+        
+        updateForm(userID, username, email, bio, password);
     })
 }
 
@@ -334,39 +336,68 @@ document.getElementById('randomButton').addEventListener("click", () => {
 });
 }
 
-//if(document.getElementById('searchButton')){
- // document.getElementById('searchButton').addEventListener("click", () => {
-  //  if(document.getElementById('notFound')) {
-   //   document.getElementById('notFound').value = "Search not found. Check your spelling and try again!";
-   // }
- // });
-//}
-
 
 async function searchDatabase(search, searchType){
     try{
         const response = await fetch(`${window.location.origin}/search/results`, {
             "method": "POST",
+            "headers": {
+                "Content-Type": "application/json"
+            },
             "body": JSON.stringify({search, searchType})
         });
         if(response.ok){
-            console.log('upload success');
-            window.location.replace(`${window.location.origin}/search/results`);
+            if(document.getElementById("searchLink")){
+                document.getElementById("searchLink").remove();
+            }
+            document.querySelector('#error').textContent = "";
+            
+            let data = await response.json();
+            let output = document.getElementById("output");
+            
+            console.log(data)
+            if (data['projectID']){
+                // this is a poor way of doing it, 
+                // but we need a post request. It's just an easy fix
+                let style = 'background: none; border: none;color: #069;text-decoration: underline;cursor: pointer;';
+                let form = document.createElement('form');
+                let button = document.createElement('button');
+                button.type="submit"
+                button.innerHTML = data.projectName;
+                button.style = style;
+                form.id = "searchLink";
+                form.action=`/projects/projectPage?projectID=${data['projectID']}`;
+                form.method="post"
+                form.appendChild(button);
+                output.appendChild(form);
+            } else {
+                let anchor = document.createElement('a');
+                anchor.id = "searchLink"
+                if(data['charID']){
+                    anchor.href = `${window.location.origin}/characters/charPage?charID=${data['charID']}`;
+                    anchor.innerText = data['name'];
+                } else if(data['userID']){
+                    anchor.href = `${window.location.origin}/users/homepage?userID=${data['userID']}`;
+                    anchor.innerText = data['username'];
+                }
+                output.appendChild(anchor);
+            }
         } else {
-            document.querySelector('.error').textContent = "Search not found. Check your spelling and try again!";
+            document.querySelector('#error').textContent = "Search not found. Check your spelling and try again!";
         }
     } catch(err) {
         console.error(err);
     }
 }
 
-if (document.getElementById('searchButton')) {
-  document.getElementById('searchButton').addEventListener("click", (event) => {
+if (document.getElementById('searchForm')) {
+  document.getElementById('searchForm').addEventListener("submit", (event) => {
     event.preventDefault();
+    document.getElement
     let userType = document.getElementById('user').checked;
     let charType = document.getElementById('char').checked;
     let projectType = document.getElementById('project').checked;
-    
+    let searchData = document.getElementById('search').value;
     let searchType;
     
     if (userType) {
@@ -381,8 +412,7 @@ if (document.getElementById('searchButton')) {
     else {
       console.log("NOT WORKING");
     }
-    
-    searchDatabase(document.getElementById('search').value, searchType);
+    searchDatabase(searchData, searchType);
   });
 
 }
