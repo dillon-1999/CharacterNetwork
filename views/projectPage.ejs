@@ -8,15 +8,7 @@
     <link rel="stylesheet" type="text/css" href="/styles/styles.css">
     <script src='/js/handler.js' defer></script>
 </head>
-<style>
-    .color1 {
-        color: darkblue;
-    }
-    
-    .fancy-button2 {
-        background-color: aliceblue;
-    }
-        
+<style> 
     td {
         padding-right: 15px;
         padding-left: 5px;
@@ -36,27 +28,11 @@
     table {
         width: 950px;
     }
-    
-    .longtextData {
-        height: 100px;
-    }
-    
-    .centerData {
-        text-align: center;
-    }
-    
-    p:hover {
-        background-color: aliceblue;
-    }
-    
-    a {
-        color: darkblue;
-    }
 </style>
 <body>
-    <div>
-        <%- include('partials/header.ejs') %>
-    </div>
+    <a href="../users/homepage?userID=<%=session.userID%>"><div class='text-center color1' id="header">
+        <h1>Character Network</h1>
+    </div></a>
     <% if(projectInfo.public === 0 && session.userID !== projectInfo.userID){ %>
             <h1>This project isn't public!</h1>
        <% } else { %>
@@ -66,19 +42,19 @@
                     <th colspan="2"> Name: <%=projectInfo.projectName%> </th>                    
                 </tr>
             <tr>
-                <td class="centerData"> Type: </td>
+                <td class="text-center"> Type: </td>
                 <td> <%= projectInfo.projectType %></td>
             </tr>
             <tr>
-                <td class="centerData"> Genre: </td>
+                <td class="text-center"> Genre: </td>
                 <td> <%= projectInfo.genre %></td>
             </tr>
             <tr>
-                <td class="centerData longtextData"> Description: </td>
+                <td class="text-center longtextData"> Description: </td>
                 <td> <%= projectInfo.projectDescription %></td>
             </tr>
             <tr>
-                <td class="centerData"> Characters: </td>
+                <td class="text-center"> Characters: </td>
                 <td>
                     <div>
                         <% for(let i = 0; i < projectsCharacters.length; ++i){ %>

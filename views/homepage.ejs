@@ -8,92 +8,6 @@
     <link rel="stylesheet" type="text/css" href="/styles/styles.css">
 </head>
 <script src='/js/handler.js' defer></script>
-<style>
-    .text-center {
-        text-align: center;
-    }
-    
-    .color1 {
-        color: darkblue;
-    }
-    
-    .block-center {
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
-    }
-    
-    .circle-pic {
-        border-radius: 50%;
-    }
-    
-    .right-align {
-        text-align: right;
-    }
-    
-    .fancy-button {
-        background-color: lightblue;
-    }
-    
-    .fancy-button2 {
-        background-color: aliceblue;
-    }
-    
-    .big-button {
-        height: 40px;
-    }
-    
-    .bio {
-        padding: 15px;
-        box-shadow: 1px 1px 5px lightgray;
-        border: 1px solid lightgray;  
-    }
-    
-    a {
-        text-decoration: none; 
-    }
-    
-    .clickable:hover {
-        text-decoration: underline;
-        cursor: pointer;
-    }
-    
-    .header {
-        border: 1px solid purple;
-        box-shadow: 1px 1px 10px lightgray;
-        background-color: aliceblue;
-    }
-    
-    body {
-        background-color: white;
-    }
-    
-    .flex-parent {
-        display: flex;
-    }
-
-    .justify-center {
-      justify-content: center;
-    }
-
-    .rightSide {
-        margin-right: 20px;
-    }
-    
-    .emphasis-name {
-        letter-spacing: 2px;
-    }
-    
-    .bottom-border {
-        border-bottom-style: black;
-    }
-    
-    .left-align {
-        text-align: left;
-        padding-left: 20px;
-    }
-    
-</style>
 <body>
     <div>
         <% if(session.isLoggedIn === true) { %>
@@ -116,8 +30,10 @@
             </table>
             
             
-            <%- include('partials/header.ejs') %>
-            
+            <a href="../users/homepage?userID=<%=session.userID%>"><div class='text-center color1' id="header">
+                <h1>Character Network</h1>
+            </div></a>
+                        
             <!--profile pic and username --> 
             <div id="profilePhotoContainer" name="<%= userInfo.avatarAddress %>"> <!-- Hold image in here -->
                 <img id="profilePhoto" src="" alt="profile photo"
@@ -155,11 +71,6 @@
                     <form action="/users/friends">
                         <input class='fancy-button big-button clickable rightSide' type="submit" id="friendsView" value="View Your Friends">
                     </form>
-
-                    <form>
-                        <input class='fancy-button big-button clickable rightSide' type="submit" id="favoritesView" value="View Your Favorites">
-                    </form>
-
                     <form action="/characters/newCharacter">
                         <input class='fancy-button big-button clickable rightSide' type="submit" id="createCharacterPage" value="Create a New Character"> <!--double check ID name-->
                     </form>
@@ -186,21 +97,22 @@
                         <%= userInfo.bio %> <br/> <br/>
                         <i>joined <%= (userInfo.dateCreated).slice(0,10) %></i> </td>
                     
-                    <!--Character Avatars-->
+                    <!--Characters-->
                     <td style="padding-left: 25px">
                     <table>
+                    <div class="scrollbox">
+
                     <% for(let i = 0; i < chars.length; i++) { %>
-                        <tr>
-                            <td>
-                               
-                                <!--<div id="charPhotoContainer" name="<%= chars[i].charAvatar %>">
-                                    <img id="charPhoto" src="" alt="character image" height="100px" width="70px">
-                                </div> -->
-                              
-                            </td>
-                            <td class="emphasis-name"> <a href="../characters/charpage?charID=<%=chars[i].charID%>" class="clickable"> <li><%= chars[i].name %> </li> </td>  </a>
-                    <% } %>
-                        </tr>
+
+                            
+                            <% if(chars[i].public) { %>
+                                <a href="../characters/charpage?charID=<%=chars[i].charID%>"> <li class="emphasis-name emphasis-hover"> <%= chars[i].name %> </li> </a>
+                            <% } else if (session.userID === userInfo.userID ) { %>
+                               <a class="private" href="../characters/charpage?charID=<%=chars[i].charID%>"> <li class="emphasis-name private"><%= chars[i].name%> (private) </li>  </a>
+                    <% }} %>
+                    
+                    </div>
+
                     <!-- <td style="padding-left: 25px">This is where another table of chacters will go.-->
                 </tr>
                 </table>

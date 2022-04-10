@@ -12,7 +12,7 @@
     
     .big-button {
         height: 40px;
-        width: 15%;
+        width: 175px;
     }
     
     .tdPadding {
@@ -85,14 +85,47 @@
     
     .flex-parent {
         display: flex;
+        
     }
     .justify-center {
       justify-content: center;
     }
+    
     .rightSide {
         margin-right: 20px;
     }
 
+    .emphasis-name {
+        letter-spacing: 2px;
+    }
+    
+    .emphasis-hover:hover {
+        background-color: lightblue;
+    }
+        
+    .bottom-border {
+        border-bottom-style: black;
+    }
+    
+    .left-align {
+        text-align: left;
+        padding-left: 20px;
+    }
+    
+    .private {
+        color: grey;
+    }
+    
+    .private:hover {
+        background-color: lightgrey;
+    }
+    
+    .scrollbox {
+        height:150px;
+        width:90%;
+        border:1px solid darkblue;
+        overflow:auto;
+    }
     /*index.ejs*/
 
 
@@ -145,8 +178,8 @@
         text-align: center;
     }
     
-    p:hover {
-        background-color: aliceblue;
+    .invisible {
+        border: none;
     }
     
     a {

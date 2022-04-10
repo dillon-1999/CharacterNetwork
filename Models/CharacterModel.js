@@ -7,6 +7,7 @@ class CharacterModel {
     constructor (db){
         this.db = db;
     }
+    
 
     createCharacter(userID, character){
         try {
@@ -35,6 +36,7 @@ class CharacterModel {
             return false;
         }
     }
+    
 
     // create a function to update different attribute
     // in the same function
@@ -81,8 +83,9 @@ class CharacterModel {
     
     getCharByName(name){
         try{
-            const sql = `SELECT * FROM Characters WHERE name = @name`;
+            const sql = `SELECT * FROM Characters WHERE name = @name `;
             return db.prepare(sql).get({name});
+            
         } catch(e){
             console.error(e);
             return false;
@@ -103,7 +106,10 @@ class CharacterModel {
 
     getCharsByUser(creator){
         try{
-            const sql = `SELECT * FROM CHARACTERS where creator=@creator`;
+            const sql = `SELECT *
+                        FROM CHARACTERS
+                        WHERE creator=@creator
+                        ORDER BY public DESC, name`;
             return db.prepare(sql).all({creator});
         } catch(e){
             console.error(e);

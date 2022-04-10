@@ -7,17 +7,11 @@
     <title>Character Network</title>
     <link rel="stylesheet" type="text/css" href="/styles/styles.css">
     <script src="/js/handler.js" defer></script>
-    <style>
-        .longtext {
-            height:200px;
-            width: 750px;
-        }
-    </style>
 </head>
 <body>
-    <div>
-        <%- include('partials/header.ejs') %>
-    </div>
+    <a href="../users/homepage?userID=<%=session.userID%>"><div class='text-center color1' id="header">
+        <h1>Character Network</h1>
+    </div></a>
     <div>
         <form id="createProjectForm" >
             <div>

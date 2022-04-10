@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS Characters (
     characterTraits TEXT DEFAULT "",
     backstory TEXT DEFAULT "",
     charAvatar TEXT DEFAUlT "defaultChar.png", -- upload an image (address), we dont facilitate 3d rendering at this point
-    public INTEGER DEFAULT 0, -- default not public
+    public INTEGER DEFAULT 1, -- default  public
     FOREIGN KEY (creator) REFERENCES Users(userID)
         ON DELETE CASCADE   --if a user account is deleted, all their characters should also be deleted
 );

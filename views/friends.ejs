@@ -8,18 +8,11 @@
     <link rel="stylesheet" type="text/css" href="/styles/styles.css">
 </head>
 <style>
-    .text-center {
-            text-align: center;
-        }
-        
-    .color1 {
-        color: darkblue;
-    }
 </style>
 <body>
-    <div>
-        <%- include('partials/header.ejs') %>
-    </div>
+    <a href="../users/homepage?userID=<%=session.userID%>"><div class='text-center color1' id="header">
+        <h1>Character Network</h1>
+    </div></a>
     <div>
         <% if(friends.length === 0){ %>
                 <h1> No friends to display!</h1>

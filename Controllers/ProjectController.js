@@ -7,7 +7,7 @@ const url = require('url');
 
 module.exports = (app) =>{
     app.get('/projects/newProject', async (req, res) => {
-        res.render('createProject');
+        res.render('createProject', {session: req.session});
     });
 
     // view page for an individual project
