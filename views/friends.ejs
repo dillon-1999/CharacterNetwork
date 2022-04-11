@@ -21,6 +21,7 @@
             <% for(let i = 0; i < friends.length; ++i){ %>
                 <div>
                     <a href="../users/homepage?userID=<%= friends[i].friendID %>"><%= friends[i].username %></a> <br><br>
+                    <p>Date Friended: <%= friends[i].dateFriended %></p>
                     <form action="/users/unfriendUser?friendID=<%= friends[i].friendID %>" method="post">
                         <button type="submit">Unfriend User</button>
                     </form>
