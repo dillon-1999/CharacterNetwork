@@ -32,7 +32,7 @@ class UserModel {
         if(Object.keys(validObj).length === 0){
             return false;
         }
-        let updates = Object.keys(validObj).map(x => x + `=@${x}`).join(' and ');
+        let updates = Object.keys(validObj).map(x => x + `=@${x}`).join(' , ');
         validObj["userID"] = userID;
         try{
             const sql = `UPDATE Users

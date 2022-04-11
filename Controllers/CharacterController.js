@@ -107,8 +107,8 @@ module.exports = (app) => {
             console.log('not logged in')
             return res.sendStatus(404);
         }
-        const checkProjectOwner = characterModel.checkCharacterOwner(charID, req.session.userID);
-        if(!checkProjectOwner){
+        const checkCharacterOwner = characterModel.checkCharacterOwner(charID, req.session.userID);
+        if(!checkCharacterOwner){
             console.log('not owner')
             return res.sendStatus(404);
         }
@@ -125,13 +125,43 @@ module.exports = (app) => {
                 console.log('in try')
                 return res.sendStatus(404);
             }
-            //if(changeVisibility){
-              //  res.redirect(307, '/users/homepage?userID=')
-            //}
+            
             changeVisibility ? res.redirect('../users/homepage?userID=' + req.session.userID) : res.sendStatus(500);
         } catch(e){
             console.error(e);
             return res.sendStatus(500);
         }
+    });
+
+    app.post('/characters/editCharInfo', async (req, res) => {
+        const {charID} = req.query;
+        const checkCharacterOwner = characterModel.checkCharacterOwner(charID, req.session.userID);
+        if(!checkCharacterOwner || !req.session.isLoggedIn){
+            console.log('not owner')
+            return res.sendStatus(404);
+        }
+        const projects = projectModel.getUsersProjects(req.session.userID);
+        res.render('editCharacterPage', {session: req.session, projects, charID: charID});
+    });
+
+    app.post('/characters/updateCharacter', async (req, res) => {
+        const {charID} = req.query;
+        const checkCharacterOwner = characterModel.checkCharacterOwner(charID, req.session.userID);
+        if(!checkCharacterOwner || !req.session.isLoggedIn){
+            console.log('not owner')
+            return res.sendStatus(404);
+        }
+        const updates = req.body;
+        try{
+            const didUpdate = characterModel.updateCharacter(req.session.userID, charID, updates);
+            if(updates.project){ // if user wanted to add to a project
+                starsInModel.addStar(updates.project, charID);
+            }
+            didUpdate ? res.sendStatus(200) : res.sendStatus(500);
+        } catch(e){
+            console.error(e);
+            return res.sendStatus(500);
+        }
+
     });
 }

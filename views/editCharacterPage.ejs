@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Character Form</title>
+    <link rel="stylesheet" type="text/css">
+    <script src="/js/handler.js" defer></script>
+    <link rel="stylesheet" type="text/css" href="/styles/styles.css">
+</head>
+<body>
+    <a href="../users/homepage?userID=<%=session.userID%>"><div class='text-center color1' id="header">
+        <h1>Character Network</h1>
+    </div></a>
+    <div>
+        <form id="updateCharForm" class="<%= charID %>">
+            <table>
+                <tr>
+                    <td>
+                        <label id="charID" for="<%= charID %>"></label>
+                        <label for="name">Name:</label><br>
+                        <input type="text" id="name" name="name" value="" ><br>
+                        
+                        <label for="eyes">Eye Color:</label><br>
+                        <input type="text" id="eyes" name="eyeColor" value="" ><br>
+                        
+                        <label for="hair">Hair Color:</label><br>
+                        <input type="text" id="hair" name="hairColor" value="" ><br>
+                        
+                        <label for="skin">Skin Color:</label><br>
+                        <input type="text" id="skin" name="skinColor" value="" ><br>
+                    </td>
+                    <td class="tdPadding">
+                        <label for="traits">Character Traits:</label><br>
+                        <textarea id="traits" name="characterTraits" value="" rows="10" cols="90" wrap="hard"></textarea><br>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="feet">Feet Tall:</label><br>
+                        <input type="text" id="feet" name="feetTall" value="" ><br>
+                        
+                        <label for="inches">Inches Tall:</label><br>
+                        <input type="text" id="inches" name="inchesTall" value="" ><br>
+                        
+                        <label for="gender">Gender:</label><br>
+                        <select id="gender" name="gender" ><br>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                        </select><br><br>
+                        
+                        <label for="project">Select a Project to Add to</label><br>
+                        <select id="projects" name="project">
+                            <option value="">None</option>
+                            <% for(let i = 0; i < projects.length; i++){ %>
+                                <option value="<%= projects[i].projectID %>"> <%=projects[i].projectName%></option>
+                            <%  } %>
+                        </select><br><br>
+                    </td>
+                    <td class="tdPadding">
+                        <label for="backstory">Backstory:</label><br>
+                        <textarea id="backstory" name="backstory" value="" rows="10" cols="90" wrap="hard"></textarea><br><br>
+                    </td>
+                </tr>
+            </table>
+    
+            <button type="button" id="randomButton" class="fancy-button">Generate Randomly!</button><br/><br/>
+            <input type="submit" id="submitEdit" class="fancy-button big-button" name="<%= session.userID %>" value="Submit Edit!">
+        </form>
+        <p class="error"></p>
+    </div>
+</body>
+</html>

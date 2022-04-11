@@ -114,7 +114,27 @@ async function updateForm(userID, username, email, bio, password){
         console.error(err)
     }
 }
+async function updateCharForm(userID, charID, updates){
+    try{
+        const response = await fetch(`${window.location.origin}/characters/updateCharacter?charID=${charID}`, {
+            "method": "POST",
+            "headers":{
 
+                "Content-Type": "application/json"
+            },
+            "mode": "cors",
+            "body": JSON.stringify(updates)
+        });
+        if(response.ok){
+            console.log('upload success');
+            window.location.replace(`${window.location.origin}/users/homepage?userID=${userID}`);
+        } else {
+            document.querySelector('.error').textContent = "An error has occurred...";
+        }
+    } catch(err) {
+        console.error(err)
+    }
+}
 async function createProject(projectName, projectType, genre, projectDescription){
     try{
         const response = await fetch (`${window.location.origin}/projects/createProject`, {
@@ -174,6 +194,41 @@ if(document.getElementById('updateForm')){
         let userID = document.getElementById('uploadUpdate').value
         
         updateForm(userID, username, email, bio, password);
+    })
+}
+
+if(document.getElementById('updateCharForm')){
+    document.getElementById('updateCharForm').addEventListener('submit', (event) => {
+        event.preventDefault();
+        console.log('here')
+        let name = document.getElementById('name').value;
+        let eyeColor = document.getElementById('eyes').value;
+        let hairColor = document.getElementById('hair').value;
+        let skinColor = document.getElementById('skin').value;
+        let feetTall = document.getElementById('feet').value;
+        let inchesTall = document.getElementById('inches').value;
+        let gender = document.getElementById('gender').value;
+        let project = document.getElementById('projects').value;
+        let backstory = document.getElementById('backstory').value;
+        let traits = document.getElementById('traits').value;
+        let userID = document.getElementById('submitEdit').name;
+        let charID = document.getElementById('updateCharForm').className;
+        const updates = {
+            "name": name, 
+            "eyeColor": eyeColor,
+            "hairColor": hairColor,
+            "skinColor": skinColor,
+            "feetTall": feetTall,
+            "inchesTall": inchesTall,
+            "gender": gender,
+            "project": project,
+            "backstory": backstory,
+            "traits": traits
+        }
+        console.log(userID)
+        console.log(charID)
+        console.log(updates)
+        updateCharForm(userID, charID, updates);
     })
 }
 

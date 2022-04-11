@@ -50,19 +50,21 @@ class CharacterModel {
                 validObj[i] = updatesObj[i];
             }
         }
+        
         if(Object.keys(validObj).length === 0){
             return false;
         }
-        let updates = Object.keys(validObj).map(x => x + `=@${x}`).join(' and ');
+        let updates = Object.keys(validObj).map(x => x + `=@${x}`).join(' , ');
         validObj["userID"] = userID;
         validObj["charID"] = charID;
-        console.log(validObj);
+
         try{
             const sql = `UPDATE Characters
                         SET
                             ${updates}
                         where
                             creator=@userID AND charID=@charID`;
+            
             db.prepare(sql).run(validObj);
             return true;
         } catch(e){
