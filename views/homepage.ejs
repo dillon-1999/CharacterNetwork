@@ -38,6 +38,11 @@
             <div id="profilePhotoContainer" name="<%= userInfo.avatarAddress %>"> <!-- Hold image in here -->
                 <img id="profilePhoto" src="" alt="profile photo"
                     height="50px" width="50px" class="block-center circle-pic">
+                
+                 <div>
+                    <h3 class='text-center'><%= userInfo.username %></h3>
+                </div>
+                
                  <% if(session.userID === userInfo.userID) { %>
                     <form action="/users/uploadAvatarPage?userID=<%= session.userID %>" method="post">
                         <button class='block-center fancy-button2 clickable'>Edit Avatar</button>
@@ -48,9 +53,7 @@
                 <% } %>
             </div>
             
-            <div>
-                <h3 class='text-center'><%= session.username %></h3>
-            </div>
+           
             
             <!-- can't friend themselves -->
             <% if(session.userID != userInfo.userID) { %> 
