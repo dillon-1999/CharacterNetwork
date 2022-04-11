@@ -20,14 +20,14 @@
                 <% } %>
             <% for(let i = 0; i < friends.length; ++i){ %>
                 <div>
-                    <p><%= friends[i].friendID %></p> <br><br>
+                    <a href="../users/homepage?userID=<%= friends[i].friendID %>"><%= friends[i].username %></a> <br><br>
                     <form action="/users/unfriendUser?friendID=<%= friends[i].friendID %>" method="post">
                         <button type="submit">Unfriend User</button>
                     </form>
                 </div>
             <% } %>
         </div>
-    <% else { %>
+    <% } else { %>
         <%- include('partials/accessDenied.ejs') %>
     <% } %>
 </body>

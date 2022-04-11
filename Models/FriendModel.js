@@ -35,7 +35,12 @@ class FriendModel {
 
     getUsersFriends(userID){
         try {
-            const sql = `SELECT friend.username, friendID, dateFriended FROM Friends, Users user, Users friend WHERE user.userID=@userID AND friendID=friend.userID`;
+            const sql = `SELECT 
+                            friend.username, friendID, dateFriended 
+                         FROM 
+                            Friends, Users user, Users friend 
+                         WHERE 
+                            user.userID=@userID AND friendID=friend.userID`;
             return db.prepare(sql).all({userID});
         } catch (e) {
             console.error(e);
@@ -68,16 +73,16 @@ class FriendModel {
         }
     }
 
-    isFriend(friendID){
-        try{
-            const sql = `SELECT * FROM Friends WHERE friendID=@friendID`;
-            const friend = db.prepare(sql).get({friendID});
-            return friend;
-        } catch(e) {
-            console.error(e);
-            return false;
-        }
-    }
+    // isFriend(friendID){
+    //     try{
+    //         const sql = `SELECT * FROM Friends WHERE friendID=@friendID`;
+    //         const friend = db.prepare(sql).get({friendID});
+    //         return friend;
+    //     } catch(e) {
+    //         console.error(e);
+    //         return false;
+    //     }
+    // }
 }
 let x = new FriendModel(db);
 // console.log(x.createFriend('61553907-d03c-4c15-8908-7c180b5f8e19','e6154999-b0a8-405b-b45a-da4a6133cc88' ))

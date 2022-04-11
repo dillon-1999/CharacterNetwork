@@ -252,6 +252,16 @@ class UserModel {
         }
     }
 
+    isUser(userID){
+        try{
+            const sql = "Select username from Users where userID=@userID";
+            return db.prepare(sql).get({userID});
+        } catch(e){
+            console.error(e);
+            return false;
+        }
+    }
+
     uploadAvatar(userID, avatarAddress){
         try{
             const sql = `UPDATE Users

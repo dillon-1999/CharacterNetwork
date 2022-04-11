@@ -52,11 +52,25 @@
                 <h3 class='text-center'><%= session.username %></h3>
             </div>
             
-            <!--adding a friend -->
+            <!-- can't friend themselves -->
             <% if(session.userID != userInfo.userID) { %> 
-                <form action="/users/friendUser?friendID=<%= userInfo.userID %>" method="post" id="friendForm">
-                    <button class='block-center fancy-button2'>Friend</button>
-                </form>
+                <!-- check to see if theyre friends or not -->
+                <% let friend = false; %>
+                <% for (let i = 0; i < friends.length && !friend; i++){ %>
+                        <% if(userInfo.userID == friends[i].friendID){ %>
+                            <% friend = true %>
+                        <% } %>
+                <% } %>
+                <% if(!friend){ %>
+                    <form action="/users/friendUser?friendID=<%= userInfo.userID %>" method="post" id="friendForm">
+                        <button class='block-center fancy-button2'>Friend</button>
+                    </form>
+                <% } else { %>
+                    <form action="/users/unFriendUser?friendID=<%= userInfo.userID %>" method="post" id="friendForm">
+                        <button class='block-center fancy-button2'>Un-friend</button>
+                    </form>
+                <% } %>
+                
             <% } %>
             
             <!-- navigation buttons -->
@@ -112,8 +126,6 @@
                     <% }} %>
                     
                     </div>
-
-                    <!-- <td style="padding-left: 25px">This is where another table of chacters will go.-->
                 </tr>
                 </table>
                 </td>

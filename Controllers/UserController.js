@@ -8,6 +8,7 @@ const fs = require('fs');
 const multer = require('multer');
 const crypto = require('crypto');
 const path = require('path');
+const { friendModel } = require("../Models/FriendModel");
 
 
 
@@ -49,8 +50,11 @@ module.exports = (app) =>{
         const chars = characterModel.getCharsByUser(userID);
         const projects = projectModel.getUsersProjects(userID);
         const userInfo = userModel.getUserData(userID);
+        // get logged in users friends, not the pages friends
+        const friends = friendModel.getUsersFriends(req.session.userID);
+        console.log(friends);
         try {
-            res.render('homepage', {session: req.session, chars, projects, userInfo});
+            res.render('homepage', {session: req.session, chars, projects, userInfo, friends});
         } catch(e){
             console.error(e);
             return res.sendStatus(500)
