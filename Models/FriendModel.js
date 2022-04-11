@@ -36,11 +36,11 @@ class FriendModel {
     getUsersFriends(userID){
         try {
             const sql = `SELECT 
-                            friend.username, friendID, dateFriended 
+                            myFriend.username, friendID, dateFriended 
                          FROM 
-                            Friends, Users user, Users friend 
+                            Friends, Users myFriend
                          WHERE 
-                            user.userID=@userID AND friendID=friend.userID`;
+                            Friends.userID=@userID AND Friends.friendID=myFriend.userID`;
             return db.prepare(sql).all({userID});
         } catch (e) {
             console.error(e);
