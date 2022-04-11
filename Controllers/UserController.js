@@ -40,7 +40,7 @@ let upload = multer({storage});
 module.exports = (app) =>{
 
     app.get('/newUser', async (req, res) => {
-        res.render('newUser');
+        res.render('newUser', {session: req.session});
     });
 
     app.get('/users/homepage', async (req, res) => {

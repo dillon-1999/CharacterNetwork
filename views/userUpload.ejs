@@ -23,6 +23,8 @@
                     >Upload your Avatar!</button>
                 </form>
                 <p class="error"></p>
+        <% } else{ %>
+            <%- include('partials/accessDenied.ejs') %>
         <% } %>
     </div>
 </body>

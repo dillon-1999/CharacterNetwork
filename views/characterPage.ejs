@@ -30,79 +30,82 @@
     
 </style>
 <body>
-    <a href="../users/homepage?userID=<%=session.userID%>"><div class='text-center color1' id="header">
-        <h1>Character Network</h1>
-    </div></a>
-    <div id="header" style="height:15%;width:90%;">
-        <div style="float:right">
-            <img src="/charAvatars/<%=charData.charAvatar%>" width="250px" style="margin-left:15%;margin-top:5%"/>
+    <% if(session.isLoggedIn) { %>
+        <a href="../users/homepage?userID=<%=session.userID%>"><div class='text-center color1' id="header">
+            <h1>Character Network</h1>
+        </div></a>
+        <div id="header" style="height:15%;width:90%;">
+            <div style="float:right">
+                <img src="/charAvatars/<%=charData.charAvatar%>" width="250px" style="margin-left:15%;margin-top:5%"/>
+            </div>
+            <div>
+                <table>
+                    <col style="width:20%;">
+                    <tr>
+                        <th colspan="2"> Name: <%=charData.name%> </th>                    
+                    </tr>
+                    <tr>
+                        <td class="centerData"> Eye Color: </td>
+                        <td> <%=charData.eyeColor%> </td>
+                    </tr>
+                    <tr>
+                        <td class="centerData"> Hair Color: </td>
+                        <td> <%=charData.hairColor%> </td>
+                    </tr>
+                    <tr>
+                        <td class="centerData"> Skin Color: </td>
+                        <td> <%=charData.skinColor%> </td>
+                    </tr>
+                    <tr>
+                        <td class="centerData"> Height: </td>
+                        <td> <%=charData.feetTall%>' <%=charData.inchesTall%>'' </td>
+                    </tr>
+                    <tr>
+                        <td class="centerData"> Gender: </td>
+                        <td> <%=charData.gender%> </td>
+                    </tr>
+                    <tr>
+                        <td class="longtextData centerData">Character Traits:</td>
+                        <td> <%=charData.characterTraits%> </td>
+                    </tr>
+                    <tr>
+                        <td class="longtextData centerData">Backstory:</td>
+                        <td> <%=charData.backstory%> </td>
+                    </tr>
+                </table>
+            </div>
         </div>
-        <div>
-            <table>
-                <col style="width:20%;">
-                <tr>
-                    <th colspan="2"> Name: <%=charData.name%> </th>                    
-                </tr>
-                <tr>
-                    <td class="centerData"> Eye Color: </td>
-                    <td> <%=charData.eyeColor%> </td>
-                </tr>
-                <tr>
-                    <td class="centerData"> Hair Color: </td>
-                    <td> <%=charData.hairColor%> </td>
-                </tr>
-                <tr>
-                    <td class="centerData"> Skin Color: </td>
-                    <td> <%=charData.skinColor%> </td>
-                </tr>
-                <tr>
-                    <td class="centerData"> Height: </td>
-                    <td> <%=charData.feetTall%>' <%=charData.inchesTall%>'' </td>
-                </tr>
-                <tr>
-                    <td class="centerData"> Gender: </td>
-                    <td> <%=charData.gender%> </td>
-                </tr>
-                <tr>
-                    <td class="longtextData centerData">Character Traits:</td>
-                    <td> <%=charData.characterTraits%> </td>
-                </tr>
-                <tr>
-                    <td class="longtextData centerData">Backstory:</td>
-                    <td> <%=charData.backstory%> </td>
-                </tr>
-            </table>
-        </div>
-    </div>
-    <br>
-    
-    <% if(session.userID == charData.creator) { %>
-    <table class="invisible">
-        <tr>
-            <td class="invisible" style="width:10px">
-            <!--CHECK FORM: only hypothetical URL as edit functionality hasn't been built yet -->
-            <form action="/characters/editCharInfo?charID=<%= charData.charID %>" method="post">
-                <button class='block-center fancy-button2'>Edit</button>
-            </form>
-            </td>
-            
-            <td class="invisible">
-            <% if( charData.public === 0){ %>
-                <form action="/characters/changeVisibility?charID=<%=charData.charID%>&visibility=1" method="post">
-                    <button class="fancy-button2" id="private-button" name="<%= charData.charID %>">make public</button><br>
-                </form>
-            <% } else{ %>
-                <form action="/characters/changeVisibility?charID=<%=charData.charID%>&visibility=0" method="post">
-                    <button class="fancy-button2" id="public-button" name="<%= charData.charID %>">make private</button><br>
-                </form>
-            <% } %>
-            </td>
-        </tr>
-        <form action="/characters/uploadAvatarPage?charID=<%= charData.charID %>" method="post">
-            <button class='block-center fancy-button2 clickable'>Edit Avatar</button>
-        </form>
-    </table>
-    <% } %>
+        <br>
         
+        <% if(session.userID == charData.creator) { %>
+        <table class="invisible">
+            <tr>
+                <td class="invisible" style="width:10px">
+                <!--CHECK FORM: only hypothetical URL as edit functionality hasn't been built yet -->
+                <form action="/characters/editCharInfo?charID=<%= charData.charID %>" method="post">
+                    <button class='block-center fancy-button2'>Edit</button>
+                </form>
+                </td>
+                
+                <td class="invisible">
+                <% if( charData.public === 0){ %>
+                    <form action="/characters/changeVisibility?charID=<%=charData.charID%>&visibility=1" method="post">
+                        <button class="fancy-button2" id="private-button" name="<%= charData.charID %>">make public</button><br>
+                    </form>
+                <% } else{ %>
+                    <form action="/characters/changeVisibility?charID=<%=charData.charID%>&visibility=0" method="post">
+                        <button class="fancy-button2" id="public-button" name="<%= charData.charID %>">make private</button><br>
+                    </form>
+                <% } %>
+                </td>
+            </tr>
+            <form action="/characters/uploadAvatarPage?charID=<%= charData.charID %>" method="post">
+                <button class='block-center fancy-button2 clickable'>Edit Avatar</button>
+            </form>
+        </table>
+        <% } %>
+    <% } else { %>
+        <%- include('partials/accessDenied.ejs') %>
+    <% } %>
 </body>
 </html>

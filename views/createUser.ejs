@@ -10,30 +10,34 @@
     </script>
 </head>
 <body>
-    <div>
-        <%- include('partials/header.ejs') %>
+    <% if(session.isLoggedIn){ %>
         <div>
-            <form id="registerForm" >
-                <div>
-                    <label></label></br>
-                    <input type="email" id="email" name="email" placeholder="Email Address" required>
-                </div>
-                <div>
-                    <label></label>
-                    <input type="password" id="password" name="password" placeholder="Password (Min 8 Characters)" required>
-                </div>
-                <div>
-                    <label></label>
-                    <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" required>
-                </div>
-                <div>
-                    <label></label>
-                    <input type="text" id="username" name="username" placeholder="Username" required>
-                </div>
-                <button>Submit</button>
-            </form>
-            <p class="error"></p>
+            <%- include('partials/header.ejs') %>
+            <div>
+                <form id="registerForm" >
+                    <div>
+                        <label></label></br>
+                        <input type="email" id="email" name="email" placeholder="Email Address" required>
+                    </div>
+                    <div>
+                        <label></label>
+                        <input type="password" id="password" name="password" placeholder="Password (Min 8 Characters)" required>
+                    </div>
+                    <div>
+                        <label></label>
+                        <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" required>
+                    </div>
+                    <div>
+                        <label></label>
+                        <input type="text" id="username" name="username" placeholder="Username" required>
+                    </div>
+                    <button>Submit</button>
+                </form>
+                <p class="error"></p>
+            </div>
         </div>
-    </div>
+    <% } else { %>
+        <%- include('partials/accessDenied.ejs') %>
+    <% } %>
 </body>
 </html>

@@ -64,7 +64,7 @@ app.get('/createUser', (req, res) => {
 });
 
 app.get('/search', (req, res) => {
-    res.render('searchPage');
+    res.render('searchPage', {session: req.session});
 });
 
 app.listen(process.env.PORT, () => {

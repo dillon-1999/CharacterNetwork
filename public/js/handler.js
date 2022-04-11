@@ -337,10 +337,10 @@ function makeName()
     vowel_count = 0;    //number of vowels used in a row
     cons_count = 0;     //number of consonants used in a row
     
-    name = "";
+    let name = "";
     
     //pick first letter
-    choice = Math.floor(Math.random() * 2);
+    let choice = Math.floor(Math.random() * 2);
     if (choice == 0) {
       name = pick_cons(name).toUpperCase();
       cons_count = 2;
@@ -377,11 +377,7 @@ function makeName()
                 cons_count = 0;
             }
         }
-        
-    
-
     }
-    
     return name;
 }
 
@@ -502,39 +498,3 @@ if (document.getElementById('searchForm')) {
   });
 
 }
-
-
-//Aly Nichols
-//if(document.getElementById('test')){
- // console.log("Hey");
-  //document.getElementById("test").addEventListener("click", () => {
-    //document.getElementById("test").innerHTML = "Boo";
-  //});
-    //window.location.replace(`${window.location.origin}/users/homepage?userID=${req.session.userID}`);
-//}
- 
- //if(document.getElementById('header')){
-    //document.getElementById('header').addEventListener('click', (event) => {
-    //    event.preventDefault();
-  //      window.location.replace(`${window.location.origin}/users/homepage?userID=${userID}`);
-        
-//});}
-
-// if(document.getElementById('private-button')){
-//     document.getElementById('private-button').addEventListener('click', (event) => {
-//         event.preventDefault();
-//         const id = document.getElementById('private-button').name;
-//         changeVisibility(0, id);
-//     });
-// }
-
-// if(document.getElementById('public-button')){
-//     document.getElementById('public-button').addEventListener('click', (event) => {
-//         event.preventDefault();
-//         const id = document.getElementById('public-button').name;
-//         changeVisibility(0, id);
-//     });
-// }
-
-
-

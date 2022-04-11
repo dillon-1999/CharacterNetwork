@@ -10,30 +10,34 @@
     <link rel="stylesheet" type="text/css" href="/styles/styles.css">
 </head>
 <body>
-    <a href="../users/homepage?userID=<%=session.userID%>"><div class='text-center color1' id="header">
-        <h1>Character Network</h1>
-    </div></a>
-    <div>
-        <form id="updateForm" >
-            <div>
-                <label for="email"></label></br>
-                <input type="email" id="email" name="email" placeholder="Email Address">
-            </div>
-            <div>
-                <label for="username"></label>
-                <input type="text" id="username" name="username" placeholder="Username">
-            </div>
-            <div>
-                <label for="password"></label>
-                <input type="password" id="password" name="password" placeholder="Password">
-            </div>
-            <div>
-                <label for="bio"></label>
-                <input type="text" id="bio" name="bio" placeholder="Bio">
-            </div>
-            <button id='uploadUpdate' type="submit" value="<%= session.userID %>">Submit</button>
-        </form>
-        <p class="error"></p>
-    </div>
+    <% if(session.isLoggedIn){ %>
+        <a href="../users/homepage?userID=<%=session.userID%>"><div class='text-center color1' id="header">
+            <h1>Character Network</h1>
+        </div></a>
+        <div>
+            <form id="updateForm" >
+                <div>
+                    <label for="email"></label></br>
+                    <input type="email" id="email" name="email" placeholder="Email Address">
+                </div>
+                <div>
+                    <label for="username"></label>
+                    <input type="text" id="username" name="username" placeholder="Username">
+                </div>
+                <div>
+                    <label for="password"></label>
+                    <input type="password" id="password" name="password" placeholder="Password">
+                </div>
+                <div>
+                    <label for="bio"></label>
+                    <input type="text" id="bio" name="bio" placeholder="Bio">
+                </div>
+                <button id='uploadUpdate' type="submit" value="<%= session.userID %>">Submit</button>
+            </form>
+            <p class="error"></p>
+        </div>
+    <% } else { %>
+        <%- include('partials/accessDenied.ejs') %>
+    <% } %>
 </body>
 </html>

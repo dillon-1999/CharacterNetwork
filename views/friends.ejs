@@ -10,21 +10,25 @@
 <style>
 </style>
 <body>
-    <a href="../users/homepage?userID=<%=session.userID%>"><div class='text-center color1' id="header">
-        <h1>Character Network</h1>
-    </div></a>
-    <div>
-        <% if(friends.length === 0){ %>
-                <h1> No friends to display!</h1>
+    <% if(session.isLoggedIn){ %>
+        <a href="../users/homepage?userID=<%=session.userID%>"><div class='text-center color1' id="header">
+            <h1>Character Network</h1>
+        </div></a>
+        <div>
+            <% if(friends.length === 0){ %>
+                    <h1> No friends to display!</h1>
+                <% } %>
+            <% for(let i = 0; i < friends.length; ++i){ %>
+                <div>
+                    <p><%= friends[i].friendID %></p> <br><br>
+                    <form action="/users/unfriendUser?friendID=<%= friends[i].friendID %>" method="post">
+                        <button type="submit">Unfriend User</button>
+                    </form>
+                </div>
             <% } %>
-        <% for(let i = 0; i < friends.length; ++i){ %>
-            <div>
-                <p><%= friends[i].friendID %></p> <br><br>
-                <form action="/users/unfriendUser?friendID=<%= friends[i].friendID %>" method="post">
-                    <button type="submit">Unfriend User</button>
-                </form>
-            </div>
-        <% } %>
-    </div>
+        </div>
+    <% else { %>
+        <%- include('partials/accessDenied.ejs') %>
+    <% } %>
 </body>
 </html>

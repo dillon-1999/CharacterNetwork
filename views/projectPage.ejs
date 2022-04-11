@@ -30,54 +30,58 @@
     }
 </style>
 <body>
-    <a href="../users/homepage?userID=<%=session.userID%>"><div class='text-center color1' id="header">
-        <h1>Character Network</h1>
-    </div></a>
-    <% if(projectInfo.public === 0 && session.userID !== projectInfo.userID){ %>
-            <h1>This project isn't public!</h1>
-       <% } else { %>
-        <table>
-            <col style="width:20%;">
+    <% if(session.isLoggedIn){ %>
+        <a href="../users/homepage?userID=<%=session.userID%>"><div class='text-center color1' id="header">
+            <h1>Character Network</h1>
+        </div></a>
+        <% if(projectInfo.public === 0 && session.userID !== projectInfo.userID){ %>
+                <h1>This project isn't public!</h1>
+        <% } else { %>
+            <table>
+                <col style="width:20%;">
+                    <tr>
+                        <th colspan="2"> Name: <%=projectInfo.projectName%> </th>                    
+                    </tr>
                 <tr>
-                    <th colspan="2"> Name: <%=projectInfo.projectName%> </th>                    
+                    <td class="text-center"> Type: </td>
+                    <td> <%= projectInfo.projectType %></td>
                 </tr>
-            <tr>
-                <td class="text-center"> Type: </td>
-                <td> <%= projectInfo.projectType %></td>
-            </tr>
-            <tr>
-                <td class="text-center"> Genre: </td>
-                <td> <%= projectInfo.genre %></td>
-            </tr>
-            <tr>
-                <td class="text-center longtextData"> Description: </td>
-                <td> <%= projectInfo.projectDescription %></td>
-            </tr>
-            <tr>
-                <td class="text-center"> Characters: </td>
-                <td>
-                    <div>
-                        <% for(let i = 0; i < projectsCharacters.length; ++i){ %>
-                            <a href="../../characters/charpage?charID=<%=projectsCharacters[i].charID%>"><p><%= projectsCharacters[i].name %></p></a>
-                       <% } %>
-                    </div>
-                </td>
-            </tr>
-        </table> <br>
-        <!-- display characters in this project -->
-            
-        <% } %>
-        
-        <% if(session.userID === projectInfo.userID){ %>
-            <% if( projectInfo.public === 0){ %>
-                <form action="/projects/changeVisibility?projectID=<%=projectInfo.projectID%>&visibility=1" method="post">
-                    <button id="private-button" class="fancy-button2" name="<%= projectInfo.projectID %>">make public</button><br>
-                </form>
-            <% } else{ %>
-                <form action="/projects/changeVisibility?projectID=<%=projectInfo.projectID%>&visibility=0" method="post">
-                    <button id="public-button" class="fancy-button2" name="<%= projectInfo.projectID %>">make private</button><br>
-                </form>
+                <tr>
+                    <td class="text-center"> Genre: </td>
+                    <td> <%= projectInfo.genre %></td>
+                </tr>
+                <tr>
+                    <td class="text-center longtextData"> Description: </td>
+                    <td> <%= projectInfo.projectDescription %></td>
+                </tr>
+                <tr>
+                    <td class="text-center"> Characters: </td>
+                    <td>
+                        <div>
+                            <% for(let i = 0; i < projectsCharacters.length; ++i){ %>
+                                <a href="../../characters/charpage?charID=<%=projectsCharacters[i].charID%>"><p><%= projectsCharacters[i].name %></p></a>
+                        <% } %>
+                        </div>
+                    </td>
+                </tr>
+            </table> <br>
+            <!-- display characters in this project -->
+                
             <% } %>
-        <%  } %>
+            
+            <% if(session.userID === projectInfo.userID){ %>
+                <% if( projectInfo.public === 0){ %>
+                    <form action="/projects/changeVisibility?projectID=<%=projectInfo.projectID%>&visibility=1" method="post">
+                        <button id="private-button" class="fancy-button2" name="<%= projectInfo.projectID %>">make public</button><br>
+                    </form>
+                <% } else{ %>
+                    <form action="/projects/changeVisibility?projectID=<%=projectInfo.projectID%>&visibility=0" method="post">
+                        <button id="public-button" class="fancy-button2" name="<%= projectInfo.projectID %>">make private</button><br>
+                    </form>
+                <% } %>
+            <%  } %>
+    <% } else { %>
+        <%- include('partials/accessDenied.ejs') %>
+    <% } %>
 </body>
 </html>

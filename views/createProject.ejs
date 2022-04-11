@@ -9,43 +9,47 @@
     <script src="/js/handler.js" defer></script>
 </head>
 <body>
-    <a href="../users/homepage?userID=<%=session.userID%>"><div class='text-center color1' id="header">
-        <h1>Character Network</h1>
-    </div></a>
-    <div>
-        <form id="createProjectForm" >
-            <div>
-                <label for="name">Project Name</label>
-                <input id="name" name="name" type="text" required>
-                <br><br>
-            </div>
-            <div>
-                <label for="type">Project Type</label>
-                <select id="type" name="type" required><br>
-                    <option value="novel">Novel</option>
-                    <option value="short-story">Short Story</option>
-                    <option value="poem">Poem</option>
-                </select><br><br>
-            </div>
-            <div>
-                <label for="genre">Project Genre:</label>
-                <select id="genre" name="genre" required><br>
-                    <option value="horror">Horror</option>
-                    <option value="comedy">Comedy</option>
-                    <option value="drama">Drama</option>
-                    <option value="comedy">Comedy</option>
-                    <option value="adventure">Adventure</option>
-                    <option value="action">Action</option>
-                    <option value="thriller">Thriller</option>
-                    <option value="romance">Romance</option>
-                </select><br><br>
-            </div>
-            <div>
-                <label for="description">Description:</label><br>
-                <textarea id="description" name="description" rows="10" cols="90" wrap="hard" required></textarea><br><br>
-            </div>
-            <button type="submit">Create Project!</button>
-        </form>
-    </div>
+    <% if(session.isLoggedIn){ %>
+        <a href="../users/homepage?userID=<%=session.userID%>"><div class='text-center color1' id="header">
+            <h1>Character Network</h1>
+        </div></a>
+        <div>
+            <form id="createProjectForm" >
+                <div>
+                    <label for="name">Project Name</label>
+                    <input id="name" name="name" type="text" required>
+                    <br><br>
+                </div>
+                <div>
+                    <label for="type">Project Type</label>
+                    <select id="type" name="type" required><br>
+                        <option value="novel">Novel</option>
+                        <option value="short-story">Short Story</option>
+                        <option value="poem">Poem</option>
+                    </select><br><br>
+                </div>
+                <div>
+                    <label for="genre">Project Genre:</label>
+                    <select id="genre" name="genre" required><br>
+                        <option value="horror">Horror</option>
+                        <option value="comedy">Comedy</option>
+                        <option value="drama">Drama</option>
+                        <option value="comedy">Comedy</option>
+                        <option value="adventure">Adventure</option>
+                        <option value="action">Action</option>
+                        <option value="thriller">Thriller</option>
+                        <option value="romance">Romance</option>
+                    </select><br><br>
+                </div>
+                <div>
+                    <label for="description">Description:</label><br>
+                    <textarea id="description" name="description" rows="10" cols="90" wrap="hard" required></textarea><br><br>
+                </div>
+                <button type="submit">Create Project!</button>
+            </form>
+        </div>
+    <% } else { %>
+        <%- include('partials/accessDenied.ejs') %>
+    <% } %>
 </body>
 </html>

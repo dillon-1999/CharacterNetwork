@@ -10,24 +10,28 @@
 </head>
 <script src='/js/handler.js' defer></script>
 <body>
-    <div>
-        <%- include('partials/header.ejs') %>
-    </div>
-    <form id="searchForm">
-        <input type="text" id="search" name="search" placeholder="Search the Network..." required> <br>
-        <input type="radio" name="searchType" id="user" value="user" checked required> 
-        <label for="user">Search for a User</label> <br>
-        <input type="radio" name="searchType" id="char" value="char" required>
-        <label for="user">Search for a Character</label>   <br>
-        <input type="radio" name="searchType" id="project" value="project" required> 
-        <label for="user">Search for a Project</label> <br> <br>
-        <button type="submit" id="searchButton">Search!</button>
-        <br><br>
-    </form>
-    <div>
-        <p id="output">
-        </p>
-    </div>
-    <p id="error"></p>
+    <% if(session.isLoggedIn){ %>
+        <div>
+            <%- include('partials/header.ejs') %>
+        </div>
+        <form id="searchForm">
+            <input type="text" id="search" name="search" placeholder="Search the Network..." required> <br>
+            <input type="radio" name="searchType" id="user" value="user" checked required> 
+            <label for="user">Search for a User</label> <br>
+            <input type="radio" name="searchType" id="char" value="char" required>
+            <label for="user">Search for a Character</label>   <br>
+            <input type="radio" name="searchType" id="project" value="project" required> 
+            <label for="user">Search for a Project</label> <br> <br>
+            <button type="submit" id="searchButton">Search!</button>
+            <br><br>
+        </form>
+        <div>
+            <p id="output">
+            </p>
+        </div>
+        <p id="error"></p>
+    <% } else { %>
+        <%- include('partials/accessDenied.ejs') %>
+    <% } %>
 </body>
 </html>

@@ -10,18 +10,22 @@
 <style>
 </style>
 <body>
-    <a href="../users/homepage?userID=<%=session.userID%>"><div class='text-center color1' id="header">
-        <h1>Character Network</h1>
-    </div></a>
-    <div>
-        <% for(let i = 0; i < projects.length; ++i){ %>
-                <div class="box">
-                    <form action="/projects/projectPage?projectID=<%= projects[i].projectID %>" method="post">
-                        <input type="submit" class="projectButton" value="<%= projects[i].projectName %>">
-                        <p><%= projects[i].projectDescription %></p>
-                    </form>
-                </div><br>
-        <% } %>
-    </div>
+    <% if(session.isLoggedIn){ %>
+        <a href="../users/homepage?userID=<%=session.userID%>"><div class='text-center color1' id="header">
+            <h1>Character Network</h1>
+        </div></a>
+        <div>
+            <% for(let i = 0; i < projects.length; ++i){ %>
+                    <div class="box">
+                        <form action="/projects/projectPage?projectID=<%= projects[i].projectID %>" method="post">
+                            <input type="submit" class="projectButton" value="<%= projects[i].projectName %>">
+                            <p><%= projects[i].projectDescription %></p>
+                        </form>
+                    </div><br>
+            <% } %>
+        </div>
+    <% } else { %>
+        <%- include('partials/accessDenied.ejs') %>
+    <% } %>
 </body>
 </html>
