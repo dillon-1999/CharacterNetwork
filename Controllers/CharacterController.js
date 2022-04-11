@@ -7,10 +7,11 @@ const { projectModel } = require("../Models/ProjectModel");
 const fs = require('fs');
 const multer = require('multer');
 const crypto = require('crypto');
-
+const path = require('path');
 let storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, '../charAvatars');
+        cb(null, path.join(__dirname, '/../public/charAvatars/'));
+        
     },
 
     filename: (req, file, cb) => {
@@ -40,6 +41,19 @@ module.exports = (app) => {
         res.render('createCharacterPage', {session: req.session, projects});
     });
 
+    app.post('/characters/uploadAvatarPage', async (req, res) => {
+        console.log("GET /users/uploadAvatarPage")
+        const {charID} = req.query;
+        console.log(charID);
+        const checkCharacterOwner = characterModel.checkCharacterOwner(charID, req.session.userID);
+        console.log(checkCharacterOwner)
+        if(!req.session.isLoggedIn || !checkCharacterOwner){
+            return res.sendStatus(404);
+        }
+
+        res.render('uploadCharAvatar', {session: req.session, charID: charID});
+    });
+
     app.post('/characters/createCharacter', async (req, res) => {
         const character = req.body;
         try {
@@ -63,6 +77,7 @@ module.exports = (app) => {
         try{
             const previousFile = characterModel.getAvatarHash(req.session.userID, req.query.charID);
             const didUpload = characterModel.uploadAvatar(req.session.userID, req.query.charID, req.file.filename);
+            console.log(didUpload);
             if(didUpload){
                 if(previousFile){ // this deletes the old file 
                     fs.unlinkSync(`../characterAvatars/${previousFile.charAvatar}`);

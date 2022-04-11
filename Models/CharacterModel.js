@@ -125,7 +125,7 @@ class CharacterModel {
                          FROM CHARACTERS
                          WHERE creator=@creator
                                AND
-                               charID=@charaID
+                               charID=@charID
                         `
             return db.prepare(sql).get({creator, charID});
         } catch(e){

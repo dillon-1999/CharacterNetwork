@@ -93,6 +93,25 @@ async function uploadFile(userID){
     }
 }
 
+async function uploadCharFile(userID, charID){
+    try{
+        let form = document.getElementById('uploadCharImage');
+        let formData = new FormData(form);
+        const response = await fetch(`${window.location.origin}/characters/uploadImage/?charID=${charID}`, {
+            "method": "POST",
+            "body": formData
+        });
+        if(response.ok){
+            console.log('upload success');
+            window.location.replace(`${window.location.origin}/users/homepage?userID=${userID}`);
+        } else {
+            document.querySelector('.error').textContent = "An error has occurred...";
+        }
+    } catch(err) {
+        console.error(err)
+    }
+}
+
 async function updateForm(userID, username, email, bio, password){
     try{
         const response = await fetch(`${window.location.origin}/users/updateUser?userID=${userID}`, {
@@ -177,6 +196,18 @@ if(document.getElementById('uploadAvatar')){
     document.getElementById('uploadAvatar').addEventListener('click', (event) => {
         event.preventDefault();
         if(uploadFile(document.getElementById('uploadAvatar').value)){
+            console.log("Yooooo");
+        } else {
+            console.log("nooooo")
+        }
+    })
+}
+
+if(document.getElementById('uploadCharAvatar')){
+    document.getElementById('uploadCharAvatar').addEventListener('click', (event) => {
+        event.preventDefault();
+        console.log('in listener')
+        if(uploadCharFile(document.getElementById('uploadCharImage').className, document.getElementById('uploadCharAvatar').value)){
             console.log("Yooooo");
         } else {
             console.log("nooooo")
