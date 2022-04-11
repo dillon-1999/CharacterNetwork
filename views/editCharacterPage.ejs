@@ -21,16 +21,16 @@
                         <td>
                             <label id="charID" for="<%= charID %>"></label>
                             <label for="name">Name:</label><br>
-                            <input type="text" id="name" name="name" value="" ><br>
+                            <input type="text" id="name" name="name" value="" placeholder="<%= charInfo.name %>"><br>
                             
                             <label for="eyes">Eye Color:</label><br>
-                            <input type="text" id="eyes" name="eyeColor" value="" ><br>
+                            <input type="text" id="eyes" name="eyeColor" value="" placeholder="<%= charInfo.eyeColor %>"><br>
                             
                             <label for="hair">Hair Color:</label><br>
-                            <input type="text" id="hair" name="hairColor" value="" ><br>
+                            <input type="text" id="hair" name="hairColor" value="" placeholder="<%= charInfo.hairColor %>"><br>
                             
                             <label for="skin">Skin Color:</label><br>
-                            <input type="text" id="skin" name="skinColor" value="" ><br>
+                            <input type="text" id="skin" name="skinColor" value="" placeholder="<%= charInfo.skinColor %>"><br>
                         </td>
                         <td class="tdPadding">
                             <label for="traits">Character Traits:</label><br>
@@ -40,10 +40,10 @@
                     <tr>
                         <td>
                             <label for="feet">Feet Tall:</label><br>
-                            <input type="text" id="feet" name="feetTall" value="" ><br>
+                            <input type="text" id="feet" name="feetTall" value="" placeholder="<%= charInfo.feetTall %>"><br>
                             
                             <label for="inches">Inches Tall:</label><br>
-                            <input type="text" id="inches" name="inchesTall" value="" ><br>
+                            <input type="text" id="inches" name="inchesTall" value="" placeholder="<%= charInfo.skinColor %>" ><br>
                             
                             <label for="gender">Gender:</label><br>
                             <select id="gender" name="gender" ><br>
@@ -61,7 +61,7 @@
                         </td>
                         <td class="tdPadding">
                             <label for="backstory">Backstory:</label><br>
-                            <textarea id="backstory" name="backstory" value="" rows="10" cols="90" wrap="hard"></textarea><br><br>
+                            <textarea id="backstory" name="backstory" value="" rows="10" cols="90" wrap="hard" placeholder="<%= charInfo.backstory %>"></textarea><br><br>
                         </td>
                     </tr>
                 </table>

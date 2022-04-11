@@ -156,7 +156,9 @@ module.exports = (app) => {
             return res.sendStatus(404);
         }
         const projects = projectModel.getUsersProjects(req.session.userID);
-        res.render('editCharacterPage', {session: req.session, projects, charID: charID});
+        const charInfo = characterModel.getCharInfo(charID);
+        console.log(charInfo);
+        res.render('editCharacterPage', {session: req.session, projects, charID: charID, charInfo});
     });
 
     app.post('/characters/updateCharacter', async (req, res) => {
