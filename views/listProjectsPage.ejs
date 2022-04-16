@@ -15,14 +15,18 @@
             <h1>Character Network</h1>
         </div></a>
         <div>
-            <% for(let i = 0; i < projects.length; ++i){ %>
-                    <div class="box">
-                        <form action="/projects/projectPage?projectID=<%= projects[i].projectID %>" method="post">
-                            <input type="submit" class="projectButton" value="<%= projects[i].projectName %>">
-                            <p><%= projects[i].projectDescription %></p>
-                        </form>
-                    </div><br>
-            <% } %>
+            <% if(projects.length > 0){ %>
+                <% for(let i = 0; i < projects.length; ++i){ %>
+                        <div class="box">
+                            <form action="/projects/projectPage?projectID=<%= projects[i].projectID %>" method="post">
+                                <input type="submit" class="projectButton" value="<%= projects[i].projectName %>">
+                                <p><%= projects[i].projectDescription %></p>
+                            </form>
+                        </div><br>
+                <% } %>
+          <% } else{ %>
+                <h1>No projects to display!</h1>
+          <% } %>
         </div>
     <% } else { %>
         <%- include('partials/accessDenied.ejs') %>
