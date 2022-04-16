@@ -79,11 +79,14 @@
             <!-- navigation buttons -->
             <br/>
             <div class='flex-parent justify-center'>
+                <form action="/projects/allUserProjects?owner=<%= userInfo.userID %>" method="post">
+                    <input class='fancy-button big-button clickable rightSide' type="submit" id="projectsView" value="View User Projects">
+                </form>
                 <% if(session.userID === userInfo.userID){ %>
                     <!-- Change all of these to forms, bad practice to use <a> -->
-                    <form action="/projects/allUserProjects?userID=<%= session.userID %>" method="post">
+                    <!-- <form action="/projects/allUserProjects?userID=<%= session.userID %>" method="post">
                         <input class='fancy-button big-button clickable rightSide' type="submit" id="projectsView" value="View Your Projects">
-                    </form>
+                    </form> -->
 
                     <form action="/users/friends">
                         <input class='fancy-button big-button clickable rightSide' type="submit" id="friendsView" value="View Your Friends">

@@ -1,4 +1,5 @@
 "use strict";
+const { valid } = require("joi");
 const { db } = require("./db");
 const uuidV4 = require("uuid").v4;
 
@@ -20,6 +21,35 @@ class ProjectModel {
         }
     }
 
+    updateProject(userID, projectID, updatesObj){
+        let options = ['projectName', 'projectType', 'genre', 'projectDescription'];
+        let validObj = {};
+        for(const i in updatesObj){
+            if(options.includes(i) && updatesObj[i]){
+                validObj[i] = updatesObj[i];
+            }
+        }
+        console.log(validObj)
+        if(Object.keys(validObj).length === 0){
+            return false;
+        }
+        let updates = Object.keys(validObj).map(x => x + `=@${x}`).join(' , ');
+        validObj["userID"] = userID;
+        validObj["projectID"] = projectID;
+        console.log(validObj);
+        try{
+            const sql = `UPDATE Projects
+                        SET
+                            ${updates}
+                        where
+                            userID=@userID and projectID=@projectID`;
+            db.prepare(sql).run(validObj);
+            return true;
+        } catch(e){
+            console.error(e);
+            return false;
+        }
+    }
     // deletes all characters along with a project deletion
     deleteProjectTransaction(userID, projectID){
         try {
@@ -114,6 +144,16 @@ class ProjectModel {
     getUserProjects(userID){
         try {
             const sql = `SELECT * FROM Projects WHERE userID=@userID`;
+            return db.prepare(sql).all({userID});
+        } catch (e){
+            console.error(e);
+            return false;
+        }
+    }
+
+    getUserPublicProjects(userID){
+        try {
+            const sql = `SELECT * FROM Projects WHERE userID=@userID AND public=1`;
             return db.prepare(sql).all({userID});
         } catch (e){
             console.error(e);

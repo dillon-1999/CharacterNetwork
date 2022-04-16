@@ -79,6 +79,9 @@
                         <button id="public-button" class="fancy-button2" name="<%= projectInfo.projectID %>">make private</button><br>
                     </form>
                 <% } %>
+                <form action="/projects/editProjectPage?projectID=<%= projectInfo.projectID %>" method="post">
+                    <button class='block-center fancy-button2'>Edit</button>
+                </form>
             <%  } %>
     <% } else { %>
         <%- include('partials/accessDenied.ejs') %>
