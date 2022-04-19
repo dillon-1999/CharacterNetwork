@@ -228,4 +228,40 @@ module.exports = (app) =>{
 
     });
 
+    app.get('/admin/allUsers', async (req, res) =>{
+        let users = []
+        if(req.session.isLoggedIn && req.session.role == 1){
+            users = userModel.getUsers();
+        }
+        res.render('adminAllUsers', {session: req.session, users})
+    });
+
+    app.post('/admin/upgradeUser', async (req,res) => {
+        const {userID} = req.query;
+        if(!req.session.isLoggedIn || req.session.role !== 1){
+            res.sendStatus(404);
+        }
+        try {
+            const upgraded = userModel.upgradeToAdmin(userID);
+            upgraded ? res.redirect('/admin/allUsers') : res.sendStatus(500);
+        } catch(e){
+            console.error(e);
+            return res.sendStatus(500);
+        }
+    });
+
+    app.post('/admin/revokeUser', async (req,res) => {
+        const {userID} = req.query;
+        if(!req.session.isLoggedIn || req.session.role !== 1){
+            res.sendStatus(404);
+        }
+        try {
+            const upgraded = userModel.revokeAdmin(userID);
+            upgraded ? res.redirect('/admin/allUsers') : res.sendStatus(500);
+        } catch(e){
+            console.error(e);
+            return res.sendStatus(500);
+        }
+    });
+
 }

@@ -29,7 +29,8 @@ module.exports = (app) =>{
         }
     
         if(searchData) {
-            if(searchData['public'] === 0){
+            // to view public you must be an admin
+            if(searchData['public'] === 0 && req.session.role !== 1){
                 return res.sendStatus(404);
             }
             return res.status(200).json(searchData);

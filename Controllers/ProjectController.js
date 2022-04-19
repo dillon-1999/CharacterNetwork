@@ -123,6 +123,14 @@ module.exports = (app) =>{
             return res.sendStatus(500);
         }
     });
+
+    app.get('/admin/allProjects', async (req, res) =>{
+        let projects = []
+        if(req.session.isLoggedIn && req.session.role == 1){
+            projects = projectModel.getAllProjects();
+        }
+        res.render('adminAllProjects', {session: req.session, projects})
+    });
 }
 
 // http://localhost:8006/projects/projectPage?projectID=e6b62489-3a2d-4ca8-a519-ee7b52c1f86b

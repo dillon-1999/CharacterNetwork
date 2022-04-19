@@ -493,7 +493,7 @@ async function searchDatabase(search, searchType){
                 let anchor = document.createElement('a');
                 anchor.id = "searchLink"
                 if(data['charID']){
-                    anchor.href = `${window.location.origin}/characters/charPage?charID=${data['charID']}`;
+                    anchor.href = `${window.location.origin}/characters/charPage/${data['charID']}`;
                     anchor.innerText = data['name'];
                 } else if(data['userID']){
                     anchor.href = `${window.location.origin}/users/homepage?userID=${data['userID']}`;

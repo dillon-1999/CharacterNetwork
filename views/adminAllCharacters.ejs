@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Character Network</title>
+    <link rel="stylesheet" type="text/css" href="/styles/styles.css">
+</head>
+<style>
+</style>
+<body>
+    <% if(session.isLoggedIn && session.role === 1){ %>
+
+        <a href="../users/homepage?userID=<%=session.userID%>"><div class='text-center color1' id="header">
+            <h1>Character Network</h1>
+        </div></a>
+        <div>
+            <% if(chars.length > 0){ %>
+                <% for(let i = 0; i < chars.length; ++i){ %>
+                        <div class="box">
+                            <form action="/characters/charPage/<%= chars[i].charID %>" method="get">
+                                <input type="submit" class="projectButton" value="<%= chars[i].name %>">
+                            </form>
+                        </div><br>
+                <% } %>
+          <% } else{ %>
+                <h1>No characters to display!</h1>
+          <% } %>
+        </div>
+    <% } else { %>
+        <%- include('partials/accessDenied.ejs') %>
+    <% } %>
+</body>
+</html>

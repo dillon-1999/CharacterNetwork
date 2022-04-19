@@ -226,6 +226,16 @@ class ProjectModel {
             return false;
         }
     }
+
+    getAllProjects(){
+        try{
+            const sql = `select * from Projects`;
+            return db.prepare(sql).all();
+        }catch(e){
+            console.error(e);
+            return false;
+        }
+    }
 }
 
 exports.projectModel = new ProjectModel(db); 

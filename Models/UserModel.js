@@ -82,23 +82,6 @@ class UserModel {
         }
     }
 
-    // updatePassword(userID, passwordHash){
-    //     try {
-    //         const sql = `
-    //             UPDATE Users
-    //             SET
-    //                 passwordHash=@passwordHash
-    //             WHERE
-    //                 userID=@userID
-    //         `;
-    //         db.prepare(sql).run({userID,  passwordHash});
-    //         return true;
-    //     } catch (e){
-    //         console.error(e);
-    //         return false;
-    //     }
-    // }
-
     deleteUser (userID) {
         try{
             const sql = `DELETE FROM Users WHERE userID=@userID`;
@@ -222,10 +205,11 @@ class UserModel {
             return true;
         } catch(e){
             console.error(e);
-            return false;
+            return false; 
         }
     }
 }
 let x = new UserModel(db);
-console.log(x.getUsers())
+// console.log(x.getUsers())
+// console.log(x.upgradeToAdmin('39de84de-03de-4e6b-ac74-5ba892308b36'));
 exports.userModel = new UserModel(db);
