@@ -10,7 +10,8 @@
 <style>
 </style>
 <body>
-    <% if(session.isLoggedIn){ %>
+    <% if(session.isLoggedIn && session.role === 1){ %>
+
         <a href="../users/homepage?userID=<%=session.userID%>"><div class='text-center color1' id="header">
             <h1>Character Network</h1>
         </div></a>

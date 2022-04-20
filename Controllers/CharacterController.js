@@ -93,8 +93,8 @@ module.exports = (app) => {
     });
 
     // queryParam: charID
-    app.get('/characters/charPage', async (req, res) => {
-        const charID = req.query.charID;
+    app.get('/characters/charPage/:charID', async (req, res) => {
+        const charID = req.params.charID;
         if(!charID){
             return res.sendStatus(404);
         }
@@ -156,7 +156,9 @@ module.exports = (app) => {
             return res.sendStatus(404);
         }
         const projects = projectModel.getUsersProjects(req.session.userID);
-        res.render('editCharacterPage', {session: req.session, projects, charID: charID});
+        const charInfo = characterModel.getCharInfo(charID);
+        console.log(charInfo);
+        res.render('editCharacterPage', {session: req.session, projects, charID: charID, charInfo});
     });
 
     app.post('/characters/updateCharacter', async (req, res) => {
@@ -178,5 +180,13 @@ module.exports = (app) => {
             return res.sendStatus(500);
         }
 
+    });
+
+    app.get('/admin/allCharacters', async (req, res) =>{
+        let chars = []
+        if(req.session.isLoggedIn && req.session.role == 1){
+            chars = characterModel.getChars();
+        }
+        res.render('adminAllCharacters', {session: req.session, chars})
     });
 }

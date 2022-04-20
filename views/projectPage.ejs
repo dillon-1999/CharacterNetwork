@@ -34,7 +34,7 @@
         <a href="../users/homepage?userID=<%=session.userID%>"><div class='text-center color1' id="header">
             <h1>Character Network</h1>
         </div></a>
-        <% if(projectInfo.public === 0 && session.userID !== projectInfo.userID){ %>
+        <% if(session.role !== 1 && projectInfo.public === 0 && session.userID !== projectInfo.userID){ %>
                 <h1>This project isn't public!</h1>
         <% } else { %>
             <table>
@@ -59,7 +59,7 @@
                     <td>
                         <div>
                             <% for(let i = 0; i < projectsCharacters.length; ++i){ %>
-                                <a href="../../characters/charpage?charID=<%=projectsCharacters[i].charID%>"><p><%= projectsCharacters[i].name %></p></a>
+                                <a href="../characters/charPage/<%=projectsCharacters[i].charID%>"><p><%= projectsCharacters[i].name %></p></a>
                         <% } %>
                         </div>
                     </td>
@@ -79,6 +79,9 @@
                         <button id="public-button" class="fancy-button2" name="<%= projectInfo.projectID %>">make private</button><br>
                     </form>
                 <% } %>
+                <form action="/projects/editProjectPage?projectID=<%= projectInfo.projectID %>" method="post">
+                    <button class='block-center fancy-button2'>Edit</button>
+                </form>
             <%  } %>
     <% } else { %>
         <%- include('partials/accessDenied.ejs') %>

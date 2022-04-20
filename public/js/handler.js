@@ -154,6 +154,29 @@ async function updateCharForm(userID, charID, updates){
         console.error(err)
     }
 }
+
+async function editProjectForm(projectID, userID, name, type, genre, description){
+    try{
+        const response = await fetch(`${window.location.origin}/projects/updateProject?projectID=${projectID}`, {
+            "method": "POST",
+            "headers":{
+
+                "Content-Type": "application/json"
+            },
+            "mode": "cors",
+            "body": JSON.stringify({projectID, "projectName": name, "projectType": type, genre, "projectDescription": description})
+        });
+        if(response.ok){
+            console.log('upload success');
+            window.location.replace(`${window.location.origin}/users/homepage?userID=${userID}`);
+        } else {
+            document.querySelector('.error').textContent = "An error has occurred...";
+        }
+    } catch(err) {
+        console.error(err)
+    }
+}
+
 async function createProject(projectName, projectType, genre, projectDescription){
     try{
         const response = await fetch (`${window.location.origin}/projects/createProject`, {
@@ -225,6 +248,20 @@ if(document.getElementById('updateForm')){
         let userID = document.getElementById('uploadUpdate').value
         
         updateForm(userID, username, email, bio, password);
+    })
+}
+
+if(document.getElementById('editProjectForm')){
+    document.getElementById('editProjectForm').addEventListener('submit', (event) => {
+        event.preventDefault();
+        let name = document.getElementById('name').value;
+        let type = document.getElementById('type').value;
+        let genre = document.getElementById('genre').value;
+        let description = document.getElementById('description').value;
+        let projectID = document.getElementById('editProjectForm').className;
+        let userID = document.getElementById('projectUpdateButton').className;
+        console.log(projectID, userID, name, type, genre, description);
+        editProjectForm(projectID, userID, name, type, genre, description);
     })
 }
 
@@ -456,7 +493,7 @@ async function searchDatabase(search, searchType){
                 let anchor = document.createElement('a');
                 anchor.id = "searchLink"
                 if(data['charID']){
-                    anchor.href = `${window.location.origin}/characters/charPage?charID=${data['charID']}`;
+                    anchor.href = `${window.location.origin}/characters/charPage/${data['charID']}`;
                     anchor.innerText = data['name'];
                 } else if(data['userID']){
                     anchor.href = `${window.location.origin}/users/homepage?userID=${data['userID']}`;

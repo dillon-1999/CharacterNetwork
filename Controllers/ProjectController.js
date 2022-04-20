@@ -24,13 +24,24 @@ module.exports = (app) =>{
     });
 
     // query param = userID
+    // /projects/allUserProjects?viewer=<%= session.userID %>&owner=<%= userInfo.userID %>
+
+    // changing this a bit:
+    // if it is the owner, it shows all projects
+    // if it is just a viewer, it shows public projects
     app.post('/projects/allUserProjects', async (req, res) => {
-        let {userID} = req.query;
-        if(!userID || req.session.userID !== userID){
+        let {owner} = req.query;
+        if(!owner || !req.session.isLoggedIn){
             return res.sendStatus(404);
         }
-        const projects = projectModel.getUserProjects(userID);
-        res.render('listProjectsPage', {session: req.session, userID, projects});
+
+        let projects;
+        if(owner === req.session.userID){
+            projects = projectModel.getUserProjects(owner);
+        } else{
+            projects = projectModel.getUserPublicProjects(owner);
+        }
+        res.render('listProjectsPage', {session: req.session, owner, projects});
     });
 
     app.post('/projects/createProject', async (req, res) => {
@@ -76,6 +87,49 @@ module.exports = (app) =>{
             console.error(e);
             return res.sendStatus(500);
         }
+
+    });
+
+    app.post('/projects/editProjectPage', async (req, res) => {
+        const {projectID} = req.query;
+        const checkProjectOwner = projectModel.checkProjectOwner(projectID, req.session.userID);
+        if(!checkProjectOwner || !req.session.isLoggedIn){
+            console.log('not owner')
+            return res.sendStatus(404);
+        }
+        const info = projectModel.getProjectInfoByID(projectID);
+        if(!info){
+            return res.sendStatus(404);
+        }
+
+        res.render('editProjectPage', {session: req.session, project: info});
+    });
+
+    app.post('/projects/updateProject', async (req, res) => {
+        console.log("/projects/updateProject")
+        const {projectID} = req.query;
+        const checkProjectOwner = projectModel.checkProjectOwner(projectID, req.session.userID);
+        if(!checkProjectOwner || !req.session.isLoggedIn){
+            console.log('not owner')
+            return res.sendStatus(404);
+        }
+        const updates = req.body;
+        console.log(updates);
+        try{
+            const didUpdate = projectModel.updateProject(req.session.userID, projectID, updates);
+            didUpdate ? res.sendStatus(200) : res.sendStatus(500);
+        } catch(e){
+            console.error(e);
+            return res.sendStatus(500);
+        }
+    });
+
+    app.get('/admin/allProjects', async (req, res) =>{
+        let projects = []
+        if(req.session.isLoggedIn && req.session.role == 1){
+            projects = projectModel.getAllProjects();
+        }
+        res.render('adminAllProjects', {session: req.session, projects})
     });
 }
 

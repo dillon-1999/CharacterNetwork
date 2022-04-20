@@ -48,105 +48,39 @@ class UserModel {
         }
     }
 
-    // setBio(bio, userID) {
-    //     try {
-    //         const sql = `UPDATE
-    //                      SET
-    //                         bio=@bio
-    //                     where 
-    //                         userID=@userID`
-    //         db.prepare(sql).run({bio, userID});
-    //         return true;
-    //     } catch (e) {
-    //         console.error(e);
-    //         return false;
-    //     }
-    // }
+    upgradeToAdmin (userID) {
+        try{
+            const sql = `
+                UPDATE Users
+                SET
+                    role=1
+                WHERE
+                    userID=@userID
+            `;
+            db.prepare(sql).run({userID});
+            return true;
+        } catch (e){
+            console.error(e);
+            return false;
+        }
+    }
 
-    // changeEmailAddress (newEmailAddr, userID) {
-    //     try{
-    //         const sql = `
-    //             UPDATE Users
-    //             SET
-    //                 email=@newEmailAddr
-    //             WHERE
-    //                 userID=@userID
-    //         `;
-    //         db.prepare(sql).run({newEmailAddr, userID});
-    //         return true;
-    //     } catch (e){
-    //         console.error(e);
-    //         return false;
-    //     }
-    // }
-
-    // changeUsername (newUsername, userID) {
-    //     try{
-    //         const sql = `
-    //             UPDATE Users
-    //             SET
-    //                 username=@newUsername
-    //             WHERE
-    //                 userID=@userID
-    //         `;
-    //         db.prepare(sql).run({newUsername, userID});
-    //         return true;
-    //     } catch (e){
-    //         console.error(e);
-    //         return false;
-    //     }
-    // }
-
-    // upgradeToAdmin (userID) {
-    //     try{
-    //         const sql = `
-    //             UPDATE Users
-    //             SET
-    //                 role=1
-    //             WHERE
-    //                 userID=@userID
-    //         `;
-    //         db.prepare(sql).run({userID});
-    //         return true;
-    //     } catch (e){
-    //         console.error(e);
-    //         return false;
-    //     }
-    // }
-
-    // revokeAdmin (userID) {
-    //     try{
-    //         const sql = `
-    //             UPDATE Users
-    //             SET
-    //                 role=0
-    //             WHERE
-    //                 userID=@userID
-    //         `;
-    //         db.prepare(sql).run({userID});
-    //         return true;
-    //     } catch (e){
-    //         console.error(e);
-    //         return false;
-    //     }
-    // }
-
-    // updatePassword(userID, passwordHash){
-    //     try {
-    //         const sql = `
-    //             UPDATE Users
-    //             SET
-    //                 passwordHash=@passwordHash
-    //             WHERE
-    //                 userID=@userID
-    //         `;
-    //         db.prepare(sql).run({userID,  passwordHash});
-    //         return true;
-    //     } catch (e){
-    //         console.error(e);
-    //         return false;
-    //     }
-    // }
+    revokeAdmin (userID) {
+        try{
+            const sql = `
+                UPDATE Users
+                SET
+                    role=0
+                WHERE
+                    userID=@userID
+            `;
+            db.prepare(sql).run({userID});
+            return true;
+        } catch (e){
+            console.error(e);
+            return false;
+        }
+    }
 
     deleteUser (userID) {
         try{
@@ -271,10 +205,11 @@ class UserModel {
             return true;
         } catch(e){
             console.error(e);
-            return false;
+            return false; 
         }
     }
 }
 let x = new UserModel(db);
-console.log(x.getUsers())
+// console.log(x.getUsers())
+// console.log(x.upgradeToAdmin('39de84de-03de-4e6b-ac74-5ba892308b36'));
 exports.userModel = new UserModel(db);

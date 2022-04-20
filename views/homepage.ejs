@@ -81,11 +81,14 @@
             <!-- navigation buttons -->
             <br/>
             <div class='flex-parent justify-center'>
+                <form action="/projects/allUserProjects?owner=<%= userInfo.userID %>" method="post">
+                    <input class='fancy-button big-button clickable rightSide' type="submit" id="projectsView" value="View User Projects">
+                </form>
                 <% if(session.userID === userInfo.userID){ %>
                     <!-- Change all of these to forms, bad practice to use <a> -->
-                    <form action="/projects/allUserProjects?userID=<%= session.userID %>" method="post">
+                    <!-- <form action="/projects/allUserProjects?userID=<%= session.userID %>" method="post">
                         <input class='fancy-button big-button clickable rightSide' type="submit" id="projectsView" value="View Your Projects">
-                    </form>
+                    </form> -->
 
                     <form action="/users/friends">
                         <input class='fancy-button big-button clickable rightSide' type="submit" id="friendsView" value="View Your Friends">
@@ -96,6 +99,23 @@
                     
                     <form action="/projects/newProject">
                         <input class='fancy-button big-button clickable' type="submit" id="createProject" value="Create a New Project"> <!--double check ID name-->
+                    </form>
+                <% } %>
+                
+            </div>
+
+            <div>
+                <% if(session.role === 1 && userInfo.userID === session.userID){ %>
+                    <form action="/admin/allUsers">
+                        <input class='fancy-button big-button clickable rightSide' type="submit" id="adminUserView" value="View All Users">
+                    </form>
+
+                    <form action="/admin/allProjects">
+                        <input class='fancy-button big-button clickable rightSide' type="submit" id="adminProjectView" value="View All Projects">
+                    </form>
+
+                    <form action="/admin/allCharacters">
+                        <input class='fancy-button big-button clickable rightSide' type="submit" id="adminCharacterView" value="View All Characters">
                     </form>
                 <% } %>
             </div>
@@ -125,9 +145,9 @@
 
                             
                             <% if(chars[i].public) { %>
-                                <a href="../characters/charpage?charID=<%=chars[i].charID%>"> <li class="emphasis-name emphasis-hover"> <%= chars[i].name %> </li> </a>
+                                <a href="../characters/charPage/<%=chars[i].charID%>"> <li class="emphasis-name emphasis-hover"> <%= chars[i].name %> </li> </a>
                             <% } else if (session.userID === userInfo.userID ) { %>
-                               <a class="private" href="../characters/charpage?charID=<%=chars[i].charID%>"> <li class="emphasis-name private"><%= chars[i].name%> (private) </li>  </a>
+                               <a class="private" href="../characters/charPage/<%=chars[i].charID%>"> <li class="emphasis-name private"><%= chars[i].name%> (private) </li>  </a>
                     <% }} %>
                     
                     </div>

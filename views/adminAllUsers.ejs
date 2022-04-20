@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Character Network</title>
+    <link rel="stylesheet" type="text/css" href="/styles/styles.css">
+</head>
+<style>
+</style>
+<body>
+    <% if(session.isLoggedIn && session.role === 1){ %>
+        <a href="../users/homepage?userID=<%=session.userID%>"><div class='text-center color1' id="header">
+            <h1>Character Network</h1>
+        </div></a>
+        <div>
+            <% if(users.length === 0){ %>
+                    <h1> No Users to display!</h1>
+                <% } %>
+            <% for(let i = 0; i < users.length; ++i){ %>
+                <!-- not entirely necessary, but a user cant revoke their own admin -->
+                <% if(users[i].userID !== session.userID) { %>
+                    <div>
+                        <a href="../users/homepage?userID=<%= users[i].userID %>"><%= users[i].username %></a> <br><br>
+                        <p>Role: <%= users[i].role %></p>
+                        <% if(users[i].role === 1){ %>
+                            <form action="/admin/revokeUser?userID=<%= users[i].userID %>" method="post">
+                                <button type="submit">Revoke Admin</button>
+                            </form>
+                        <% } else{ %>
+                            <form action="/admin/upgradeUser?userID=<%= users[i].userID %>" method="post">
+                                <button type="submit">Upgrade To Admin</button>
+                            </form>
+                        <% } %>
+                        <br><br><hr>
+                    </div>
+                <% } %>
+            <% } %>
+        </div>
+    <% } else { %>
+        <%- include('partials/accessDenied.ejs') %>
+    <% } %>
+</body>
+</html>

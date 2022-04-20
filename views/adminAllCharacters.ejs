@@ -10,22 +10,22 @@
 <style>
 </style>
 <body>
-    <% if(session.isLoggedIn){ %>
+    <% if(session.isLoggedIn && session.role === 1){ %>
+
         <a href="../users/homepage?userID=<%=session.userID%>"><div class='text-center color1' id="header">
             <h1>Character Network</h1>
         </div></a>
         <div>
-            <% if(projects.length > 0){ %>
-                <% for(let i = 0; i < projects.length; ++i){ %>
+            <% if(chars.length > 0){ %>
+                <% for(let i = 0; i < chars.length; ++i){ %>
                         <div class="box">
-                            <form action="/projects/projectPage?projectID=<%= projects[i].projectID %>" method="post">
-                                <input type="submit" class="projectButton" value="<%= projects[i].projectName %>">
-                                <p><%= projects[i].projectDescription %></p>
+                            <form action="/characters/charPage/<%= chars[i].charID %>" method="get">
+                                <input type="submit" class="projectButton" value="<%= chars[i].name %>">
                             </form>
                         </div><br>
                 <% } %>
           <% } else{ %>
-                <h1>No projects to display!</h1>
+                <h1>No characters to display!</h1>
           <% } %>
         </div>
     <% } else { %>
