@@ -11,26 +11,26 @@
 </head>
 <body>
     <div>
-        <%- include('partials/header.ejs') %>
-        <div>
+        <%- include('partials/header.ejs') %> <br>
+        <div class="box2 block-center">
             <form id="registerForm" >
-                <div>
+                <div class="text-center">
                     <label></label></br>
-                    <input type="email" id="email" name="email" placeholder="Email Address" required>
-                </div>
-                <div>
+                    <input  class="big-textEntry"  type="email" id="email" name="email" placeholder="Email Address" required>
+                </div> <br>
+                <div class="text-center">
                     <label></label>
-                    <input type="password" id="password" name="password" placeholder="Password (Min 8 Characters)" required>
-                </div>
-                <div>
+                    <input class="big-textEntry" type="password" id="password" name="password" placeholder="Password (Min 8 Characters)" required>
+                </div> <br>
+                <div class="text-center">
                     <label></label>
-                    <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" required>
-                </div>
-                <div>
+                    <input  class="big-textEntry" type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" required>
+                </div> <br>
+                <div class="text-center">
                     <label></label>
-                    <input type="text" id="username" name="username" placeholder="Username" required>
-                </div>
-                <button>Submit</button>
+                    <input  class="big-textEntry"  type="text" id="username" name="username" placeholder="Username" required>
+                </div> <br>
+                <button class="block-center">Submit</button>
             </form>
             <p class="error"></p>
         </div>

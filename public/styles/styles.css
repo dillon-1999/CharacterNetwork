@@ -27,6 +27,10 @@
 
 
     /*createUser.ejs*/
+    .big-textEntry {
+        height: 50px;
+        width: 250px;
+    }
 
 
     /*editUserPage.ejs*/
@@ -36,7 +40,14 @@
     .color1 {
         color: darkblue;
     }
+    
+    .color2 {
+        color: navy;
+    }
 
+    .color3 {
+        color: royalblue;
+    }
     
     /*homepage.ejs*/ 
     .block-center {
@@ -61,7 +72,9 @@
     .bio {
         padding: 15px;
         box-shadow: 1px 1px 5px lightgray;
-        border: 1px solid lightgray;  
+        border: 1px solid lightgray;
+        wrap: hard;
+        white-space: pre-line;
     }
     
     a {
@@ -102,6 +115,10 @@
     .emphasis-hover:hover {
         background-color: lightblue;
     }
+    
+    .bigger-text {
+        font-size: x-large ;
+    }
         
     .bottom-border {
         border-bottom-style: black;
@@ -121,10 +138,11 @@
     }
     
     .scrollbox {
-        height:150px;
+        height:300px;
         width:90%;
         border:1px solid darkblue;
         overflow:auto;
+        
     }
     /*index.ejs*/
 
@@ -142,6 +160,14 @@
     
     .box {
         border-left: 5px solid blue;
+        background-color: aliceblue;
+        padding: 10px;
+        width: 50%;
+    }
+    
+    .box2 {
+        border-left: 5px solid blue;
+        border-right: 5px solid blue;
         background-color: aliceblue;
         padding: 10px;
         width: 50%;

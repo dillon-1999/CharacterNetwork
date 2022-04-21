@@ -31,7 +31,7 @@
 </style>
 <body>
     <% if(session.isLoggedIn) { %>
-        <a href="../users/homepage?userID=<%=session.userID%>"><div class='text-center color1' id="header">
+        <a href="../../users/homepage?userID=<%=session.userID%>"><div class='text-center color1' id="header">
             <h1>Character Network</h1>
         </div></a>
         <div id="header" style="height:15%;width:90%;">
@@ -81,10 +81,16 @@
         <table class="invisible">
             <tr>
                 <td class="invisible" style="width:10px">
-                <!--CHECK FORM: only hypothetical URL as edit functionality hasn't been built yet -->
-                <form action="/characters/editCharInfo?charID=<%= charData.charID %>" method="post">
-                    <button class='block-center fancy-button2'>Edit</button>
-                </form>
+                    <!--CHECK FORM: only hypothetical URL as edit functionality hasn't been built yet -->
+                    <form action="/characters/editCharInfo?charID=<%= charData.charID %>" method="post">
+                        <button class='block-center fancy-button'>Edit</button>
+                    </form>
+                </td>
+                
+                <td class="invisible" style="width:90px">
+                    <form action="/characters/uploadAvatarPage?charID=<%= charData.charID %>" method="post">
+                        <button class='fancy-button clickable'>Edit Avatar</button>
+                    </form>
                 </td>
                 
                 <td class="invisible">
@@ -94,14 +100,14 @@
                     </form>
                 <% } else{ %>
                     <form action="/characters/changeVisibility?charID=<%=charData.charID%>&visibility=0" method="post">
-                        <button class="fancy-button2" id="public-button" name="<%= charData.charID %>">make private</button><br>
+                        <button class="fancy-button" id="public-button" name="<%= charData.charID %>">make private</button><br>
                     </form>
                 <% } %>
                 </td>
+                
+                
             </tr>
-            <form action="/characters/uploadAvatarPage?charID=<%= charData.charID %>" method="post">
-                <button class='block-center fancy-button2 clickable'>Edit Avatar</button>
-            </form>
+            
         </table>
         <% } %>
     <% } else { %>

@@ -11,10 +11,10 @@
 <script src='/js/handler.js' defer></script>
 <body>
     <% if(session.isLoggedIn){ %>
-        <div>
-            <%- include('partials/header.ejs') %>
-        </div>
-        <form id="searchForm">
+         <a href="../users/homepage?userID=<%=session.userID%>"><div class='text-center color1' id="header">
+            <h1>Character Network</h1>
+        </div></a> <br>
+        <form id="searchForm" class="box block-center">
             <input type="text" id="search" name="search" placeholder="Search the Network..." required> <br>
             <input type="radio" name="searchType" id="user" value="user" checked required> 
             <label for="user">Search for a User</label> <br>
@@ -22,14 +22,14 @@
             <label for="user">Search for a Character</label>   <br>
             <input type="radio" name="searchType" id="project" value="project" required> 
             <label for="user">Search for a Project</label> <br> <br>
-            <button type="submit" id="searchButton">Search!</button>
+            <button type="submit" id="searchButton" class="big-button">Search!</button>
             <br><br>
-        </form>
-        <div>
-            <p id="output">
+        </form> <br>
+        <div class="text-center">
+            <p class="bigger-text" id="output">
             </p>
         </div>
-        <p id="error"></p>
+        <p class="text-center" id="error"></p>
     <% } else { %>
         <%- include('partials/accessDenied.ejs') %>
     <% } %>

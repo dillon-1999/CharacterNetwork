@@ -59,7 +59,7 @@
                     <td>
                         <div>
                             <% for(let i = 0; i < projectsCharacters.length; ++i){ %>
-                                <a href="../characters/charPage/<%=projectsCharacters[i].charID%>"><p><%= projectsCharacters[i].name %></p></a>
+                                <a href="../characters/charPage/<%=projectsCharacters[i].charID%>"><p class="emphasis-hover"><%= projectsCharacters[i].name %></p></a>
                         <% } %>
                         </div>
                     </td>
@@ -70,6 +70,7 @@
             <% } %>
             
             <% if(session.userID === projectInfo.userID){ %>
+            <div class='flex-parent'>
                 <% if( projectInfo.public === 0){ %>
                     <form action="/projects/changeVisibility?projectID=<%=projectInfo.projectID%>&visibility=1" method="post">
                         <button id="private-button" class="fancy-button2" name="<%= projectInfo.projectID %>">make public</button><br>
@@ -80,9 +81,10 @@
                     </form>
                 <% } %>
                 <form action="/projects/editProjectPage?projectID=<%= projectInfo.projectID %>" method="post">
-                    <button class='block-center fancy-button2'>Edit</button>
+                    <button class='fancy-button2'>Edit</button>
                 </form>
             <%  } %>
+            </div>
     <% } else { %>
         <%- include('partials/accessDenied.ejs') %>
     <% } %>

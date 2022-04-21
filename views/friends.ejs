@@ -13,17 +13,19 @@
     <% if(session.isLoggedIn){ %>
         <a href="../users/homepage?userID=<%=session.userID%>"><div class='text-center color1' id="header">
             <h1>Character Network</h1>
+            <br>
         </div></a>
         <div>
             <% if(friends.length === 0){ %>
-                    <h1> No friends to display!</h1>
+                    <h2 class="color3 text-center"> (｡•́︿•̀｡) <br> No friends to display!</h3>
+                    <a href="../users/homepage?userID=<%=session.userID%>"><button class="color3 block-center">Go Home</button></a>
                 <% } %>
             <% for(let i = 0; i < friends.length; ++i){ %>
-                <div>
-                    <a href="../users/homepage?userID=<%= friends[i].friendID %>"><%= friends[i].username %></a> <br><br>
+                <div class="box">
+                    <a class="bigger-text" href="../users/homepage?userID=<%= friends[i].friendID %>"><%= friends[i].username %></a> <br><br>
                     <p>Date Friended: <%= friends[i].dateFriended %></p>
                     <form action="/users/unfriendUser?friendID=<%= friends[i].friendID %>" method="post">
-                        <button type="submit">Unfriend User</button>
+                        <button type="submit" class="fancy-button2 clickable">Unfriend User</button>
                     </form>
                 </div>
             <% } %>

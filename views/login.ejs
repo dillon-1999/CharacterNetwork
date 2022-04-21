@@ -10,21 +10,27 @@
     </script>
 </head>
 <body>
-    <div>
+    <div >
         <%- include('partials/header.ejs') %>
-        <div>
+        
+        <br> <br> <br>
+        <h2 class="text-center color1">Login</h2>
+        <div class="box2 block-center">
+            <br>
             <form id="loginForm">
-                <div>
+                <div class="text-center">
                     <label for="email"></label>
-                    <input id="email" name="email" type="email" placeholder="email address" required>
+                    <input class="big-textEntry" id="email" name="email" type="email" placeholder="email address" required>
                 </div>
-                <div>
+                <br>
+                <div class="text-center">
                     <label for="password"></label>
-                    <input id="password" name="password" type="password" placeholder="password" required>
+                    <input class="big-textEntry" id="password" name="password" type="password" placeholder="password" required>
                 </div>
-                <div>
-                    <button>Sign In</button>
-                    <p>Not a user? Click <a id='anchor' style="cursor: pointer;">here</a></p>
+                <br>
+                <div class="text-center">
+                    <button class="fancy-button big-button">Sign In</button>
+                    <p>Not a user? Click <a id='anchor' class="clickable">here</a></p>
                 </div>
             </form>
             <p class="error"></p>

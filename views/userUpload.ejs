@@ -12,14 +12,15 @@
         <a href="../users/homepage?userID=<%=session.userID%>"><div class='text-center color1' id="header">
             <h1>Character Network</h1>
         </div></a>
-        <div>
+        <div class="box2">
         <% if(session.isLoggedIn === true) { %>
-                <form id='uploadForm'>
+                <form id='uploadForm' class="block-center"> 
                     <input type="file" name="file"  />
                     <button 
                     id='uploadAvatar'
                     type="submit"
                     value="<%= session.userID %>"
+                    class="big-button"
                     >Upload your Avatar!</button>
                 </form>
                 <p class="error"></p>

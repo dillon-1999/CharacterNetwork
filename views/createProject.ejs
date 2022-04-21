@@ -16,12 +16,12 @@
         <div>
             <form id="createProjectForm" >
                 <div>
-                    <label for="name">Project Name</label>
+                    <label for="name" class="color2">Project Name:</label> <br>
                     <input id="name" name="name" type="text" required>
                     <br><br>
                 </div>
                 <div>
-                    <label for="type">Project Type</label>
+                    <label for="type" class="color2">Project Type:</label> <br>
                     <select id="type" name="type" required><br>
                         <option value="novel">Novel</option>
                         <option value="short-story">Short Story</option>
@@ -29,7 +29,7 @@
                     </select><br><br>
                 </div>
                 <div>
-                    <label for="genre">Project Genre:</label>
+                    <label for="genre" class="color2">Project Genre:</label> <br>
                     <select id="genre" name="genre" required><br>
                         <option value="horror">Horror</option>
                         <option value="comedy">Comedy</option>
@@ -42,10 +42,10 @@
                     </select><br><br>
                 </div>
                 <div>
-                    <label for="description">Description:</label><br>
+                    <label for="description" class="color2">Description:</label><br>
                     <textarea id="description" name="description" rows="10" cols="90" wrap="hard" required></textarea><br><br>
                 </div>
-                <button type="submit">Create Project!</button>
+                <button type="submit" class="fancy-button big-button">Create Project!</button>
             </form>
         </div>
     <% } else { %>

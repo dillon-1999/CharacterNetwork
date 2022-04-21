@@ -132,27 +132,27 @@
                 </tr>
                 <tr>
                     <!--BIO-->
-                    <td class="bio">
+                    <td class="bio" style="white-space: pre-line;">
                         <%= userInfo.bio %> <br/> <br/>
                         <i>joined <%= (userInfo.dateCreated).slice(0,10) %></i> </td>
                     
                     <!--Characters-->
-                    <td style="padding-left: 25px">
-                    <table>
+                    <td style="padding-left: 25px; vertical-align: top;">
+                    
                     <div class="scrollbox">
 
                     <% for(let i = 0; i < chars.length; i++) { %>
 
                             
                             <% if(chars[i].public) { %>
-                                <a href="../characters/charPage/<%=chars[i].charID%>"> <li class="emphasis-name emphasis-hover"> <%= chars[i].name %> </li> </a>
+                                <a href="../characters/charPage/<%=chars[i].charID%>"> <li class="emphasis-name emphasis-hover" style="padding: 5px;"> <%= chars[i].name %> </li> </a>
                             <% } else if (session.userID === userInfo.userID ) { %>
-                               <a class="private" href="../characters/charPage/<%=chars[i].charID%>"> <li class="emphasis-name private"><%= chars[i].name%> (private) </li>  </a>
+                               <a class="private" href="../characters/charPage/<%=chars[i].charID%>"> <li class="emphasis-name private" style="padding: 5px;"><%= chars[i].name%> (private) </li>  </a>
                     <% }} %>
                     
                     </div>
                 </tr>
-                </table>
+                
                 </td>
             </table>
             
