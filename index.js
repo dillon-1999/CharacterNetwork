@@ -9,6 +9,12 @@ const redis = require('redis');
 const session = require('express-session');
 let RedisStore = require('connect-redis')(session);
 let client = redis.createClient();
+const isProd = process.env.MODE === "production"
+
+if(isProd){
+    app.set('trust proxy', 1);
+    app.use(helmet())
+}
 
 const sessionConfig = {
     store: new RedisStore({ client: client }),
@@ -17,6 +23,8 @@ const sessionConfig = {
     saveUninitialized: false,
     name: "session",
     cookie: {
+        sameSite: isProd,
+        secure: isProd,
         httpOnly: true,
         maxAge: 10000 * 60 * 8 // 8 hours
     }

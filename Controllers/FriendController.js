@@ -31,7 +31,7 @@ module.exports = (app) =>{
             const added = friendModel.createFriend(userID, friendID);
             added ? res.redirect('/users/homepage?userID=' + userID ) : res.sendStatus(400);
         } catch (e){
-            console.log(e);
+            console.error(e);
             return res.sendStatus(500);
         }
     });
@@ -53,7 +53,7 @@ module.exports = (app) =>{
             const added = friendModel.unFriend(userID, friendID);
             added ? res.redirect('/users/homepage?userID=' + userID ) : res.sendStatus(400);
         } catch (e){
-            console.log(e);
+            console.error(e);
             return res.sendStatus(500);
         }
     });

@@ -52,7 +52,6 @@ module.exports = (app) =>{
         const userInfo = userModel.getUserData(userID);
         // get logged in users friends, not the pages friends
         const friends = friendModel.getUsersFriends(req.session.userID);
-        console.log(friends);
         try {
             res.render('homepage', {session: req.session, chars, projects, userInfo, friends});
         } catch(e){
@@ -184,7 +183,6 @@ module.exports = (app) =>{
             const previousFile = userModel.getAvatarHash(req.session.userID);
             const didUpload = userModel.uploadAvatar(req.session.userID, req.file.filename);
             if(didUpload){
-                console.log('in upload');
                 if(previousFile){ // this deletes the old file 
                     // path will need to be changed on the server
                     fs.unlinkSync(`/Users/dillonboatman/Desktop/CharacterNetwork/public/userAvatars/${previousFile.avatarAddress}`);

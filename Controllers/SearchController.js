@@ -7,8 +7,6 @@ module.exports = (app) =>{
     app.post('/search/results', async (req, res) => {
         console.log("GET /search/results");
         const {search, searchType} = req.body;
-        console.log(search);
-        console.log(searchType);
         if(!search || !searchType){
             return res.sendStatus(404);
         }

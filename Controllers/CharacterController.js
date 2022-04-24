@@ -44,9 +44,7 @@ module.exports = (app) => {
     app.post('/characters/uploadAvatarPage', async (req, res) => {
         console.log("GET /users/uploadAvatarPage")
         const {charID} = req.query;
-        console.log(charID);
         const checkCharacterOwner = characterModel.checkCharacterOwner(charID, req.session.userID);
-        console.log(checkCharacterOwner)
         if(!req.session.isLoggedIn || !checkCharacterOwner){
             return res.sendStatus(404);
         }
@@ -77,7 +75,6 @@ module.exports = (app) => {
         try{
             const previousFile = characterModel.getAvatarHash(req.session.userID, req.query.charID);
             const didUpload = characterModel.uploadAvatar(req.session.userID, req.query.charID, req.file.filename);
-            console.log(didUpload);
             if(didUpload){
                 if(previousFile){ // this deletes the old file 
                     fs.unlinkSync(`../characterAvatars/${previousFile.charAvatar}`);
@@ -119,25 +116,20 @@ module.exports = (app) => {
     app.post('/characters/changeVisibility', async (req,res) => {
         const {visibility, charID} = req.query;
         if(!req.session.userID){
-            console.log('not logged in')
             return res.sendStatus(404);
         }
         const checkCharacterOwner = characterModel.checkCharacterOwner(charID, req.session.userID);
         if(!checkCharacterOwner){
-            console.log('not owner')
             return res.sendStatus(404);
         }
 
         try{
             let changeVisibility;
             if(visibility === '0'){
-                console.log('here')
                 changeVisibility = characterModel.setPrivate(req.session.userID, charID);
             } else if(visibility === '1'){
-                console.log('make public')
                 changeVisibility = characterModel.setPublic(req.session.userID, charID);
             } else{
-                console.log('in try')
                 return res.sendStatus(404);
             }
             
@@ -152,12 +144,10 @@ module.exports = (app) => {
         const {charID} = req.query;
         const checkCharacterOwner = characterModel.checkCharacterOwner(charID, req.session.userID);
         if(!checkCharacterOwner || !req.session.isLoggedIn){
-            console.log('not owner')
             return res.sendStatus(404);
         }
         const projects = projectModel.getUsersProjects(req.session.userID);
         const charInfo = characterModel.getCharInfo(charID);
-        console.log(charInfo);
         res.render('editCharacterPage', {session: req.session, projects, charID: charID, charInfo});
     });
 
@@ -165,7 +155,6 @@ module.exports = (app) => {
         const {charID} = req.query;
         const checkCharacterOwner = characterModel.checkCharacterOwner(charID, req.session.userID);
         if(!checkCharacterOwner || !req.session.isLoggedIn){
-            console.log('not owner')
             return res.sendStatus(404);
         }
         const updates = req.body;

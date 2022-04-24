@@ -29,14 +29,12 @@ class ProjectModel {
                 validObj[i] = updatesObj[i];
             }
         }
-        console.log(validObj)
         if(Object.keys(validObj).length === 0){
             return false;
         }
         let updates = Object.keys(validObj).map(x => x + `=@${x}`).join(' , ');
         validObj["userID"] = userID;
         validObj["projectID"] = projectID;
-        console.log(validObj);
         try{
             const sql = `UPDATE Projects
                         SET

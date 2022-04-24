@@ -209,7 +209,5 @@ class UserModel {
         }
     }
 }
-let x = new UserModel(db);
-// console.log(x.getUsers())
-// console.log(x.upgradeToAdmin('39de84de-03de-4e6b-ac74-5ba892308b36'));
+
 exports.userModel = new UserModel(db);

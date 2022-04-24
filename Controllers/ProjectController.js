@@ -23,9 +23,6 @@ module.exports = (app) =>{
         res.render('projectPage', {session: req.session, projectInfo, projectsCharacters});
     });
 
-    // query param = userID
-    // /projects/allUserProjects?viewer=<%= session.userID %>&owner=<%= userInfo.userID %>
-
     // changing this a bit:
     // if it is the owner, it shows all projects
     // if it is just a viewer, it shows public projects
@@ -63,12 +60,10 @@ module.exports = (app) =>{
     app.post('/projects/changeVisibility', async (req,res) => {
         const {visibility, projectID} = req.query;
         if(!req.session.userID){
-            console.log('not logged in')
             return res.sendStatus(404);
         }
         const checkProjectOwner = projectModel.checkProjectOwner(projectID, req.session.userID);
         if(!checkProjectOwner){
-            console.log('not owner')
             return res.sendStatus(404);
         }
 
@@ -79,10 +74,10 @@ module.exports = (app) =>{
             } else if(visibility === '0'){
                 changeVisibility = projectModel.setPrivate(req.session.userID, projectID);
             } else{
-                console.log('in try')
                 return res.sendStatus(404);
             }
-            changeVisibility ? res.redirect(307, '/projects/allUserProjects?userID=' + req.session.userID) : res.sendStatus(500);
+            
+            changeVisibility ? res.redirect(307, '/projects/allUserProjects?owner=' + req.session.userID) : res.sendStatus(500);
         } catch(e){
             console.error(e);
             return res.sendStatus(500);
@@ -94,7 +89,6 @@ module.exports = (app) =>{
         const {projectID} = req.query;
         const checkProjectOwner = projectModel.checkProjectOwner(projectID, req.session.userID);
         if(!checkProjectOwner || !req.session.isLoggedIn){
-            console.log('not owner')
             return res.sendStatus(404);
         }
         const info = projectModel.getProjectInfoByID(projectID);
@@ -110,11 +104,9 @@ module.exports = (app) =>{
         const {projectID} = req.query;
         const checkProjectOwner = projectModel.checkProjectOwner(projectID, req.session.userID);
         if(!checkProjectOwner || !req.session.isLoggedIn){
-            console.log('not owner')
             return res.sendStatus(404);
         }
         const updates = req.body;
-        console.log(updates);
         try{
             const didUpdate = projectModel.updateProject(req.session.userID, projectID, updates);
             didUpdate ? res.sendStatus(200) : res.sendStatus(500);

@@ -4,7 +4,6 @@ document.addEventListener('readystatechange', () => {
         let photo = document.getElementById('profilePhotoContainer');
         let avatarAddress = photo.getAttribute('name');
         let child = photo.firstChild.nextElementSibling;
-        console.log(child);
         child.src = `${window.location.origin}/userAvatars/${avatarAddress}`;
     }
   }
@@ -17,7 +16,6 @@ document.addEventListener('readystatechange', () => {
             let photo = document.getElementById('charPhotoContainer');
             let avatarAddress = photo.getAttribute('name');
             let child = photo.firstChild.nextElementSibling;
-            console.log(child);
             child.src = `${window.location.origin}/charAvatars/${avatarAddress}`;
         }
     }
@@ -29,7 +27,6 @@ document.addEventListener('readystatechange', () => {
             let photo = document.getElementById('searchPhotoContainer');
             let avatarAddress = photo.getAttribute('name');
             let child = photo.firstChild.nextElementSibling;
-            console.log(child);
             child.src = `${window.location.origin}/systemImages/search.png`;
         }
     }
@@ -229,7 +226,6 @@ if(document.getElementById('uploadAvatar')){
 if(document.getElementById('uploadCharAvatar')){
     document.getElementById('uploadCharAvatar').addEventListener('click', (event) => {
         event.preventDefault();
-        console.log('in listener')
         if(uploadCharFile(document.getElementById('uploadCharImage').className, document.getElementById('uploadCharAvatar').value)){
             console.log("Yooooo");
         } else {
@@ -260,7 +256,6 @@ if(document.getElementById('editProjectForm')){
         let description = document.getElementById('description').value;
         let projectID = document.getElementById('editProjectForm').className;
         let userID = document.getElementById('projectUpdateButton').className;
-        console.log(projectID, userID, name, type, genre, description);
         editProjectForm(projectID, userID, name, type, genre, description);
     })
 }
@@ -268,7 +263,6 @@ if(document.getElementById('editProjectForm')){
 if(document.getElementById('updateCharForm')){
     document.getElementById('updateCharForm').addEventListener('submit', (event) => {
         event.preventDefault();
-        console.log('here')
         let name = document.getElementById('name').value;
         let eyeColor = document.getElementById('eyes').value;
         let hairColor = document.getElementById('hair').value;
@@ -293,9 +287,6 @@ if(document.getElementById('updateCharForm')){
             "backstory": backstory,
             "traits": traits
         }
-        console.log(userID)
-        console.log(charID)
-        console.log(updates)
         updateCharForm(userID, charID, updates);
     })
 }
@@ -309,9 +300,6 @@ if(document.getElementById('registerForm')){
         let username = document.getElementById('username').value;
         if(password === confirmPassword){
             newUser(email, password, username);
-            console.log(email)
-            console.log(password)
-            console.log(username)
         } else {
             document.querySelector('.error').textContent = "Passwords do not match!";
         }
@@ -473,8 +461,6 @@ async function searchDatabase(search, searchType){
             
             let data = await response.json();
             let output = document.getElementById("output");
-            
-            console.log(data)
             if (data['projectID']){
                 // this is a poor way of doing it, 
                 // but we need a post request. It's just an easy fix
