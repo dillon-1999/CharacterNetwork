@@ -59,7 +59,12 @@
                     <td>
                         <div>
                             <% for(let i = 0; i < projectsCharacters.length; ++i){ %>
-                                <a href="../characters/charPage/<%=projectsCharacters[i].charID%>"><p class="emphasis-hover"><%= projectsCharacters[i].name %></p></a>
+                                <!-- show if it is the owner, -->
+                                <% if(session.userID === projectInfo.userID){ %>
+                                    <a href="../characters/charPage/<%=projectsCharacters[i].charID%>"><p class="emphasis-hover"><%= projectsCharacters[i].name %></p></a>
+                                <% } else if(projectsCharacters[i].public === 1){ %>
+                                    <a href="../characters/charPage/<%=projectsCharacters[i].charID%>"><p class="emphasis-hover"><%= projectsCharacters[i].name %></p></a>
+                               <% } %>
                         <% } %>
                         </div>
                     </td>

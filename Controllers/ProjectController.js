@@ -2,6 +2,7 @@
 // const argon2 = require("argon2");
 const { projectModel } = require("../Models/ProjectModel");
 const { starsInModel } = require("../Models/StarsInModel");
+const { characterModel } = require("../Models/CharacterModel");
 const url = require('url');
 // const {schemas, VALIDATION_OPTIONS} = require("../validators/validatorContainer");
 
@@ -67,12 +68,20 @@ module.exports = (app) =>{
             return res.sendStatus(404);
         }
 
+        const projectCharacters = starsInModel.getCharactersByProject(projectID);
         try{
             let changeVisibility;
             if(visibility === '1'){
                 changeVisibility = projectModel.setPublic(req.session.userID, projectID);
+                for(let i = 0; i < projectCharacters.length; ++i){
+                    characterModel.setPublic(req.session.userID, projectCharacters[i].charID);
+                }
             } else if(visibility === '0'){
                 changeVisibility = projectModel.setPrivate(req.session.userID, projectID);
+                // must set all characters private
+                for(let i = 0; i < projectCharacters.length; ++i){
+                    characterModel.setPrivate(req.session.userID, projectCharacters[i].charID);
+                }
             } else{
                 return res.sendStatus(404);
             }

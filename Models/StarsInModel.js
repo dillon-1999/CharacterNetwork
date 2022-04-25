@@ -43,7 +43,7 @@ class StarsInModel {
     // this should really be in CharacterModel
     getCharactersByProject(projectID){
         try {
-            const sql = `SELECT name, charAvatar, Characters.charID
+            const sql = `SELECT name, charAvatar, Characters.charID, Characters.public
                          FROM Characters
                          JOIN StarsIn ON StarsIn.charID = Characters.charID AND StarsIn.projectID=@projectID;
             `;
