@@ -3,6 +3,7 @@
 require("dotenv").config();
 // const isProduction = process.env.MODE === "production";
 const express = require("express");
+const helmet = require("helmet");
 const app = express();
 const path = require("path");
 const redis = require('redis');
@@ -23,8 +24,8 @@ const sessionConfig = {
     saveUninitialized: false,
     name: "session",
     cookie: {
-        sameSite: isProd,
-        secure: isProd,
+       // sameSite: isProd,
+       // secure: isProd,
         httpOnly: true,
         maxAge: 10000 * 60 * 8 // 8 hours
     }

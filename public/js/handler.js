@@ -45,7 +45,7 @@ async function newUser(email, password, username) {
         if(response.ok){
             window.location.replace(`${window.location.origin}/login`);
         } else if(response.status >= 400 && response.status < 500) {
-            document.querySelector('.error').textContent = "Invalid inputs";
+            document.querySelector('.error').textContent = "Invalid Email or Username. Please try again.";
         } 
     } catch (err) {
         document.querySelector('.error').textContent = "Server Error..."
