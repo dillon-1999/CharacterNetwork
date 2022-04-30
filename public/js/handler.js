@@ -48,7 +48,26 @@ async function newUser(email, password, username) {
             document.querySelector('.error').textContent = "Invalid Email or Username. Please try again.";
         } 
     } catch (err) {
-        document.querySelector('.error').textContent = "Server Error..."
+        document.querySelector('.error').textContent = "Server Error...";
+    }
+}
+
+async function newChar(charObj, userID) {
+    try {
+        const response = await fetch(`${window.location.origin}/characters/createCharacter`, {
+            "method": "POST",
+            "headers": {
+            "Content-Type": "application/json"
+            },
+            "body": JSON.stringify(charObj)
+        });
+        if(response.ok){
+            window.location.replace(`${window.location.origin}/users/homepage?userID=${userID}`);
+        } else if(response.status >= 400 && response.status < 500) {
+            document.querySelector('.error').textContent = "Check your inputs!";
+        }
+    } catch (err) {
+        document.querySelector('.error').textContent = "Server Error...";
     }
 }
 
@@ -285,7 +304,7 @@ if(document.getElementById('updateCharForm')){
             "gender": gender,
             "project": project,
             "backstory": backstory,
-            "traits": traits
+            "characterTraits": traits
         }
         updateCharForm(userID, charID, updates);
     })
@@ -304,6 +323,36 @@ if(document.getElementById('registerForm')){
             document.querySelector('.error').textContent = "Passwords do not match!";
         }
         
+    });
+}
+
+if(document.getElementById('createCharForm')){
+    document.getElementById('createCharForm').addEventListener('submit', (event) => {
+        event.preventDefault();
+        let name = document.getElementById('name').value;
+        let eyeColor = document.getElementById('eyes').value;
+        let hairColor = document.getElementById('hair').value;
+        let skinColor = document.getElementById('skin').value;
+        let feetTall = document.getElementById('feet').value;
+        let inchesTall = document.getElementById('inches').value;
+        let gender = document.getElementById('gender').value;
+        let project = document.getElementById('projects').value;
+        let backstory = document.getElementById('backstory').value;
+        let traits = document.getElementById('traits').value;
+        let id = document.getElementById('createCharForm').className;
+        const charObj = {
+            "name": name, 
+            "eyeColor": eyeColor,
+            "hairColor": hairColor,
+            "skinColor": skinColor,
+            "feetTall": feetTall,
+            "inchesTall": inchesTall,
+            "gender": gender,
+            "project": project,
+            "backstory": backstory,
+            "characterTraits": traits
+        };
+        newChar(charObj, id);
     });
 }
 
