@@ -3,6 +3,7 @@
 const { characterModel } = require("../Models/CharacterModel");
 const { starsInModel } = require("../Models/StarsInModel");
 const { projectModel } = require("../Models/ProjectModel");
+const {schemas, VALIDATION_OPTIONS} = require("../validators/validatorContainer");
 
 const fs = require('fs');
 const multer = require('multer');
@@ -54,6 +55,12 @@ module.exports = (app) => {
 
     app.post('/characters/createCharacter', async (req, res) => {
         const character = req.body;
+        const {value, error} = schemas.characterSchema.validate(req.body, VALIDATION_OPTIONS); 
+        if (error){
+            const errorMessages = error.details.map(error => error.message);
+            return res.status(400).json(errorMessages);
+        }
+
         try {
             const added = characterModel.createCharacter(req.session.userID, character);
             if(character.project){ // if user wanted to add to a project

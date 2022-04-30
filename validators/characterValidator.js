@@ -9,6 +9,6 @@ exports.characterSchema = Joi.object({
     feetTall: Joi.number().integer().min(0).required(),
     inchesTall: Joi.number().integer().min(0).required(),
     gender: Joi.string().required(),
-    characterTraits: Joi.string(),
-    backstory: Joi.string()
+    characterTraits: Joi.string().allow('', null),
+    backstory: Joi.string().allow('', null)
 });

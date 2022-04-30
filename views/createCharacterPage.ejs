@@ -21,7 +21,7 @@
         <!--The random values will have to be set in a function by an onclick listener for the random button-->
         <!--The below values are only so the code will run until that is set; delete these variables later-->
             
-        <form action="/characters/createCharacter" method="post">
+        <form id="createCharForm" class="<%= session.userID %>">
             <table>
                 <tr>
                     <td>
@@ -71,6 +71,9 @@
             <button type="button" id="randomButton" class="fancy-button">Generate Randomly!</button><br/><br/>
             <input type="submit" class="fancy-button big-button" value="Create!">
         </form>
+        <div>
+            <p class="error"></p>
+        </div>
     <% } else { %>
         <%- include('partials/accessDenied.ejs') %>
     <% } %>

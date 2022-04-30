@@ -44,9 +44,21 @@ class CharacterModel {
         // valid options
         let options = ['name', 'eyeColor', 'hairColor', 'skinColor', 
             'feetTall', 'inchesTall', 'gender', 'characterTraits', 'backstory'];
+        
+        if(updatesObj.feetTall){
+            if(!parseInt(updatesObj.feetTall)){
+                delete updatesObj.feetTall;
+            }
+        }
+        if(updatesObj.inchesTall){
+            if(!parseInt(updatesObj.inchesTall)){
+                delete updatesObj.feetTall;
+            }
+        }
+        console.log(updatesObj);
         let validObj = {};
         for(const i in updatesObj){
-            if(options.includes(i) && updatesObj[i]){
+            if(options.includes(i) && updatesObj[i].trim()){
                 validObj[i] = updatesObj[i];
             }
         }
